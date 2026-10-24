@@ -112,13 +112,14 @@ test('omits undefined or empty search parameters from catalog URL', () => {
 ```
 
 ### Verify RED: Confirm It Fails For the Right Reason
-Run the test runner (`pytest`, `npm test`, etc.). Confirm it fails because the feature or logic is missing, not because of an import error or typo.
+Run the **targeted test runner** on the specific test file or case (e.g. `pytest tests/test_billing.py -k test_checkout` or `npm test -- tests/billing.test.ts`). Confirm it fails because the feature or logic is missing, not because of an import error or typo.
+> **Time & Token Invariant**: Never run the full multi-module test suite on every inner TDD step. Target only the active test file; reserve the full suite for the outer completion gate.
 
 ### GREEN: Implement the Minimal Code
 Write just enough code to satisfy the test contract. Do not add speculative features or premature abstractions.
 
 ### Verify GREEN: Confirm Test Passes
-Run the test runner and verify it passes cleanly.
+Re-run the targeted test runner and verify it passes cleanly.
 
 ### REFACTOR: Clean Up
 Remove duplication, improve variable names, or optimize performance while keeping the test suite green.

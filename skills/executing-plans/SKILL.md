@@ -77,7 +77,7 @@ Inspect the next task's tag in the plan:
 #### Path A: Sequential Task (`[Sequential]`)
 Execute directly inline in the current session:
 1. **Domain Verification**:
-   - *Dynamic Logic / Contracts*: Strict TDD (`hyperpowers:test-driven-development`). Write failing test $\rightarrow$ implement $\rightarrow$ pass.
+   - *Dynamic Logic / Contracts*: Strict TDD (`hyperpowers:test-driven-development`). Write failing test $\rightarrow$ implement $\rightarrow$ pass. Run **targeted test file** during the inner cycle (never run the whole multi-module suite on every line edit).
    - *UI / Presentation*: Markup/CSS $\rightarrow$ multi-viewport visual check via `ui-shot` (Mobile 375px, Tablet 768px, Desktop 1280px+) $\rightarrow$ verify 0 console errors. No unit tests for static CSS/text.
    - *Static / Config*: Modify $\rightarrow$ link check (`curl -sI`) $\rightarrow$ compiler/typecheck gate (`tsc --noEmit`, `py_compile`).
 2. **Commit**: Run verification command and commit (`git commit -m "feat([scope]): [description]"`).
