@@ -318,6 +318,84 @@ Hyperpowers bundles an ephemeral, zero-leak visual testing engine at [`skills/vi
 
 ---
 
+## ⚙️ Configuration & Customization (`hyperpowers.json`)
+
+Hyperpowers works immediately out-of-the-box with production-hardened defaults. When projects require custom task caps, alternative execution modes, or custom viewport dimensions, Hyperpowers provides hierarchical configuration through **JSON schema**, **environment variables**, and **natural language chat prompting**.
+
+### 1. Natural Language Prompting (Agent-Driven)
+
+You can adjust settings at any time simply by asking your agent in natural language:
+- *"Set execution mode to inline for this project"*
+- *"Increase implementation plan task cap to 10"*
+- *"Set the debugging circuit breaker to 3 attempts"*
+- *"Change the mobile preview viewport to 414x896"*
+
+The agent will automatically create or update `hyperpowers.json` adhering to [`hyperpowers.schema.json`](hyperpowers.schema.json) and confirm the changes.
+
+---
+
+### 2. Configuration File (`hyperpowers.json`)
+
+Create a `hyperpowers.json` (or `.hyperpowers/config.json`) in your project root:
+
+```json
+{
+  "$schema": "https://raw.githubusercontent.com/samwork64/hyperpowers/main/hyperpowers.schema.json",
+  "execution": {
+    "mode": "hybrid",
+    "taskCap": 7,
+    "watchdogTimeoutSeconds": 450
+  },
+  "debugging": {
+    "circuitBreakerThreshold": 2
+  },
+  "testing": {
+    "targetedInnerLoop": true,
+    "quietByDefault": true
+  },
+  "visual": {
+    "viewports": {
+      "mobile": { "width": 375, "height": 812 },
+      "tablet": { "width": 768, "height": 1024 },
+      "desktop": { "width": 1440, "height": 900 }
+    },
+    "timeoutMs": 12000
+  },
+  "telemetry": false
+}
+```
+
+#### Settings Reference
+
+| Key | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `execution.mode` | `"hybrid"` \| `"sdd"` \| `"inline"` | `"hybrid"` | Plan execution engine mode. `"hybrid"` executes sequential tasks inline and independent batches concurrently; `"sdd"` isolates every task in a subagent; `"inline"` runs all tasks sequentially in the active session. |
+| `execution.taskCap` | `integer (1–20)` | `7` | Maximum atomic tasks in a plan before milestone phase-splitting. |
+| `execution.watchdogTimeoutSeconds` | `integer (30–1800)` | `450` | Liveness watchdog interval before inspecting background tasks. |
+| `debugging.circuitBreakerThreshold` | `integer (1–5)` | `2` | Number of consecutive failed bug-fix attempts before halting speculative edits. |
+| `testing.targetedInnerLoop` | `boolean` | `true` | Restrict inner TDD test cycle to active test file, eliminating regression test lag. |
+| `testing.quietByDefault` | `boolean` | `true` | Apply quiet flags (`-q`) to prevent log floods in context windows. |
+| `visual.viewports` | `object` | *See above* | Custom dimensions for `mobile`, `tablet`, and `desktop` captures in `ui-shot.cjs`. |
+| `visual.timeoutMs` | `integer` | `12000` | Multi-viewport page readiness timeout in milliseconds. |
+| `telemetry` | `boolean` | `false` | Enable or disable external companion badge requests. |
+
+---
+
+### 3. Resolution Precedence
+
+Settings resolve dynamically in the following order:
+
+$$\text{Environment Variables} \longrightarrow \text{Project } \texttt{hyperpowers.json} \longrightarrow \text{Global } \texttt{\~/.config/hyperpowers/config.json} \longrightarrow \text{Built-in Defaults}$$
+
+| Setting | Environment Variable Override |
+| :--- | :--- |
+| `execution.mode` | `HYPERPOWERS_EXECUTION_MODE="hybrid"\|"sdd"\|"inline"` |
+| `execution.taskCap` | `HYPERPOWERS_TASK_CAP=7` |
+| `debugging.circuitBreakerThreshold` | `HYPERPOWERS_CIRCUIT_BREAKER=2` |
+| `telemetry` | `HYPERPOWERS_DISABLE_TELEMETRY=1` |
+
+---
+
 ## 🔒 Privacy & Telemetry
 
 Hyperpowers is committed to developer privacy:

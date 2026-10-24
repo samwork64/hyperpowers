@@ -96,3 +96,24 @@ Prevent orphan processes, memory bloat, and port conflicts by following these in
 - **Planning**: Use built-in `/plan` slash command or plan/task artifacts (`write_to_file` in artifact directory) rather than writing ad-hoc files to the repository. **Zero Textual Duplication**: never dump full plan text into the chat.
 - **Subagents & Zero-Idle Invariant**: Use `invoke_subagent` for concurrent parallel batches (`Subagents: [...]`) or heavy background execution. **NEVER** dispatch a single subagent for a sequential task and sit idle waiting for it. Perform code reviews inline against the rubric in seconds. Slice and pass **ONLY** the 15–30 line task brief to implementers, never the full implementation plan.
 - **Task Tracking**: Use task artifacts via `write_to_file` (`IsArtifact: true`, `ArtifactMetadata.ArtifactType: "task"`) and update with `replace_file_content`. (`manage_task` is for background shell processes only).
+
+## 4. Configuration & Settings Resolution (`hyperpowers.json`)
+
+Hyperpowers supports dynamic runtime overrides via configuration files, environment variables, or natural language prompts while preserving resilient built-in defaults:
+
+1. **Resolution Precedence**:
+   `Environment Variables (HYPERPOWERS_*)` $\rightarrow$ `Project Config (hyperpowers.json or .hyperpowers/config.json)` $\rightarrow$ `Global Config (~/.config/hyperpowers/config.json)` $\rightarrow$ `Built-in Defaults`.
+2. **Key Configurable Options**:
+   - `execution.mode`: `"hybrid"` (default) | `"sdd"` | `"inline"`.
+   - `execution.taskCap`: Max tasks per plan before milestone splitting (default: `7`).
+   - `execution.watchdogTimeoutSeconds`: Subagent watchdog liveness timer (default: `450`).
+   - `debugging.circuitBreakerThreshold`: Consecutive failed fix attempts before halting (default: `2`).
+   - `testing.targetedInnerLoop`: Test only active file on inner loop (default: `true`).
+   - `testing.quietByDefault`: Apply quiet flags by default to prevent log dumping (default: `true`).
+   - `visual.viewports`: Custom dimensions for Mobile, Tablet, and Desktop viewports.
+   - `telemetry`: Enable/disable external badge requests (default: `false`).
+3. **Natural Language Settings Configuration**:
+   When the user instructs you via chat to adjust a default (e.g. *"Set default execution mode to inline"*, *"Increase task cap to 10"*, or *"Use 414px for mobile viewports"*):
+   - Update or create `hyperpowers.json` (or `.hyperpowers/config.json`) in the project root adhering to `hyperpowers.schema.json`.
+   - Confirm the updated configuration to the user and adhere to it for all subsequent operations.
+

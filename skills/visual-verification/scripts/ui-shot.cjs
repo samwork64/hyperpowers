@@ -68,12 +68,32 @@ if (args.length === 0 || args.includes("--help") || args.includes("-h")) {
   process.exit(0);
 }
 
+function loadHyperpowersConfig() {
+  const candidatePaths = [
+    path.resolve("hyperpowers.json"),
+    path.resolve(".hyperpowers/config.json"),
+    path.resolve("../hyperpowers.json")
+  ];
+  for (const p of candidatePaths) {
+    if (fs.existsSync(p)) {
+      try {
+        return JSON.parse(fs.readFileSync(p, "utf-8"));
+      } catch (e) {
+        // Ignore parse error
+      }
+    }
+  }
+  return null;
+}
+
+const hpConfig = loadHyperpowersConfig();
+
 let fullPage = false;
 let scrollTarget = null;
 let customViewport = null;
 let colorScheme = null;
 let waitUntil = "networkidle";
-let timeoutMs = 12000;
+let timeoutMs = (hpConfig && hpConfig.visual && hpConfig.visual.timeoutMs) ? hpConfig.visual.timeoutMs : 12000;
 let delayMs = 300;
 let verbose = false;
 const evalScripts = [];
@@ -574,10 +594,11 @@ async function main() {
       fs.mkdirSync(outDir, { recursive: true });
     }
 
+    const vCfg = (hpConfig && hpConfig.visual && hpConfig.visual.viewports) ? hpConfig.visual.viewports : {};
     const viewports = [
-      { name: "mobile", width: 375, height: 812, isMobile: true, file: "preview-mobile.png" },
-      { name: "tablet", width: 768, height: 1024, isMobile: true, file: "preview-tablet.png" },
-      { name: "desktop", width: 1440, height: 900, isMobile: false, file: "preview-desktop.png" }
+      { name: "mobile", width: (vCfg.mobile && vCfg.mobile.width) || 375, height: (vCfg.mobile && vCfg.mobile.height) || 812, isMobile: true, file: "preview-mobile.png" },
+      { name: "tablet", width: (vCfg.tablet && vCfg.tablet.width) || 768, height: (vCfg.tablet && vCfg.tablet.height) || 1024, isMobile: true, file: "preview-tablet.png" },
+      { name: "desktop", width: (vCfg.desktop && vCfg.desktop.width) || 1440, height: (vCfg.desktop && vCfg.desktop.height) || 900, isMobile: false, file: "preview-desktop.png" }
     ];
 
     console.log(`[ui-shot] Capturing multi-viewport suite...`);

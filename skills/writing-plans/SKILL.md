@@ -47,6 +47,7 @@ Organize tasks so the execution engine knows what can run concurrently:
 ### Plan Atomicity & Task Cap Rule (Token & Drift Guard)
 * **Task Cap**: Limit implementation plans to **3 to 7 atomic tasks**.
 * **Phased Milestone Splitting**: If a feature requires >8 tasks, do **NOT** write a monolithic mega-plan. Sprawling plans exhaust context tokens, cause agents to hallucinate step boundaries, and invite compounding drift. Split into phased milestones (e.g., `Phase 1: Backend Foundation`, `Phase 2: UI & Views`). Execute and verify Phase 1 before planning Phase 2.
+* **Configuration Override**: Customize the task cap threshold via `execution.taskCap` in `hyperpowers.json` or `HYPERPOWERS_TASK_CAP` (default: 7).
 
 ---
 

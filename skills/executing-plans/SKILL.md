@@ -25,6 +25,8 @@ Select the execution mode matched to your runtime capabilities and project requi
 | **Mode 2: Sandboxed Subagent Execution (SDD Mode)** | High-risk refactors, massive multi-file changes, untrusted tasks, or when strict isolation is demanded. | Every task runs in an isolated subagent workspace using [templates/implementer-prompt.md](templates/implementer-prompt.md) with independent verification gates. |
 | **Mode 3: Native Inline Execution** | Single-module features, lightweight CLI tasks, or runtimes lacking subagent primitives. | All tasks execute sequentially in the parent session. Zero subagent overhead, instant feedback. |
 
+*Configuration Override*: Default mode can be customized via `execution.mode` in `hyperpowers.json` or environment variable `HYPERPOWERS_EXECUTION_MODE` (`"hybrid"`, `"sdd"`, `"inline"`).
+
 > **The Zero-Idle Invariant (Universal Rule)**:
 > Subagents are throughput multipliers for concurrent parallel execution ($\ge 2$) or non-blocking background delegation. **NEVER** dispatch a single subagent for a sequential task and sit idle waiting for it. If a task is sequential, execute it natively inline.
 

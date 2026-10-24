@@ -1,0 +1,119 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "HyperpowersConfig",
+  "description": "Project and user configuration settings for the Hyperpowers agent framework.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "URI of the JSON schema for validation."
+    },
+    "execution": {
+      "type": "object",
+      "description": "Plan execution engine settings.",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["hybrid", "sdd", "inline"],
+          "default": "hybrid",
+          "description": "Default plan execution mode. 'hybrid' runs sequential tasks inline and independent batches concurrently; 'sdd' isolates every task in a subagent workspace; 'inline' runs all tasks sequentially in the active session."
+        },
+        "taskCap": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20,
+          "default": 7,
+          "description": "Maximum number of atomic tasks per implementation plan before phase-splitting into milestones."
+        },
+        "watchdogTimeoutSeconds": {
+          "type": "integer",
+          "minimum": 30,
+          "maximum": 1800,
+          "default": 450,
+          "description": "Watchdog timer interval in seconds before testing subagent liveness."
+        }
+      },
+      "additionalProperties": false
+    },
+    "debugging": {
+      "type": "object",
+      "description": "Causal debugging and anti-thrashing settings.",
+      "properties": {
+        "circuitBreakerThreshold": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5,
+          "default": 2,
+          "description": "Number of consecutive failed fix attempts before the circuit breaker triggers and halts speculative edits."
+        }
+      },
+      "additionalProperties": false
+    },
+    "testing": {
+      "type": "object",
+      "description": "Verification and test runner settings.",
+      "properties": {
+        "targetedInnerLoop": {
+          "type": "boolean",
+          "default": true,
+          "description": "When true, runs only the targeted test file during RED-GREEN-REFACTOR inner cycles, reserving full suite runs for final completion."
+        },
+        "quietByDefault": {
+          "type": "boolean",
+          "default": true,
+          "description": "When true, applies quiet flags (e.g. pytest -q, cargo test -- -q) to prevent log flooding in context windows."
+        }
+      },
+      "additionalProperties": false
+    },
+    "visual": {
+      "type": "object",
+      "description": "Visual verification and UI testing settings.",
+      "properties": {
+        "viewports": {
+          "type": "object",
+          "description": "Viewport dimensions for multi-viewport captures.",
+          "properties": {
+            "mobile": {
+              "type": "object",
+              "properties": {
+                "width": { "type": "integer", "default": 375 },
+                "height": { "type": "integer", "default": 812 }
+              },
+              "additionalProperties": false
+            },
+            "tablet": {
+              "type": "object",
+              "properties": {
+                "width": { "type": "integer", "default": 768 },
+                "height": { "type": "integer", "default": 1024 }
+              },
+              "additionalProperties": false
+            },
+            "desktop": {
+              "type": "object",
+              "properties": {
+                "width": { "type": "integer", "default": 1440 },
+                "height": { "type": "integer", "default": 900 }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "timeoutMs": {
+          "type": "integer",
+          "default": 12000,
+          "description": "Page readiness timeout in milliseconds."
+        }
+      },
+      "additionalProperties": false
+    },
+    "telemetry": {
+      "type": "boolean",
+      "default": false,
+      "description": "When false, completely disables all optional external badge and network requests."
+    }
+  },
+  "additionalProperties": false
+}

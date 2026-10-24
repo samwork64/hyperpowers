@@ -81,6 +81,18 @@ Skills declare abstract actions (*Plan Storage*, *Task Tracking*, *Subagent Disp
 
 ---
 
-## User Precedence
+## User Precedence & Configuration
 
-User instructions (direct requests, `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`) take precedence over skill defaults. Tailor process rigor to the specific context requested by the user.
+User instructions (direct requests, `hyperpowers.json`, `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`) take precedence over skill defaults.
+
+### Runtime Configuration (`hyperpowers.json`)
+Hyperpowers checks for project settings in `hyperpowers.json` or `.hyperpowers/config.json` (conforming to `hyperpowers.schema.json`) and environment variables (`HYPERPOWERS_*`):
+- `execution.mode`: Default execution mode (`"hybrid"`, `"sdd"`, `"inline"`).
+- `execution.taskCap`: Implementation plan task cap before milestone splitting (default: `7`).
+- `execution.watchdogTimeoutSeconds`: Watchdog liveness timeout (default: `450`).
+- `debugging.circuitBreakerThreshold`: Consecutive failed fix attempts before halting (default: `2`).
+- `testing.targetedInnerLoop`: Test only active file on inner TDD cycle (default: `true`).
+- `visual.viewports`: Custom dimensions for Mobile, Tablet, Desktop.
+- `telemetry`: Enable/disable external badge requests (default: `false`).
+
+When the user requests setting adjustments in chat (e.g. *"Set task cap to 5"*), update `hyperpowers.json` directly.

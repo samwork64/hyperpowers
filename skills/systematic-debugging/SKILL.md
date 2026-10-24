@@ -82,6 +82,7 @@ Reproduce the issue using the highest-fidelity, lowest-noise harness matching th
    - **The 2-Failure Circuit Breaker**: If **two consecutive fix attempts** fail to resolve the defect or cause secondary regressions, you **MUST STOP IMMEDIATELY**.
      - Speculative 3rd/4th attempts burn context tokens, introduce compound regressions, and confuse the debugging state.
      - **Circuit Breaker Action**: Run `git checkout -- .` (or restore modified files to the clean reproduction baseline) to discard speculative edits. Re-examine root assumptions, re-trace the signal path from scratch with additional diagnostic instrumentation, or consult the user with the exact failure telemetry.
+     - **Configuration Override**: Customize the failure limit via `debugging.circuitBreakerThreshold` in `hyperpowers.json` or `HYPERPOWERS_CIRCUIT_BREAKER` (default: 2 attempts).
    - **Architectural Warning Signals**:
      - The fix requires spreading defensive checks (`if (x != null)`) across multiple unrelated files.
      - The fix resolves one symptom but immediately surfaces a new unexpected failure elsewhere.
