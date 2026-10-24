@@ -22,10 +22,14 @@ import re
 import unittest
 from pathlib import Path
 
-REPO = next(
-    parent for parent in Path(__file__).resolve().parents
-    if (parent / "scripts" / "generate-catalog-summary.py").is_file()
-)
+try:
+    REPO = next(
+        parent for parent in Path(__file__).resolve().parents
+        if (parent / "scripts" / "generate-catalog-summary.py").is_file()
+    )
+except StopIteration:
+    REPO = None
+
 SKILL_TREES = ("cli/assets/skills", ".claude/skills")
 # The only file that may use the plugin-root form: hand-authored for the plugin install
 # and not shipped by the CLI (sync-assets.mjs mirrors data/ and scripts/, never SKILL.md).
@@ -63,6 +67,10 @@ def resolve(skill_dir, md, path):
 
 
 class SkillScriptPathsTest(unittest.TestCase):
+    def setUp(self):
+        if REPO is None:
+            raise unittest.SkipTest("generate-catalog-summary.py not present in skill bundle")
+
     def test_every_shipped_markdown_invocation_resolves_from_the_skill_directory(self):
         problems, seen = [], 0
         for skill_dir, md, lineno, path in shipped_invocations():

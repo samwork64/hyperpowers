@@ -6,12 +6,19 @@ import tempfile
 import unittest
 from pathlib import Path
 
-ROOT = next(parent for parent in Path(__file__).resolve().parents
-            if (parent / "scripts/evaluate-relevance.py").exists())
-MODULE_PATH = ROOT / "scripts/evaluate-relevance.py"
-SPEC = importlib.util.spec_from_file_location("evaluate_relevance", MODULE_PATH)
-evaluator = importlib.util.module_from_spec(SPEC)
-SPEC.loader.exec_module(evaluator)
+try:
+    ROOT = next(parent for parent in Path(__file__).resolve().parents
+                if (parent / "scripts/evaluate-relevance.py").exists())
+    MODULE_PATH = ROOT / "scripts/evaluate-relevance.py"
+    SPEC = importlib.util.spec_from_file_location("evaluate_relevance", MODULE_PATH)
+    evaluator = importlib.util.module_from_spec(SPEC)
+    SPEC.loader.exec_module(evaluator)
+except StopIteration:
+    ROOT = None
+    evaluator = None
+
+if evaluator is None:
+    raise unittest.SkipTest("evaluate-relevance.py maintainer script not present in skill bundle")
 
 
 class TestMetricMath(unittest.TestCase):

@@ -14,11 +14,16 @@ import tempfile
 import unittest
 from pathlib import Path
 
-REPO = next(
-    parent for parent in Path(__file__).resolve().parents
-    if (parent / "scripts" / "generate-catalog-summary.py").is_file()
-)
-DATA = REPO / "src/ui-ux-pro-max/data"
+try:
+    REPO = next(
+        parent for parent in Path(__file__).resolve().parents
+        if (parent / "scripts" / "generate-catalog-summary.py").is_file()
+    )
+    DATA = REPO / "src/ui-ux-pro-max/data"
+except StopIteration:
+    REPO = None
+    DATA = None
+
 SNAPSHOT_FILES = (
     "google-fonts.csv",
     "google-font-licenses.json",
@@ -36,6 +41,10 @@ def _load_generator():
 
 
 class CatalogSummaryLineEndingsTest(unittest.TestCase):
+    def setUp(self):
+        if REPO is None:
+            raise unittest.SkipTest("generate-catalog-summary.py not present in skill bundle")
+
     def test_digest_is_identical_for_lf_and_crlf(self):
         digest = _load_generator().digest
         with tempfile.TemporaryDirectory() as tmp:

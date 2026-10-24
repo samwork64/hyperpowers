@@ -10,18 +10,27 @@ import tempfile
 import unittest
 from pathlib import Path
 
-REPO = next(
-    parent for parent in Path(__file__).resolve().parents
-    if all((parent / "scripts" / script).is_file() for script in (
-        "refresh-google-fonts.py", "refresh-icon-catalog.py",
-    ))
-)
+try:
+    REPO = next(
+        parent for parent in Path(__file__).resolve().parents
+        if all((parent / "scripts" / script).is_file() for script in (
+            "refresh-google-fonts.py", "refresh-icon-catalog.py",
+        ))
+    )
+    FONT_SCRIPT = REPO / "scripts" / "refresh-google-fonts.py"
+    ICON_SCRIPT = REPO / "scripts" / "refresh-icon-catalog.py"
+except StopIteration:
+    REPO = None
+    FONT_SCRIPT = None
+    ICON_SCRIPT = None
+
 FIXTURES = Path(__file__).parent / "fixtures" / "catalogs"
-FONT_SCRIPT = REPO / "scripts" / "refresh-google-fonts.py"
-ICON_SCRIPT = REPO / "scripts" / "refresh-icon-catalog.py"
 
 
 class CatalogRefreshTest(unittest.TestCase):
+    def setUp(self):
+        if REPO is None:
+            raise unittest.SkipTest("Maintainer catalog refresh scripts not present in skill bundle")
     def run_command(self, *args, env=None):
         return subprocess.run(
             [sys.executable, *map(str, args)],
