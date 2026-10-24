@@ -26,7 +26,9 @@
     "workflows"
   ],
   "author": {
-    "name": "Jesse Vincent / Hyperpowers Contributors"
+    "name": "samwork64 & Hyperpowers Contributors"
   },
+  "repository": "https://github.com/samwork64/hyperpowers",
+  "homepage": "https://github.com/samwork64/hyperpowers",
   "license": "MIT"
 }

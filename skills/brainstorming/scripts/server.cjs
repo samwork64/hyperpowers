@@ -246,7 +246,7 @@ function brandMarkup() {
     ? ''
     : '<img class="brand-logo" src="' + HYPERPOWERS_BRAND_IMAGE_URL + '?v=' + encodeURIComponent(HYPERPOWERS_VERSION) + '" alt="Hyperpowers" referrerpolicy="no-referrer" decoding="async">';
 
-  return '<div class="brand"><a href="https://github.com/obra/superpowers">' + logo + '<span class="brand-copy">' + text + '</span></a></div>';
+  return '<div class="brand"><a href="https://github.com/samwork64/hyperpowers">' + logo + '<span class="brand-copy">' + text + '</span></a></div>';
 }
 
 function renderBranding(html) {
