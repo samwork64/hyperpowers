@@ -10,7 +10,7 @@ Hyperpowers is the comprehensive software engineering and visual design framewor
 
 - [Core Innovations](#core-innovations)
 - [The 4-Stage Frontend UI/UX Pipeline](#the-4-stage-frontend-uiux-pipeline)
-- [The 18-Skill Suite](#the-18-skill-suite)
+- [The 22-Skill Suite](#the-22-skill-suite)
 - [Installation Across Harnesses](#installation-across-harnesses)
   - [Google Antigravity](#google-antigravity)
   - [Claude Code](#claude-code)
@@ -71,11 +71,15 @@ flowchart LR
 
 ---
 
-## The 18-Skill Suite
+## The 22-Skill Suite
 
 | Domain | Skill | Purpose & Core Invariant |
 | :--- | :--- | :--- |
-| **Visual & UI** | `hyperpowers:frontend-design` | Distinctive visual design, anti-cliché aesthetics, tailored typography, 4-state ergonomics. |
+| **Visual & UI** | `hyperpowers:frontend-design` | Distinctive visual direction, anti-cliché aesthetics, tailored typography, 4-state ergonomics. |
+| **Visual & UI** | `hyperpowers:ui-ux-pro-max` | Searchable local database: 79 styles, 192 product palettes, 74 font pairings, 119 UX rules via `search.py`. |
+| **Visual & UI** | `hyperpowers:shadcn` | Component scaffolding CLI (`npx shadcn@latest add`), preset registry, and design system page generation. |
+| **Visual & UI** | `hyperpowers:impeccable` | Out-of-distribution craft floor, surface modes (*Operate*, *Read*, *Persuade*), tactile physics, `DESIGN.md`. |
+| **Visual & UI** | `hyperpowers:web-design-guidelines` | Vercel guidelines audit: tap targets ($\ge 44\times 44$px), keyboard navigation, contrast compliance. |
 | **Visual & UI** | `hyperpowers:visual-verification` | Headless CDP multi-viewport capture (`Mobile`, `Tablet`, `Desktop`, `--full-page`, `--scroll`). |
 | **Planning & Scoping** | `hyperpowers:brainstorming` | Socratic intent clarification before writing code. Lead with engineering recommendation first. |
 | **Planning & Scoping** | `hyperpowers:writing-plans` | Bite-sized tasks (2-5 min) with domain-specific verification. Reject plan dumping in chat. |

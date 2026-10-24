@@ -23,11 +23,16 @@ Invoke the appropriate process skill before jumping into code or raw execution:
 | :--- | :--- | :--- |
 | **New feature, exploration, or design choice** | `hyperpowers:brainstorming` | Clarify intent and trade-offs before building. Lead with technical recommendation first. |
 | **Frontend UI/UX aesthetic direction** | `hyperpowers:frontend-design` | Domain-anchored aesthetics, tailored typography, 4-state coverage, ban AI visual clichés. |
+| **Searchable UI/UX styles, palettes & fonts** | `hyperpowers:ui-ux-pro-max` | 79 styles, 192 product palettes, 74 font pairings, 119 UX rules via local `search.py`. |
+| **Component composition, registry & presets** | `hyperpowers:shadcn` | Component scaffolding, registry discovery (`npx shadcn@latest add`), preset design systems. |
+| **Out-of-distribution craft floor & UX polish** | `hyperpowers:impeccable` | Surface modes (*Operate*, *Read*, *Persuade*), tactile physics, micro-interactions, `DESIGN.md`. |
+| **Web Interface Guidelines & a11y audit** | `hyperpowers:web-design-guidelines` | Vercel guidelines compliance, tap targets ($\ge 44\times 44$px), keyboard navigation, WCAG AA. |
 | **Multi-viewport visual QA & screenshots** | `hyperpowers:visual-verification` | Ephemeral headless CDP capture (Mobile/Tablet/Desktop/Full-Page) via `ui-shot.cjs`. |
 | **Multi-step implementation planning** | `hyperpowers:writing-plans` | Break work into bite-sized tasks with domain-specific verification. Prefer native plan tools. |
 | **Executing plan (Master Engine: Hybrid / SDD / Inline)** | `hyperpowers:executing-plans` | Mode 1: Hybrid (default), Mode 2: Sandboxed SDD, Mode 3: Native Inline. Zero-idle invariant. |
 | **Executing plan (Full Subagent Isolation)** | `hyperpowers:subagent-driven-development` | Fresh implementer per task in dedicated workspace with coordinator review gates. |
 | **Parallel orthogonal tasks** | `hyperpowers:dispatching-parallel-agents` | Analyze dependency graph; dispatch concurrent subagents only when decoupled. |
+| **Isolated workspace & branch setup** | `hyperpowers:using-git-worktrees` | Parallel development branches and worktrees protecting active working tree. |
 | **Bug, test failure, build error, or regression** | `hyperpowers:systematic-debugging` | Causal root investigation before any fix attempt. Detect thrashing early. |
 | **Dynamic logic, state, or API contracts** | `hyperpowers:test-driven-development` | Strict Red-Green-Refactor. Reject test theater for static code or CSS. |
 | **Claiming completion, fix, or green build** | `hyperpowers:verification-before-completion` | Demand fresh empirical evidence across domain matrix before making claims. |
