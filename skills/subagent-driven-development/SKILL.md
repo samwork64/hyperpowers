@@ -41,6 +41,7 @@ PARALLEL BATCH OR ISOLATED IMPLEMENTER ➔ FAST INLINE REVIEW GATE ➔ UPDATE TA
 
 ### 1. Extract Task Brief & Dispatch Implementers
 * Read the current task(s) from the plan or task ledger.
+* **Minimal Context Slicing (Anti-Token-Bloat Rule)**: Slice and pass **ONLY** the specific 15–30 line task brief and necessary interface signatures into `[PASTE_TASK_BRIEF_HERE]`. **NEVER** pass the entire implementation plan or unrelated tasks. Passing full plans wastes 70–80% of tokens and dilutes subagent focus.
 * **Single Isolated Task**: Dispatch implementer via platform subagent tool using [implementer-prompt.md](implementer-prompt.md).
 * **Parallel Independent Batch**: Dispatch all independent tasks concurrently using the platform's multi-agent dispatch (e.g. `invoke_subagent` with `Subagents: [...]`, or concurrent `Agent` calls).
 * **Fallback**: If subagents are unavailable, execute inline in the session.

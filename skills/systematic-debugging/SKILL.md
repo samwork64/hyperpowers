@@ -78,12 +78,15 @@ Reproduce the issue using the highest-fidelity, lowest-noise harness matching th
    - Fix the defect at the causal source, not at the downstream symptom receiver.
    - Make the smallest focused change that restores the invariant. Do not bundle opportunistic refactorings or speculative code.
 
-2. **Thrashing Detection (Architectural Circuit Breaker)**:
-   - Stop immediately and question the architecture if you observe any of these warning signals:
+2. **Thrashing Detection & 2-Failure Circuit Breaker**:
+   - **The 2-Failure Circuit Breaker**: If **two consecutive fix attempts** fail to resolve the defect or cause secondary regressions, you **MUST STOP IMMEDIATELY**.
+     - Speculative 3rd/4th attempts burn context tokens, introduce compound regressions, and confuse the debugging state.
+     - **Circuit Breaker Action**: Run `git checkout -- .` (or restore modified files to the clean reproduction baseline) to discard speculative edits. Re-examine root assumptions, re-trace the signal path from scratch with additional diagnostic instrumentation, or consult the user with the exact failure telemetry.
+   - **Architectural Warning Signals**:
      - The fix requires spreading defensive checks (`if (x != null)`) across multiple unrelated files.
      - The fix resolves one symptom but immediately surfaces a new unexpected failure elsewhere.
      - The fix requires bypassing established contracts or subverting types/abstractions.
-   - *Action:* If thrashing occurs, **STOP**. This is not a single bug; it is an architectural impedance mismatch or invalid foundational assumption. Re-examine the design or discuss alternatives before continuing.
+   - *Action:* If thrashing occurs, **STOP**. This is an architectural impedance mismatch or invalid foundational assumption. Re-examine the design or discuss alternatives before continuing.
 
 ---
 

@@ -106,7 +106,7 @@ Verify the decoupling invariants before dispatch:
 
 For high-isolation tasks requiring dedicated workspaces:
 1. **Workspace Provisioning**: Create dedicated directory or worktree per task using [scripts/sdd-workspace](../subagent-driven-development/scripts/sdd-workspace) or native worktrees.
-2. **Dispatch Implementer**: Dispatch fresh subagent using [implementer-prompt.md](../subagent-driven-development/implementer-prompt.md).
+2. **Dispatch Implementer (Minimal Context Slicing)**: Dispatch fresh subagent using [implementer-prompt.md](../subagent-driven-development/implementer-prompt.md). Pass **ONLY** the 15–30 line task brief and relevant interface contracts; never paste the entire multi-task implementation plan.
 3. **Inline Review Gate**: Upon implementer completion, inspect the diff immediately in the active coordinator turn:
    ```bash
    git diff --stat BASE_SHA..HEAD_SHA

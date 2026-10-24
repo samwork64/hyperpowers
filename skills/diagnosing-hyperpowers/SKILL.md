@@ -1,6 +1,6 @@
 ---
 name: diagnosing-hyperpowers
-description: Use when a hyperpowers session went wrong and your human partner wants to know why — repeated work, ignored plans, stumbles, poor results, a skill that didn't fire, "it took too long", "why is it so expensive", "what is it doing" — or wants to build a bug report for the hyperpowers maintainers, for the current session or a past one identified by id or path, on any harness.
+description: Diagnose failed or slow hyperpowers sessions across any agent harness. Analyzes transcripts, repeated work, ignored plans, or budget/latency issues to build evidence-backed bug reports.
 ---
 
 # Diagnosing Hyperpowers

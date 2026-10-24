@@ -28,6 +28,12 @@ Before declaring any task or phase complete, follow this 4-step gate:
 3. **Inspect Entire Output**: Check return exit codes, error streams, compiler warnings, and test counts.
 4. **Correlate with Acceptance Invariants**: Ensure the output proves the exact requirement, not merely that a command completed without crashing.
 
+### Log Output Density & Noise Reduction Rule (Context Guard)
+When executing verification commands on large codebases:
+* **Avoid Raw Log Flooding**: Never dump thousands of lines of verbose build/test stdout directly into the context. Excessive output exhausts context windows and displaces active instructions.
+* **Quiet Flags by Default**: Prefer quiet/concise flags during regression passes (e.g. `pytest -q`, `npm test -- --silent`, `cargo test -- -q`).
+* **Surgical Failure Inspection**: If a verification command fails (non-zero exit code), inspect targeted error tails (`tail -n 50`) or filter for failures (`grep -E "FAIL|ERROR|error\["`) rather than dumping megabytes of compilation logs into the conversation context.
+
 ---
 
 ## Multi-Domain Verification Matrix

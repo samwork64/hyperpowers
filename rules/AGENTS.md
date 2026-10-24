@@ -51,12 +51,15 @@ Follow this pipeline whenever designing, creating, or modifying user interfaces:
   - Clarify layout, responsive breakpoints (mobile/tablet/desktop), accessibility (WCAG/ARIA), and state management (local vs. store vs. URL query parameters).
 - **Implementation Planning**: Use `hyperpowers:writing-plans`.
   - Break down web features into ordered, isolated layers: Database schema/migrations -> Backend API endpoints -> Data fetching/hooks -> UI components -> Page composition -> E2E flows.
+  - **Plan Atomicity & Task Cap**: Limit implementation plans to **3 to 7 atomic tasks**. If a feature requires >8 tasks, split into phased milestones (Phase 1, Phase 2) to prevent context token exhaustion and compounding drift.
   - Categorize tasks dynamically based on failure mode: **Logic Tasks** (TDD for algorithms, state, dynamic contracts), **UI Tasks** (multi-viewport visual checks via `ui-shot`), and **Static/Config Tasks** (compile/typecheck & link verification). Reject test theater.
 - **Dynamic Verification Selection**:
+  - **Targeted Test Execution Rule**: Run the **targeted test file** during the inner TDD cycle (RED-GREEN-REFACTOR). Run the full broad suite only during the outer completion gate to save 80–90% of cycle latency and avoid log context flooding.
   - **TDD for Dynamic Behavior**: Apply unit tests to functions with computation, dynamic URL generation with parameters, data mapping, state reducers, or complex branch logic.
   - **Reject Test Theater**: Never write unit tests that merely assert static text, constants, or declarative CSS styles exist.
   - **Always Compile & Type-Check**: Ensure all modified files pass `tsc`, `py_compile`, or `eslint` after changes.
   - **Avoid Arbitrary Timeouts**: Use condition-based waiting (`waitFor`, polling signals) instead of fixed `sleep`/`setTimeout` to prevent flaky async tests.
+  - **Log Output Density & Noise Reduction**: Use quiet flags by default (`pytest -q`, `cargo test -- -q`). Never dump 1,000+ lines of raw stdout into context. Filter for errors (`tail -n 50`) on non-zero exit codes.
 - **Debugging Web Issues**: Use `hyperpowers:systematic-debugging`.
   - For hydration mismatches, CORS errors, broken layout, or console warnings: reproduce with a minimal script or visual inspection first, isolate root cause, test hypotheses, and verify fix before committing.
 - **Verification Before Completion**: Run `hyperpowers:verification-before-completion`.
@@ -91,5 +94,5 @@ Prevent orphan processes, memory bloat, and port conflicts by following these in
 
 ## 3. Antigravity Tool Mappings
 - **Planning**: Use built-in `/plan` slash command or plan/task artifacts (`write_to_file` in artifact directory) rather than writing ad-hoc files to the repository. **Zero Textual Duplication**: never dump full plan text into the chat.
-- **Subagents & Zero-Idle Invariant**: Use `invoke_subagent` for concurrent parallel batches (`Subagents: [...]`) or heavy background execution. **NEVER** dispatch a single subagent for a sequential task and sit idle waiting for it. Perform code reviews inline against the rubric in seconds.
+- **Subagents & Zero-Idle Invariant**: Use `invoke_subagent` for concurrent parallel batches (`Subagents: [...]`) or heavy background execution. **NEVER** dispatch a single subagent for a sequential task and sit idle waiting for it. Perform code reviews inline against the rubric in seconds. Slice and pass **ONLY** the 15–30 line task brief to implementers, never the full implementation plan.
 - **Task Tracking**: Use task artifacts via `write_to_file` (`IsArtifact: true`, `ArtifactMetadata.ArtifactType: "task"`) and update with `replace_file_content`. (`manage_task` is for background shell processes only).
