@@ -1,0 +1,27 @@
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Node & package managers
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Runtime session directories
+.hyperpowers/
+.superpowers/
+.worktrees/
+
+# Ephemeral screenshots (allow assets/)
+screenshots/
+
+# Environment files
+.env
+.env.local

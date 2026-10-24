@@ -1,0 +1,29 @@
+{
+  "name": "hyperpowers",
+  "displayName": "Hyperpowers",
+  "version": "1.0.0",
+  "description": "Next-generation full-stack agent framework: rigorous backend engineering, anti-cliché visual design, living subsystem architecture, and multi-viewport visual verification.",
+  "logo": "assets/antigravity-logo.png",
+  "suggestedPrompts": [
+    "I've got an idea for something I'd like to build",
+    "Let's design and visually verify a modern interface",
+    "Let's systematically debug and resolve this failure",
+    "Audit and map the architecture into living agent docs"
+  ],
+  "category": "Developer Tools",
+  "keywords": [
+    "skills",
+    "engineering",
+    "tdd",
+    "debugging",
+    "frontend-design",
+    "visual-verification",
+    "agent-docs",
+    "best-practices",
+    "workflows"
+  ],
+  "author": {
+    "name": "Jesse Vincent / Hyperpowers Contributors"
+  },
+  "license": "MIT"
+}
