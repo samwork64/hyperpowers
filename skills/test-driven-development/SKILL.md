@@ -41,24 +41,35 @@ Choose the verification strategy that matches the risk. For example:
 
 ---
 
-## 2. When TDD Applies (and When It Does Not)
+## 2. Anti-Flakiness & Hermetic Isolation Invariants
 
-### Apply TDD For:
-- **Dynamic Logic & Transformations**: URL generators, query string builders, data parsers, mappers.
-- **State Management**: Redux/Zustand stores, reducers, state machines, custom hooks.
-- **Contract & API Handlers**: Request parsers, response formatters, authentication guards, route handlers.
-- **Calculations & Algorithms**: Filtering algorithms, pricing calculators, pagination logic.
-- **Bug Fixes in Business Logic**: Reproduce the logic bug with a failing test first, then fix the code.
+Flaky tests erode confidence and waste tokens. Enforce two strict rules:
 
-### Do NOT Write Unit Tests For (Anti-Patterns):
-- **Static URLs & Constants**: Do not test that a constant equals its value.
-- **Static UI Markup & Labels**: Do not test that static text or icons exist in the DOM.
-- **Pure CSS / Tailwind Presentation**: Do not write tests asserting CSS class names or styles; verify visually with `ui-shot`.
-- **Configuration & Environment Files**: Verify via schema validation or compilation, not unit tests.
+### A. Zero Arbitrary Timeouts (Condition-Based Waiting Only)
+- **Banned**: Fixed `sleep(1000)` or `setTimeout` delays in tests.
+- **Enforced**: Condition-based polling (`waitFor`, polling loop with micro-sleeps and hard timeout threshold, or event promises). Tests run as fast as the machine allows and fail with clear diagnostics on real timeouts.
+
+### B. Hermetic Test Isolation (No Shared Mutable State)
+- Tests must be executable in any random order without cascading failures.
+- Always use ephemeral fixtures: isolated database transactions with auto-rollback, unique temporary directories (`tmp_path`), and ephemeral ports (`:0`).
+- Reset mock singletons and global environment variables in `afterEach` / `teardown`.
 
 ---
 
-## 3. The Red-Green-Refactor Cycle (For Logic & Contracts)
+## 3. Full-Stack Schema & Contract Synchronization
+
+When implementing client-server features:
+1. **Schema-First Contracts**: Define input/output schemas (Zod, Pydantic, OpenAPI) once. Test boundary parsing:
+   - Valid inputs parse to strongly-typed objects.
+   - Missing required fields throw expected validation errors.
+   - Unexpected fields are stripped or rejected.
+2. **Standardized Error Envelopes**:
+   - Ensure backend error responses follow a uniform structure: `{ error: { code: string, message: string, details?: unknown } }`.
+   - Test that client fetchers correctly catch and handle these envelopes rather than crashing with unhandled JSON parse exceptions.
+
+---
+
+## 4. The Red-Green-Refactor Cycle
 
 When a test is warranted, follow the strict cycle:
 
@@ -88,7 +99,7 @@ digraph tdd_cycle {
 Demonstrate the contract: what inputs go in, what output comes out, or how an edge case behaves.
 
 ```typescript
-// Example: Testing a dynamic URL generator
+// Example: Testing dynamic URL query generation
 test('generates valid catalog search URL with encoded parameters', () => {
   const url = buildCatalogUrl({ system: 'snes', search: 'super mario & friends', page: 2 });
   expect(url).toBe('/api/catalog?system=snes&search=super%20mario%20%26%20friends&page=2');
@@ -114,7 +125,7 @@ Remove duplication, improve variable names, or optimize performance while keepin
 
 ---
 
-## 4. The Universal Invariant: The Build & Syntax Gate
+## 5. The Universal Invariant: The Build & Syntax Gate
 
 Regardless of whether a task is verified via TDD, visual verification, or link checks:
 

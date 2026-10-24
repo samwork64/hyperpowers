@@ -80,14 +80,14 @@ flowchart LR
 | **Planning & Scoping** | `hyperpowers:brainstorming` | Socratic intent clarification before writing code. Lead with engineering recommendation first. |
 | **Planning & Scoping** | `hyperpowers:writing-plans` | Bite-sized tasks (2-5 min) with domain-specific verification. Reject plan dumping in chat. |
 | **Planning & Scoping** | `hyperpowers:managing-agent-docs` | Living subsystem briefs in `agent-docs/`, Git commit SHA drift guard, active ideas backlog. |
-| **Execution** | `hyperpowers:executing-plans` | **Hybrid execution (Default)**: Inline execution for sequential tasks, parallel subagents for concurrent batches. |
+| **Execution** | `hyperpowers:executing-plans` | **Master Execution Engine**: Mode 1: Hybrid (default), Mode 2: Sandboxed SDD, Mode 3: Native Inline. Zero idle waiting. |
 | **Execution** | `hyperpowers:subagent-driven-development` | Full task isolation: fresh implementer subagent per task with coordinator review gates. |
 | **Execution** | `hyperpowers:dispatching-parallel-agents` | Orthogonal task parallelism: concurrent subagent dispatch for decoupled graph branches. |
 | **Execution** | `hyperpowers:using-git-worktrees` | Isolated workspace creation on fresh branches to protect working directories. |
 | **Quality & Logic** | `hyperpowers:test-driven-development` | RED-GREEN-REFACTOR cycle for dynamic logic, state, and API contracts. Rejects test theater. |
 | **Quality & Logic** | `hyperpowers:systematic-debugging` | 4-phase causal root-cause isolation before any code edits. Prevents thrashing. |
 | **Quality & Logic** | `hyperpowers:verification-before-completion` | Demand fresh empirical evidence across full domain matrix before claiming fixes or completion. |
-| **Review & Branching** | `hyperpowers:requesting-code-review` | Rigorous diff inspection against plan and rubric. Fast inline self-review by default. |
+| **Review & Branching** | `hyperpowers:requesting-code-review` | Symmetrical 6-axis audit against `code-review-rubric.md`. Fast inline self-review by default. |
 | **Review & Branching** | `hyperpowers:receiving-code-review` | 4-quadrant technical deliberation over performative agreement. |
 | **Review & Branching** | `hyperpowers:finishing-a-development-branch` | Clean tree verification; structured merge, squash, rebase, PR, or cleanup decisions. |
 | **Meta & Tooling** | `hyperpowers:using-hyperpowers` | Conversation entry point, capability routing matrix, and cross-harness tool resolution. |

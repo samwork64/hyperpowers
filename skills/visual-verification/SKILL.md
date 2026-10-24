@@ -10,7 +10,7 @@ description: Empirical multi-viewport visual testing and layout verification usi
 **Core Principle:** CSS, layout, spacing, typography, and responsive flows cannot be verified by unit tests. Asserting class names in a headless DOM is **test theater**. Visual verification demands empirical pixel rendering in real viewport geometries.
 
 ```
-SPAWN EPHEMERAL SERVER ➔ MULTI-VIEWPORT CDP CAPTURE ➔ AUDIT LAYOUT & ARTIFACTS ➔ ZERO-LEAK CLEANUP
+SPAWN EPHEMERAL SERVER ➔ MULTI-VIEWPORT CDP CAPTURE ➔ STAGE 4 STATES ➔ AUDIT LAYOUT ➔ ZERO-LEAK CLEANUP
 ```
 
 ---
@@ -27,7 +27,30 @@ Every UI change must be audited across three standard viewports:
 
 ---
 
-## 2. Bundled Zero-Leak Tooling (`ui-shot.cjs`)
+## 2. Mandatory 4-State Visual Staging
+
+Never audit only the happy path. Stage and capture all 4 states using query parameters or `--eval`:
+
+1. **Empty State**: Verify illustration, descriptive copy, and primary action CTA:
+   ```bash
+   node <path>/skills/visual-verification/scripts/ui-shot.cjs http://localhost:3000/dashboard?empty=true ./screenshots/empty-state.png
+   ```
+2. **Loading Skeleton State**: Verify skeleton geometry matches real content layout:
+   ```bash
+   node <path>/skills/visual-verification/scripts/ui-shot.cjs --eval 'document.body.classList.add("skeleton-preview")' http://localhost:3000 ./screenshots/loading.png
+   ```
+3. **Error State**: Verify plain-English error explanation and retry button:
+   ```bash
+   node <path>/skills/visual-verification/scripts/ui-shot.cjs http://localhost:3000/orders?error=network ./screenshots/error-state.png
+   ```
+4. **Interactive Focus State**: Verify keyboard navigation `:focus-visible` rings:
+   ```bash
+   node <path>/skills/visual-verification/scripts/ui-shot.cjs --eval 'document.querySelector("button.primary").focus()' http://localhost:3000 ./screenshots/focus-ring.png
+   ```
+
+---
+
+## 3. Bundled Zero-Leak Tooling (`ui-shot.cjs`)
 
 Hyperpowers bundles a standalone, zero-dependency CDP runner that communicates directly with headless Chrome, Chromium, Edge, or Brave:
 
@@ -64,7 +87,7 @@ node <path-to-hyperpowers>/skills/visual-verification/scripts/ui-shot.cjs http:/
 
 ---
 
-## 3. Ephemeral Server Lifecycle (Zero-Leak Protocol)
+## 4. Ephemeral Server Lifecycle (Zero-Leak Protocol)
 
 When running a local development server solely for visual verification, bind its lifecycle with a trap to prevent orphan processes and port conflicts:
 
@@ -86,10 +109,10 @@ kill $DEV_PID 2>/dev/null
 
 ---
 
-## 4. Visual Quality Checklist
+## 5. Visual Quality Checklist
 
 When reviewing captured screenshots:
-1. **Zero Horizontal Overflow**: Ensure no element forces the viewport width to expand horizontally on mobile.
+1. **Zero Horizontal Overflow**: Ensure no element forces the viewport width to expand horizontally on mobile ($375\text{px}$).
 2. **Typography & Readability**: Ensure body text has comfortable line height ($\ge 1.4$) and line length (<75 characters).
 3. **Contrast Compliance**: Check text against background (WCAG AA 4.5:1 minimum). Never accept washed-out gray on white.
 4. **Console Hygiene**: Confirm zero unhandled console warnings, JavaScript exceptions, or hydration mismatches during capture.

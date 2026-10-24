@@ -24,6 +24,8 @@ SPEC / DESIGN ➔ DECOMPOSE INTO ATOMIC TASKS ➔ IDENTIFY CONCURRENCY (PARALLEL
 2. **Zero Textual Duplication (Universal Invariant)**:
    - Do **NOT** dump the full textual plan into the chat response before or after saving it. The plan is stored in its dedicated tool, artifact, or file. Point the user directly to the plan location with a concise 2-sentence summary of key architectural decisions and execution options.
 
+---
+
 ## 2. Context Discovery & Agent-Docs Pre-Check
 
 Before reading dozens of raw source files:
@@ -53,37 +55,41 @@ Every plan artifact should follow this high-density layout:
 
 > **Goal:** [One clear sentence describing what is built]  
 > **Architecture:** [2-3 sentences on technical approach and domain boundaries]  
-> **Tech Stack:** [Core technologies, libraries, and frameworks]
+> **Tech Stack:** [Core technologies, libraries, and frameworks]  
+> **Blast Radius & Rollback:** [Risk level; specific rollback command if migration or destructive action fails]
 
 ## Concurrency & Execution Map
 - **Phase 1 [Sequential]**: Core schema / foundational interfaces (Task 1).
-- **Phase 2 [Parallel Batch 1]**: Independent modules (Tasks 2A, 2B, 2C).
-- **Phase 3 [Sequential]**: Integration, wiring, and verification (Task 3).
+- **Phase 2 [Parallel Batch 1]**: Independent modules (Tasks 2A, 2B, 2C) — Depends on: Task 1.
+- **Phase 3 [Sequential]**: Integration, wiring, and verification (Task 3) — Depends on: Phase 2.
 
 ---
 
 ## Tasks
 
 ### Task 1: [Sequential] [Task Name]
+**Dependencies:** None  
 **Files:**
 - Create: `path/to/file.py`
 - Test: `tests/path/to/test.py`
 
 - [ ] **Step 1**: Write failing test / define contract.
 - [ ] **Step 2**: Implement minimal code.
-- [ ] **Step 3**: Verify test passes & commit.
+- [ ] **Step 3**: Verify test passes (`pytest tests/path/to/test.py`) & commit.
 
 ### Task 2A: [Parallel Batch 1] [Task Name]
+**Dependencies:** Depends on Task 1  
 **Files:**
 - Create: `tools/scraper_a.py`
 - [ ] **Step 1**: Implement scraper for source A.
-- [ ] **Step 2**: Verify output & commit.
+- [ ] **Step 2**: Verify output (`python tools/scraper_a.py --test`) & commit.
 
 ### Task 2B: [Parallel Batch 1] [Task Name]
+**Dependencies:** Depends on Task 1  
 **Files:**
 - Create: `tools/scraper_b.py`
 - [ ] **Step 1**: Implement scraper for source B.
-- [ ] **Step 2**: Verify output & commit.
+- [ ] **Step 2**: Verify output (`python tools/scraper_b.py --test`) & commit.
 ```
 
 ---
@@ -95,11 +101,13 @@ Select task steps based on the **failure mode**:
 ### A. Logic & Contract Tasks (TDD)
 * Dynamic calculations, data transformations, URL generators with parameters, state machines, API routes.
 * Red-Green-Refactor: failing test first $\rightarrow$ minimal code $\rightarrow$ verify pass $\rightarrow$ commit.
+* Mandatory exact test command: e.g. `pytest tests/test_billing.py -k test_checkout`.
 
 ### B. UI & Presentation Tasks (Visual Verification)
 * Styling, layout, HTML/JSX, responsive flow.
 * No unit tests for static text or CSS classes.
 * Multi-viewport inspection via `ui-shot` (Mobile 375px, Tablet 768px, Desktop 1280px+) + 0 console errors.
+* Mandatory exact capture command: e.g. `ui-shot http://localhost:3000/orders ./screenshots`.
 
 ### C. Static & Maintenance Tasks (Compile & Link Gate)
 * URL fixes, config updates, typo fixes.
@@ -115,4 +123,4 @@ After saving the plan, present the execution approach clearly to the user:
 > 
 > 1. **Hybrid (Recommended / Default)**: Sequential tasks run natively inline for speed and interactive control; orthogonal tasks are dispatched concurrently in parallel to subagents (or inline if subagents unavailable).
 > 2. **Native Inline Only**: All tasks executed directly in this session. Fastest, zero subagent overhead.
-> 3. **Full Subagent Isolation**: Fresh subagent per task with independent review gates.
+> 3. **Full Subagent Isolation (SDD)**: Fresh subagent per task in an isolated workspace with independent review gates.

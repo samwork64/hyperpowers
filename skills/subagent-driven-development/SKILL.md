@@ -67,7 +67,7 @@ PARALLEL BATCH OR ISOLATED IMPLEMENTER ➔ FAST INLINE REVIEW GATE ➔ UPDATE TA
   git diff --stat BASE_SHA..HEAD_SHA
   git diff BASE_SHA..HEAD_SHA
   ```
-* Evaluate against the criteria in [task-reviewer-prompt.md](task-reviewer-prompt.md) or [code-reviewer.md](../requesting-code-review/code-reviewer.md).
+* Evaluate against the criteria in [code-review-rubric.md](../requesting-code-review/code-review-rubric.md) or [task-reviewer-prompt.md](task-reviewer-prompt.md).
 * *Note*: Only dispatch an external subagent reviewer if evaluating multiple large, independent branches simultaneously or if explicitly requested by the user.
 
 ### 4. Adjudicate & Fix

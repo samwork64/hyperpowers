@@ -61,9 +61,8 @@ Follow these five phases sequentially for any defect:
 
 Reproduce the issue using the highest-fidelity, lowest-noise harness matching the domain:
 
-| Domain | Reproduction Mechanism | Expected Evidence |
-| :--- | :--- | :--- |
 | **Logic, State & APIs** | Minimal automated unit/integration test. | Test fails with exact expected failure mode (RED). |
+| **Test Pollution (Order Flakiness)** | Run binary search with [find-polluter.sh](find-polluter.sh) when a test passes in isolation but fails in the suite. | Identifies the polluting test that leaks global state or unclosed sockets. |
 | **Concurrency & Races** | Deterministic stress script or focused timing harness. | Reliable trigger showing contention or interleaved state. |
 | **Build & Toolchain** | Isolated minimal reproduction command or environment check. | Clean reproduction of compiler/linker error without unrelated project noise. |
 | **CLI & Systems** | Targeted shell invocation with controlled flags/stdin/piping. | Exact non-zero exit code or corrupted stream output observed. |

@@ -25,15 +25,15 @@ Invoke the appropriate process skill before jumping into code or raw execution:
 | **Frontend UI/UX aesthetic direction** | `hyperpowers:frontend-design` | Domain-anchored aesthetics, tailored typography, 4-state coverage, ban AI visual clichés. |
 | **Multi-viewport visual QA & screenshots** | `hyperpowers:visual-verification` | Ephemeral headless CDP capture (Mobile/Tablet/Desktop/Full-Page) via `ui-shot.cjs`. |
 | **Multi-step implementation planning** | `hyperpowers:writing-plans` | Break work into bite-sized tasks with domain-specific verification. Prefer native plan tools. |
-| **Executing plan (Hybrid - Default)** | `hyperpowers:executing-plans` | Sequential tasks run inline; independent batches run concurrently via parallel subagents. |
-| **Executing plan (Full Subagent Isolation)** | `hyperpowers:subagent-driven-development` | Fresh implementer per task with inline review gate + live task artifact. |
+| **Executing plan (Master Engine: Hybrid / SDD / Inline)** | `hyperpowers:executing-plans` | Mode 1: Hybrid (default), Mode 2: Sandboxed SDD, Mode 3: Native Inline. Zero-idle invariant. |
+| **Executing plan (Full Subagent Isolation)** | `hyperpowers:subagent-driven-development` | Fresh implementer per task in dedicated workspace with coordinator review gates. |
 | **Parallel orthogonal tasks** | `hyperpowers:dispatching-parallel-agents` | Analyze dependency graph; dispatch concurrent subagents only when decoupled. |
 | **Bug, test failure, build error, or regression** | `hyperpowers:systematic-debugging` | Causal root investigation before any fix attempt. Detect thrashing early. |
 | **Dynamic logic, state, or API contracts** | `hyperpowers:test-driven-development` | Strict Red-Green-Refactor. Reject test theater for static code or CSS. |
 | **Claiming completion, fix, or green build** | `hyperpowers:verification-before-completion` | Demand fresh empirical evidence across domain matrix before making claims. |
 | **Receiving review feedback or PR comments** | `hyperpowers:receiving-code-review` | 4-quadrant technical deliberation over performative agreement. |
-| **Requesting code review** | `hyperpowers:requesting-code-review` | Default to inline self-review; reserve subagents for parallel multi-module auditing. |
-| **Finalizing branch or feature** | `hyperpowers:finishing-a-development-branch` | Verify tests/builds on clean tree; present clear merge/PR/retain options. |
+| **Requesting code review** | `hyperpowers:requesting-code-review` | Audit against 6-axis rubric; default to fast inline self-review. |
+| **Finalizing branch or feature** | `hyperpowers:finishing-a-development-branch` | Verify tests/builds on clean tree; reconcile ideas backlog; present PR/merge options. |
 | **Codebase memory & ideas backlog** | `hyperpowers:managing-agent-docs` | Maintain living subsystem briefs in `agent-docs/` and reconcile active ideas. |
 | **Creating or refining agent skills** | `hyperpowers:writing-skills` | Test-driven skill design, YAML schema conformance, subagent verification. |
 | **Diagnosing agent sessions & bug reports** | `hyperpowers:diagnosing-hyperpowers` | Objective forensic bundle capture without speculative self-diagnosis. |

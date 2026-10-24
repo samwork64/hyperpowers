@@ -99,6 +99,8 @@ would help more than reading:
 - options that would look different from each other
 - a structure that's easier to see than read: a diagram, a timeline, a map
 
+**Pair with Frontend Design**: If the project involves user interfaces or web frontend components, invoke `hyperpowers:frontend-design` during ideation. Establish domain-anchored aesthetics, ban AI visual clichés, curate semantic color tokens, and plan for all 4 states (empty, loading skeleton, error, interactive) before writing specifications.
+
 Once they've accepted, use it for mockups to react to, side-by-side
 options, and throwaway prototypes they can click.
 

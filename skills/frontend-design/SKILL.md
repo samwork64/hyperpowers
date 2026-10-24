@@ -1,6 +1,6 @@
 ---
 name: frontend-design
-description: Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Enforces anti-cliché design intelligence, tailored typography, multi-state ergonomics, and domain-anchored aesthetics.
+description: Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Enforces anti-cliché design intelligence, tailored typography, multi-state ergonomics, design system token architecture, and domain-anchored aesthetics.
 ---
 
 # Frontend Design: Anti-Cliché Design Intelligence
@@ -30,7 +30,24 @@ Do not spend design freedom on generic AI template habits. Unless the user expli
 
 ---
 
-## 2. The 5-Stage Design Reasoning Pathway
+## 2. Design System Token Architecture
+
+Maintain a centralized design system token contract (in `theme.css`, `tailwind.config.ts`, or `agent-docs/DESIGN.md`):
+
+1. **Semantic Color Tokens (Zero Hardcoded Hex in Components)**:
+   - Surface Tokens: `bg-background`, `bg-card`, `bg-popover`, `bg-muted`
+   - Content Tokens: `text-foreground`, `text-muted-foreground`, `text-primary-foreground`
+   - Border & Separator Tokens: `border-border`, `border-input`, `ring-ring`
+   - Intent Tokens: `bg-primary`, `bg-secondary`, `bg-accent`, `bg-destructive`
+2. **Accessible Contrast Ratios**:
+   - Body copy to surface: $\ge 4.5:1$ (WCAG AA).
+   - Large headings ($\ge 24\text{px}$) to surface: $\ge 3:1$.
+   - Interactive boundaries/icons to surface: $\ge 3:1$.
+   - **Tinted Neutrals**: On colored surfaces, tint secondary text from that surface hue; never use washed-out generic gray (`text-slate-400` on white is strictly banned).
+
+---
+
+## 3. The 5-Stage Design Reasoning Pathway
 
 ```
 [1. Subject Anchor] ➔ [2. Anti-Cliché Palette] ➔ [3. Typographic Scale] ➔ [4. Multi-State Ergonomics] ➔ [5. Multi-Viewport Gate]
@@ -45,8 +62,7 @@ Ground aesthetic choices in the physical vernacular of the product domain:
 
 ### Stage 2: Anti-Cliché Palette & Material System
 * Curate a deliberate **4–6 color palette** derived from the physical subject (e.g. warm paper `#F8F6F0`, deep olive `#3D4A3E`, terracotta `#D97757`, slate charcoal `#1E2022`, muted cobalt `#2B4C7E`, burnt amber `#C07D38`).
-* **Semantic Tokens First**: Use semantic theme tokens (`bg-background`, `text-foreground`, `border-border`, `bg-primary`) rather than hardcoded Tailwind colors (`bg-indigo-600`).
-* **Tint Secondary Text**: On colored surfaces, tint secondary text from that surface hue or foreground; never use plain washed-out gray (`text-slate-400` on white is an accessibility failure).
+* Ensure light and dark modes have calibrated contrast rather than naive color inversions.
 
 ### Stage 3: Typographic Character & Hierarchy
 * Pair an expressive display typeface with a clean, highly legible text face.
@@ -55,15 +71,23 @@ Ground aesthetic choices in the physical vernacular of the product domain:
 * **Ban Typographic Gimmicks**: No single-word colored highlights, no random italics for emphasis.
 
 ### Stage 4: Mandatory 4-State Component Ergonomics
-Never design only the "happy path". Every dynamic view must explicitly design:
+Never design only the "happy path". Every dynamic view must explicitly implement and support:
 1. **Empty State**: Friendly graphic/illustration + clear descriptive copy + primary CTA button (e.g. *"No bookmarks yet. Browse catalog to add your first ROM."*).
 2. **Loading State**: Dimension-accurate skeleton loader matching real component geometry (never a generic center spinner).
 3. **Error State**: Plain-English explanation of failure + immediate retry action.
-4. **Interaction States**: Explicit hover, active, disabled, and high-visibility `:focus-visible` outline rings for keyboard accessibility.
+4. **Interaction States**:
+   - `:hover`: Subtle optical elevation or contrast shift.
+   - `:active`: Definite tactile press feedback (`transform: scale(0.98)`).
+   - `:disabled`: Reduced opacity (0.5), `cursor: not-allowed`, no hover effects.
+   - `:focus-visible`: High-visibility 2px focus ring with 2px offset (`focus-visible:ring-2 focus-visible:ring-offset-2`).
 
-### Stage 5: Multi-Viewport & Contrast Verification Gate
-Verify the built interface in real viewports using `ui-shot`:
+### Stage 5: Accessibility (a11y) & Multi-Viewport Verification Gate
+Verify the built interface in real viewports using `ui-shot.cjs`:
 * **Mobile (375px)**: Zero horizontal overflow (`overflow-x: hidden`), touch targets $\ge 44\times 44\text{px}$, clean vertical stacking.
 * **Tablet (768px)**: Flexible grid/flex wrapping.
 * **Desktop (1280px+)**: Controlled max-widths, optical balance.
-* **WCAG AA Compliance**: Body text contrast $\ge 4.5:1$, large text $\ge 3:1$. Zero console errors or warnings.
+* **Keyboard & Screen Reader Accessibility**:
+  - Semantic HTML landmarks: `<header>`, `<nav>`, `<main>`, `<aside>`, `<footer>`.
+  - Accessible names on icon buttons (`aria-label="Close dialog"`).
+  - Respect `prefers-reduced-motion: reduce`.
+  - Zero unhandled browser console errors or hydration mismatches.

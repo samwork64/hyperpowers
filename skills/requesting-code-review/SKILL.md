@@ -40,11 +40,13 @@ NEVER DISPATCH A SINGLE SUBAGENT ONLY TO SIT IDLE WAITING FOR IT
    ```
 
 2. **Evaluate Against Domain Criteria**:
-   Evaluate the diff directly using the rubric in [code-reviewer.md](code-reviewer.md):
-   * **Logic & APIs**: Contracts, input validation, boundary edge cases, real behavior tests (no test theater).
-   * **Systems & Native**: Memory clean, resource release (sockets/files), thread safety, zero compiler warnings.
-   * **CLI & Tools**: Exit codes, stdout/stderr purity, flag parsing.
-   * **UI & Presentation**: Responsive viewports, contrast, clean console logs. No unit tests for static text or CSS.
+   Evaluate the diff directly against the 6 evaluation axes in [code-review-rubric.md](code-review-rubric.md):
+   * **Spec & Contract Compliance**: Requirement fidelity, zero YAGNI/bloat, stable signatures.
+   * **Architectural Integrity**: Cohesion, design system token architecture, subsystem boundary adherence.
+   * **Failure Modes & Edge Cases**: Boundary values, null/undefined safety, error envelopes, resource cleanup.
+   * **Security & Secret Hygiene**: Zero hardcoded secrets, input sanitization, parameterized queries.
+   * **Test Authenticity vs. Test Theater**: Genuine logic/contract assertions, condition-based waiting, zero CSS tests.
+   * **Performance & Resource Hygiene**: No N+1 queries, hot path optimization, zero memory/process leaks.
 
 3. **Adjudicate Findings**:
    * **Critical (Must Fix)**: Broken contracts, logic bugs, data loss, build breaks $\rightarrow$ fix immediately.

@@ -17,7 +17,7 @@ TECHNICAL RIGOR & VERIFICATION OVER PERFORMATIVE AGREEMENT
 
 ## The 4-Quadrant Deliberation Pathway
 
-Evaluate every review finding against these four technical quadrants:
+Evaluate every review finding against these four technical quadrants, anchored in the [code-review-rubric.md](../requesting-code-review/code-review-rubric.md):
 
 | Quadrant | Finding Type | Evaluation Standard | Action Pathway |
 | :--- | :--- | :--- | :--- |
