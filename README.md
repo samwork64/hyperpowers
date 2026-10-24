@@ -112,7 +112,7 @@ Install directly from your local directory or git repository:
 agy plugin install /home/sam/Work/Personal/hyperpowers
 
 # Or from remote repository:
-agy plugin install https://github.com/obra/superpowers
+agy plugin install https://github.com/<your-username>/hyperpowers
 ```
 
 Antigravity automatically discovers all 21 skills, registers the rules engine in `rules/AGENTS.md`, and activates `hyperpowers:using-hyperpowers` on session start.
@@ -170,7 +170,7 @@ muse plugins approve hyperpowers
 ### Pi
 
 ```bash
-pi install git:github.com/obra/superpowers
+pi install git:github.com/<your-username>/hyperpowers
 ```
 
 ### Other Harnesses
