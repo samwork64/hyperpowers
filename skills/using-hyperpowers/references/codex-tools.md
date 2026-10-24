@@ -27,7 +27,7 @@ Add to your Codex config (`~/.codex/config.toml`):
 multi_agent = true
 ```
 
-This enables the multi-agent tools that skills like `dispatching-parallel-agents` and `subagent-driven-development` use:
+This enables the multi-agent tools that skills like `dispatching-parallel-agents` and `executing-plans` (Mode 2) use:
 
 - **Spawning:** Give children a clean context with `spawn_agent {fork_turns: "none"}`; the default `"all"` copies your entire transcript into the child. On Codex 0.145+, role files under `~/.codex/agents/` attach to isolated forks via `agent_type`.
 - **Fix rounds:** Resume the implementer with `followup_task` — it delivers your message, triggers a turn, and transparently reloads a child the harness evicted. Never dispatch a fresh implementer on the theory that a spawned agent cannot be messaged again; on V2 it always can.

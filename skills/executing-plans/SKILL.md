@@ -22,7 +22,7 @@ Select the execution mode matched to your runtime capabilities and project requi
 | Execution Mode | Ideal Workload | Mechanics |
 | :--- | :--- | :--- |
 | **Mode 1: Hybrid Execution (Recommended / Default)** | Standard multi-task features, full-stack apps, mixed backend/frontend workloads. | **Sequential tasks** execute natively inline for zero latency and continuous momentum; **independent batches** dispatch concurrently to parallel subagents. |
-| **Mode 2: Sandboxed Subagent Execution (SDD Mode)** | High-risk refactors, massive multi-file changes, untrusted tasks, or when strict isolation is demanded. | Every task runs in an isolated subagent workspace using [implementer-prompt.md](../subagent-driven-development/implementer-prompt.md) with independent verification gates. |
+| **Mode 2: Sandboxed Subagent Execution (SDD Mode)** | High-risk refactors, massive multi-file changes, untrusted tasks, or when strict isolation is demanded. | Every task runs in an isolated subagent workspace using [templates/implementer-prompt.md](templates/implementer-prompt.md) with independent verification gates. |
 | **Mode 3: Native Inline Execution** | Single-module features, lightweight CLI tasks, or runtimes lacking subagent primitives. | All tasks execute sequentially in the parent session. Zero subagent overhead, instant feedback. |
 
 > **The Zero-Idle Invariant (Universal Rule)**:
@@ -105,14 +105,14 @@ Verify the decoupling invariants before dispatch:
 ### Mode 2: Sandboxed Subagent Execution (SDD Mode)
 
 For high-isolation tasks requiring dedicated workspaces:
-1. **Workspace Provisioning**: Create dedicated directory or worktree per task using [scripts/sdd-workspace](../subagent-driven-development/scripts/sdd-workspace) or native worktrees.
-2. **Dispatch Implementer (Minimal Context Slicing)**: Dispatch fresh subagent using [implementer-prompt.md](../subagent-driven-development/implementer-prompt.md). Pass **ONLY** the 15–30 line task brief and relevant interface contracts; never paste the entire multi-task implementation plan.
+1. **Workspace Provisioning**: Create dedicated directory or worktree per task using [scripts/sdd-workspace](scripts/sdd-workspace) or native worktrees.
+2. **Dispatch Implementer (Minimal Context Slicing)**: Dispatch fresh subagent using [templates/implementer-prompt.md](templates/implementer-prompt.md). Pass **ONLY** the 15–30 line task brief and relevant interface contracts; never paste the entire multi-task implementation plan.
 3. **Inline Review Gate**: Upon implementer completion, inspect the diff immediately in the active coordinator turn:
    ```bash
    git diff --stat BASE_SHA..HEAD_SHA
    git diff BASE_SHA..HEAD_SHA
    ```
-   Evaluate against [code-review-rubric.md](../requesting-code-review/code-review-rubric.md).
+   Evaluate against [code-review-rubric.md](../requesting-code-review/code-review-rubric.md), or dispatch a review using [templates/task-reviewer-prompt.md](templates/task-reviewer-prompt.md). If fixes are needed, re-review with [templates/re-review-prompt.md](templates/re-review-prompt.md).
 4. **Adjudication**:
    - If clean: Mark completed (`- [x]`) and proceed.
    - If issues found: Send concrete findings back to implementer or fix surgical deltas inline.

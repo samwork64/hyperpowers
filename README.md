@@ -71,7 +71,7 @@ flowchart LR
 
 ---
 
-## The 22-Skill Suite
+## The 21-Skill Suite
 
 | Domain | Skill | Purpose & Core Invariant |
 | :--- | :--- | :--- |
@@ -84,8 +84,7 @@ flowchart LR
 | **Planning & Scoping** | `hyperpowers:brainstorming` | Socratic intent clarification before writing code. Lead with engineering recommendation first. |
 | **Planning & Scoping** | `hyperpowers:writing-plans` | Bite-sized tasks (2-5 min) with domain-specific verification. Reject plan dumping in chat. |
 | **Planning & Scoping** | `hyperpowers:managing-agent-docs` | Living subsystem briefs in `agent-docs/`, Git commit SHA drift guard, active ideas backlog. |
-| **Execution** | `hyperpowers:executing-plans` | **Master Execution Engine**: Mode 1: Hybrid (default), Mode 2: Sandboxed SDD, Mode 3: Native Inline. Zero idle waiting. |
-| **Execution** | `hyperpowers:subagent-driven-development` | Full task isolation: fresh implementer subagent per task with coordinator review gates. |
+| **Execution** | `hyperpowers:executing-plans` | **Master Execution Engine**: Mode 1: Hybrid (default), Mode 2: Sandboxed SDD, Mode 3: Native Inline with zero-idle review gates. |
 | **Execution** | `hyperpowers:dispatching-parallel-agents` | Orthogonal task parallelism: concurrent subagent dispatch for decoupled graph branches. |
 | **Execution** | `hyperpowers:using-git-worktrees` | Isolated workspace creation on fresh branches to protect working directories. |
 | **Quality & Logic** | `hyperpowers:test-driven-development` | RED-GREEN-REFACTOR cycle for dynamic logic, state, and API contracts. Rejects test theater. |
@@ -116,7 +115,7 @@ agy plugin install /home/sam/Work/Personal/hyperpowers
 agy plugin install https://github.com/obra/superpowers
 ```
 
-Antigravity automatically discovers all 18 skills, registers the rules engine in `rules/AGENTS.md`, and activates `hyperpowers:using-hyperpowers` on session start.
+Antigravity automatically discovers all 21 skills, registers the rules engine in `rules/AGENTS.md`, and activates `hyperpowers:using-hyperpowers` on session start.
 
 ### Claude Code
 

@@ -30,7 +30,6 @@ Invoke the appropriate process skill before jumping into code or raw execution:
 | **Multi-viewport visual QA & screenshots** | `hyperpowers:visual-verification` | Ephemeral headless CDP capture (Mobile/Tablet/Desktop/Full-Page) via `ui-shot.cjs`. |
 | **Multi-step implementation planning** | `hyperpowers:writing-plans` | Break work into bite-sized tasks with domain-specific verification. Prefer native plan tools. |
 | **Executing plan (Master Engine: Hybrid / SDD / Inline)** | `hyperpowers:executing-plans` | Mode 1: Hybrid (default), Mode 2: Sandboxed SDD, Mode 3: Native Inline. Zero-idle invariant. |
-| **Executing plan (Full Subagent Isolation)** | `hyperpowers:subagent-driven-development` | Fresh implementer per task in dedicated workspace with coordinator review gates. |
 | **Parallel orthogonal tasks** | `hyperpowers:dispatching-parallel-agents` | Analyze dependency graph; dispatch concurrent subagents only when decoupled. |
 | **Isolated workspace & branch setup** | `hyperpowers:using-git-worktrees` | Parallel development branches and worktrees protecting active working tree. |
 | **Bug, test failure, build error, or regression** | `hyperpowers:systematic-debugging` | Causal root investigation before any fix attempt. Detect thrashing early. |

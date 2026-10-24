@@ -20,12 +20,12 @@ Skills speak in abstract actions ("dispatch a subagent", "create a plan", "track
 
 ---
 
-## Cheaper Orchestration for Subagent-Driven Development
+## Cheaper Orchestration for Sandboxed Subagent Execution (Mode 2)
 
-The controller session is the most expensive seat in a `hyperpowers:subagent-driven-development` run: it reads every dispatch result and report, typically on the session's highest-tier model. Claude Code supports nested subagents (up to `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH`), allowing the entire loop to run one layer down.
+The controller session is the most expensive seat in a `hyperpowers:executing-plans` (Mode 2: SDD) run: it reads every dispatch result and report, typically on the session's highest-tier model. Claude Code supports nested subagents (up to `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH`), allowing the entire loop to run one layer down.
 
 When your human partner asks for it — or notes that the controller model is too expensive for routine coordination:
-1. Dispatch **ONE** orchestrator subagent on a mid-tier model with the plan path and instruction to execute `hyperpowers:subagent-driven-development`.
+1. Dispatch **ONE** orchestrator subagent on a mid-tier model with the plan path and instruction to execute `hyperpowers:executing-plans` in Sandboxed SDD mode.
 2. The orchestrator dispatches its own implementers per the skill's Model Selection rules.
 3. The orchestrator's final message must include the "Rulings I made" list verbatim to inform the human partner.
 4. *Do this only for an entire plan.* Nesting a single task's dispatch adds unnecessary overhead.
