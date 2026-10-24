@@ -45,7 +45,8 @@ Select the execution mode matched to your runtime capabilities and project requi
 Conversation context does not survive LLM compaction. When a session is compacted or restarted mid-run:
 1. Re-read the active task ledger (artifact, todo list, or plan file) to identify completed tasks (`- [x]`).
 2. Run `git log --oneline -n 10` and `git status` to verify the exact state of the working tree.
-3. Automatically resume execution from the first unchecked task (`- [ ]`) without re-asking the user.
+3. If background subagents or daemon tasks were in-flight, query running processes (`manage_subagents(Action: 'list')` or platform equivalent) to reconnect.
+4. Automatically resume execution from the first unchecked task (`- [ ]`) without re-asking the user.
 
 ### C. Watchdog Protection & Disconnect Revival
 When dispatching subagents, network drops or server restarts can cause silent stalls:
@@ -92,6 +93,7 @@ Verify the decoupling invariants before dispatch:
 - **Zero Temporal Dependency**: Can all tasks run without waiting for outputs of each other?
 
 1. **Concurrent Dispatch**:
+   - Record active subagent conversation IDs in the task ledger so handles survive session compaction.
    - *Antigravity*: Issue all tasks in a single `invoke_subagent` call with `Subagents: [...]`.
    - *Claude Code*: Dispatch concurrent `Agent` tool calls.
    - *Gemini CLI*: Dispatch concurrent `invoke_agent` calls in one response.

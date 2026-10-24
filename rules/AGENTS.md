@@ -95,7 +95,7 @@ Prevent orphan processes, memory bloat, and port conflicts by following these in
 ## 3. Antigravity Tool Mappings
 - **Planning**: Use built-in `/plan` slash command or plan/task artifacts (`write_to_file` in artifact directory) rather than writing ad-hoc files to the repository. **Zero Textual Duplication**: never dump full plan text into the chat.
 - **Subagents & Zero-Idle Invariant**: Use `invoke_subagent` for concurrent parallel batches (`Subagents: [...]`) or heavy background execution. **NEVER** dispatch a single subagent for a sequential task and sit idle waiting for it. Perform code reviews inline against the rubric in seconds. Slice and pass **ONLY** the 15–30 line task brief to implementers, never the full implementation plan.
-- **Task Tracking**: Use task artifacts via `write_to_file` (`IsArtifact: true`, `ArtifactMetadata.ArtifactType: "task"`) and update with `replace_file_content`. (`manage_task` is for background shell processes only).
+- **Task Tracking & Compaction Resilience**: Use task artifacts via `write_to_file` (`IsArtifact: true`, `ArtifactMetadata.ArtifactType: "task"`) and update with `replace_file_content`. Always persist active subagent IDs and commit completed tasks atomically. If session compaction occurs, immediately resume from the first pending task using the task artifact and `git log -n 5`. (`manage_task` is for background shell processes only).
 
 ## 4. Configuration & Settings Resolution (`hyperpowers.json`)
 
