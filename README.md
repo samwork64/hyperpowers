@@ -267,6 +267,7 @@ Hyperpowers is engineered to protect context windows and prevent runaway agent t
 4. **The 2-Failure Circuit Breaker**: If two consecutive fix attempts fail to resolve a bug or cause secondary regressions, agents **must stop immediately**, run `git checkout -- .` to restore a clean baseline, and re-trace signal paths or consult telemetry rather than guessing.
 5. **Log Output Density Guard**: Raw verbose build logs (1,000+ lines of compiler stdout) are prevented from flooding context. Agents use quiet flags (`pytest -q`, `cargo test -- -q`) and surgical error tail inspection (`tail -n 50`).
 6. **Compressed Frontmatter Metadata**: All 21 skill descriptions are compressed to high-density intent triggers, saving **~250 tokens per turn** on every prompt invocation.
+7. **File-Level Syntax Sanity Gate (`check-syntax.py`)**: Before claiming completion or declaring "good to go", agents execute a $<100\text{ms}$ static parse across all modified files (`ast.parse`, `json.loads`, `node --check`, `bash -n`, TOML, YAML). This prevents common failures where focused test suites pass on module A while an un-imported module B or config file harbors a silent syntax error.
 
 ---
 

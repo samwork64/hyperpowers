@@ -28,6 +28,17 @@ Before declaring any task or phase complete, follow this 4-step gate:
 3. **Inspect Entire Output**: Check return exit codes, error streams, compiler warnings, and test counts.
 4. **Correlate with Acceptance Invariants**: Ensure the output proves the exact requirement, not merely that a command completed without crashing.
 
+### 0. The File-Level Syntax Sanity Gate (Mandatory Pre-Flight)
+Before running high-level test suites or declaring completion:
+Execute the bundled zero-dependency syntax verification script across all modified files:
+```bash
+python3 skills/verification-before-completion/scripts/check-syntax.py
+```
+* **Why this is critical**: Test suites frequently execute only targeted modules. Un-imported files, secondary helpers, configuration JSONs, or conditionally executed code can harbor silent syntax errors (unmatched quotes, bad indentation, unclosed brackets, broken JSON commas, shell syntax errors) while tests falsely report green.
+* **Language Coverage**: Automatically checks Python (`ast.parse`), JSON (`json.loads`), Shell (`bash -n`), JavaScript (`node --check`), TOML, and YAML.
+* **Zero Latency**: Executes in $<100\text{ms}$ with pure standard library tooling.
+* **Invariant**: Never claim a task is complete or say *"we are good to go"* if `check-syntax.py` exits with non-zero. Fix all file-level parse errors immediately.
+
 ### Log Output Density & Noise Reduction Rule (Context Guard)
 When executing verification commands on large codebases:
 * **Avoid Raw Log Flooding**: Never dump thousands of lines of verbose build/test stdout directly into the context. Excessive output exhausts context windows and displaces active instructions.

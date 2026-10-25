@@ -63,6 +63,7 @@ Follow this pipeline whenever designing, creating, or modifying user interfaces:
 - **Debugging Web Issues**: Use `hyperpowers:systematic-debugging`.
   - For hydration mismatches, CORS errors, broken layout, or console warnings: reproduce with a minimal script or visual inspection first, isolate root cause, test hypotheses, and verify fix before committing.
 - **Verification Before Completion**: Run `hyperpowers:verification-before-completion`.
+  - **File-Level Syntax Sanity**: Always run file-level syntax compilation across all modified files (`check-syntax.py`, `py_compile`, `node --check`, `json.loads`, `bash -n`) to eliminate silent parse errors before running suites. Never claim "good to go" if any file fails static parsing.
   - Verify type checks: `npx tsc --noEmit` or language equivalent.
   - Verify linting: `npm run lint` or `eslint`.
   - Verify test suite: `npm test` / `vitest run` / `pytest` for logic regressions.

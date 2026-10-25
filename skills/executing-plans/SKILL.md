@@ -135,9 +135,10 @@ For lightweight environments or single-module workflows:
 
 Once all tasks in the ledger are checked (`- [x]`):
 
-1. **Universal Build Gate**: Run the full project test suite, typechecker, and linter (`hyperpowers:verification-before-completion`).
-2. **Fast Inline Code Review**:
+1. **File-Level Syntax & Static Sanity Pass**: Run `python3 skills/verification-before-completion/scripts/check-syntax.py` across all modified files. Verify zero syntax or structural parse errors before running high-level suites.
+2. **Universal Build Gate**: Run the full project test suite, typechecker, and linter (`hyperpowers:verification-before-completion`).
+3. **Fast Inline Code Review**:
    - Inspect whole-branch diff (`git diff BASE_BRANCH..HEAD`).
    - Audit against the 6 evaluation axes in [code-review-rubric.md](../requesting-code-review/code-review-rubric.md).
    - Resolve any Critical or Important issues immediately.
-3. **Branch Finalization**: Proceed to `hyperpowers:finishing-a-development-branch` to reconcile `agent-docs/ideas.md`, update subsystem briefs with the latest git commit SHA, and present clean merge/PR options.
+4. **Branch Finalization**: Proceed to `hyperpowers:finishing-a-development-branch` to reconcile `agent-docs/ideas.md`, update subsystem briefs with the latest git commit SHA, and present clean merge/PR options.
