@@ -1,11 +1,19 @@
 ---
 name: using-hyperpowers
-description: Use when starting any conversation - establishes how to navigate, invoke, and leverage specialized skills and native platform capabilities.
+description: Use when starting any conversation - establishes how to find and use skills, requiring skill invocation before ANY response including exploring files or clarifying questions.
 ---
 
 <SUBAGENT-STOP>
 If you were dispatched as a subagent to execute a specific task, ignore this skill. Focus exclusively on your assigned task instructions.
 </SUBAGENT-STOP>
+
+<EXTREMELY-IMPORTANT>
+If you think there is even a 1% chance a skill might apply to what you are doing, you ABSOLUTELY MUST invoke the skill.
+
+IF A SKILL APPLIES TO YOUR TASK, YOU DO NOT HAVE A CHOICE. YOU MUST USE IT.
+
+This is not negotiable. You cannot rationalize your way out of this.
+</EXTREMELY-IMPORTANT>
 
 # Using Hyperpowers & Capability Routing
 
@@ -15,14 +23,52 @@ Hyperpowers provides battle-tested engineering and visual design workflows for p
 
 ---
 
+## The Rule
+
+**Invoke relevant or requested skills BEFORE any response or action** — including clarifying questions, exploring the codebase, running shell commands, or checking files. If it turns out wrong for the situation, you don't have to use it.
+
+**Before entering plan mode or writing plans:** if you haven't already brainstormed, invoke `hyperpowers:brainstorming` first.
+
+**Mandatory Announcement:** Announce `"Using [skill] to [purpose]"` and call `view_file` on that skill immediately. Follow the skill instructions exactly. If it has a checklist, create a tracking todo per item.
+
+---
+
+## Skill Priority
+
+When multiple skills apply, **process skills come first** — they discover intent, set the architecture, and establish gates; then implementation and domain skills carry them out:
+
+- **"Build X", "Update feature X", "Redesign X", "Add component X"** → `hyperpowers:brainstorming` first! (For UI/visual tasks, invoke alongside `hyperpowers:frontend-design`). Then `hyperpowers:writing-plans`.
+- **"Fix this bug", "Why is X failing", "Investigate issue"** → `hyperpowers:systematic-debugging` first! Then domain skills.
+
+---
+
+## Red Flags (Rationalization Inoculation)
+
+These thoughts mean STOP — you are rationalizing avoiding process discipline:
+
+| Thought | Reality |
+| :--- | :--- |
+| *"This is just a simple question or tweak"* | Questions and small tweaks are tasks. Check for skills. |
+| *"I need more context / let me explore the codebase first"* | Skills tell you HOW to explore and what questions to ask. Check first. |
+| *"I can check git / files quickly with `ls` or `grep`"* | Files lack intent and conversation context. Check for skills. |
+| *"The user gave very specific instructions with an image"* | Detailed requests still require brainstorming and architecture alignment. |
+| *"This doesn't need a formal skill"* | If a skill exists, use it. |
+| *"I remember this skill from earlier"* | Skills evolve and have specific checklists. Read current version. |
+| *"The skill is overkill for this"* | Simple tasks become complex regressions. Use the skill. |
+| *"I'll just do this one edit first"* | Check BEFORE touching any file. |
+| *"This feels productive to just start coding"* | Undisciplined hacking causes regressions and token waste. Skills prevent this. |
+| *"User instructions take precedence so I can skip"* | User precedence applies ONLY when the user explicitly commands *"skip skills"*. |
+
+---
+
 ## The Capability Routing Matrix
 
 Invoke the appropriate process skill before jumping into code or raw execution:
 
 | User Intent / Engineering Phase | Primary Skill | Core Invariant |
 | :--- | :--- | :--- |
-| **New feature, exploration, or design choice** | `hyperpowers:brainstorming` | Clarify intent and trade-offs before building. Lead with technical recommendation first. |
-| **Frontend UI/UX aesthetic direction** | `hyperpowers:frontend-design` | Domain-anchored aesthetics, tailored typography, 4-state coverage, ban AI visual clichés. |
+| **New feature, exploration, redesign, or design choice** | `hyperpowers:brainstorming` | Clarify intent and trade-offs before building. Lead with technical recommendation first. |
+| **Frontend UI/UX aesthetic direction & redesigns** | `hyperpowers:frontend-design` | Domain-anchored aesthetics, tailored typography, 4-state coverage, ban AI visual clichés. |
 | **Searchable UI/UX styles, palettes & fonts** | `hyperpowers:ui-ux-pro-max` | 79 styles, 192 product palettes, 74 font pairings, 119 UX rules via local `search.py`. |
 | **Component composition, registry & presets** | `hyperpowers:shadcn` | Component scaffolding, registry discovery (`npx shadcn@latest add`), preset design systems. |
 | **Out-of-distribution craft floor & UX polish** | `hyperpowers:impeccable` | Surface modes (*Operate*, *Read*, *Persuade*), tactile physics, micro-interactions, `DESIGN.md`. |
@@ -34,7 +80,7 @@ Invoke the appropriate process skill before jumping into code or raw execution:
 | **Isolated workspace & branch setup** | `hyperpowers:using-git-worktrees` | Parallel development branches and worktrees protecting active working tree. |
 | **Bug, test failure, build error, or regression** | `hyperpowers:systematic-debugging` | Causal root investigation before any fix attempt. Detect thrashing early. |
 | **Dynamic logic, state, or API contracts** | `hyperpowers:test-driven-development` | Strict Red-Green-Refactor. Reject test theater for static code or CSS. |
-| **Claiming completion, fix, or green build** | `hyperpowers:verification-before-completion` | Demand fresh empirical evidence across domain matrix before making claims. |
+| **Claiming completion, fix, or green build** | `hyperpowers:verification-before-completion` | File-level syntax sanity (`check-syntax.py`) + empirical test/build evidence. |
 | **Receiving review feedback or PR comments** | `hyperpowers:receiving-code-review` | 4-quadrant technical deliberation over performative agreement. |
 | **Requesting code review** | `hyperpowers:requesting-code-review` | Audit against 6-axis rubric; default to fast inline self-review. |
 | **Finalizing branch or feature** | `hyperpowers:finishing-a-development-branch` | Verify tests/builds on clean tree; reconcile ideas backlog; present PR/merge options. |
@@ -81,9 +127,11 @@ Skills declare abstract actions (*Plan Storage*, *Task Tracking*, *Subagent Disp
 
 ---
 
-## User Precedence & Configuration
+## User Instructions & Precedence
 
-User instructions (direct requests, `hyperpowers.json`, `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`) take precedence over skill defaults.
+User instructions (direct requests, `hyperpowers.json`, `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`) take precedence over skill defaults, which in turn override default agent behavior.
+
+> **CRITICAL EXCEPTION**: Only skip skill workflows or instructions when your human partner has **explicitly told you to skip them** (e.g. *"skip brainstorming"*, *"just code directly without plans"*). A direct request to build, redesign, or fix something is NOT an instruction to skip process skills.
 
 ### Runtime Configuration (`hyperpowers.json`)
 Hyperpowers checks for project settings in `hyperpowers.json` or `.hyperpowers/config.json` (conforming to `hyperpowers.schema.json`) and environment variables (`HYPERPOWERS_*`):

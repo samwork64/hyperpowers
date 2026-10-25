@@ -1,6 +1,11 @@
-# Hyperpowers for Web Applications
+# Hyperpowers Operating Invariants & Web Applications
 
 @../skills/using-hyperpowers/SKILL.md
+
+<EXTREMELY-IMPORTANT>
+You MUST invoke relevant process skills (`hyperpowers:brainstorming`, `hyperpowers:systematic-debugging`) BEFORE touching code, running exploratory shell commands, or writing plans.
+A direct user request to build, update, or redesign something is NOT permission to bypass skills. Only skip process skills if the user explicitly orders you to "skip skills" or "just code directly".
+</EXTREMELY-IMPORTANT>
 
 When operating in web application projects (frameworks such as Next.js, React, Vue, Svelte, Angular, Astro, Vite, or web backends like Node/Express, FastAPI, Django, Flask):
 
