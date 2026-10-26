@@ -33,6 +33,14 @@ Your first message depends on what kind of request they made:
 2. **Propose a sensible default direction**: Explain what you would choose and why.
 3. **Ask for their opinion/decision**: End with a single, focused question asking for their thoughts, constraints, or preferences regarding your recommendation.
 
+### If they asked to build, redesign, or modify a UI / frontend feature:
+1. **Pair with Frontend Design Intelligence**: Invoke `hyperpowers:frontend-design` (and consult `hyperpowers:ui-ux-pro-max`). Ground the proposal in domain aesthetics, semantic color tokens, and mandatory 4-state coverage (empty, loading skeleton, error, interactive).
+2. **Present a High-Signal Design Proposal (The WHAT & WHY)**:
+   - Visual hierarchy, content grouping, and typography.
+   - Interaction mechanics (gestures, sheet sliding, selection markers).
+   - *Keep code lines and file edits out of this message* — focus purely on user-facing behavior and visual decisions.
+3. **Ask for Approval to Plan**: End with: *"Shall I proceed with writing the implementation plan for this design, or would you like to adjust any details?"*
+
 ### If they asked to build a new feature or project from scratch:
 1. One line letting them know that if they'd rather skip the questions and
    have you just start, they can say so. If they take you up on it, this

@@ -120,12 +120,21 @@ Select task steps based on the **failure mode**:
 
 ---
 
-## 6. Execution Handoff
+## 6. Execution Handoff & Plan Approval Gate
 
-After saving the plan, present the execution approach clearly to the user:
+<HARD-GATE>
+PLAN CREATION STOPS HERE. DO NOT START EXECUTING CODE IN THE SAME TURN.
 
-> *"Plan complete and saved to `[plan location]`. Which execution approach would you prefer?"*
-> 
-> 1. **Hybrid (Recommended / Default)**: Sequential tasks run natively inline for speed and interactive control; orthogonal tasks are dispatched concurrently in parallel to subagents (or inline if subagents unavailable).
-> 2. **Native Inline Only**: All tasks executed directly in this session. Fastest, zero subagent overhead.
-> 3. **Full Subagent Isolation (SDD)**: Fresh subagent per task in an isolated workspace with independent review gates.
+After saving the plan artifact:
+1. **STOP all tool calls immediately**. Do NOT invoke `executing-plans`, run terminal commands, or edit code in this response turn.
+2. **Present the Plan**:
+   - Link directly to the saved plan artifact / file.
+   - Provide a concise 3–5 bullet summary covering:
+     - The atomic tasks to be executed.
+     - Files to be modified.
+     - The verification strategy (tests, `ui-shot` viewports, `check-syntax.py`).
+3. **Explicitly Request Plan Approval**:
+   > *"I have prepared the implementation plan: `[plan location]`. Would you like me to proceed with execution (Hybrid Mode), or would you like to review and adjust any tasks first?"*
+4. **Wait for User Approval**: Execution begins ONLY in the next turn after the user explicitly confirms or approves the plan.
+</HARD-GATE>
+
