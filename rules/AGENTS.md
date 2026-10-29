@@ -13,11 +13,13 @@ When operating in web application projects (frameworks such as Next.js, React, V
 
 ### A. 4-Stage Frontend UI/UX Pipeline
 Follow this pipeline whenever designing, creating, or modifying user interfaces:
-1. **Stage 1: Direction & Aesthetics** (`frontend-design`):
+1. **Stage 1: Direction & Aesthetics** (`frontend-design` for new surfaces, `ui-evolution` for existing UI refactors):
    - Invoke alongside `hyperpowers:brainstorming`.
-   - **Ban AI Visual Clichés**: Strictly ban generic purple/indigo-to-cyan SaaS gradients (`from-indigo-500 to-teal-400`), the "Lucide-icon-in-a-gray-box" card monoculture, pastel "Trust-Me" badges, tracked-out ALL-CAPS eyebrow labels, and robotic buzz-copy (*"Streamline your workflow"*).
-   - Ground aesthetics in the physical subject matter vernacular (retro consoles, financial terminals, editorial publishing, developer CLI).
-   - Curate a deliberate 4–6 color palette using semantic theme tokens (`bg-background`, `text-foreground`, `border-border`, `bg-primary`). Never use washed-out gray-on-gray text (`text-slate-400` on white is banned).
+   - **For New UIs (`frontend-design`)**: Ground aesthetics in the physical subject matter; strictly ban generic AI visual clichés (purple SaaS gradients, Lucide card monoculture, pastel trust badges, robotic buzz-copy); curate 4–6 semantic theme tokens.
+   - **For Existing UI Refactors (`ui-evolution`)**:
+     - *Token & Component Harvest*: Scan existing CSS, variables, and signature components first. Strict rule: **Reuse first, extend second, invent never**.
+     - *Visual Forensic & Value Matrix*: Diagnose 6 classic AI failure modes (unparsed data walls, fake metrics, competing actions, placeholder flooding, dead voids, scroll bleed); build Value Justification Table ("Why & Benefit").
+     - *10/10 Self-Critique Loop*: Generate visual mockups, evaluate against 5-axis rubric (Hierarchy, Brand Cohesion, Craft/Contrast, Data Integrity, Mobile Ergonomics); enforce $\ge 9/10$ quality floor before presenting.
 2. **Stage 2: Design Intelligence & Multi-State Ergonomics** (`ui-ux-pro-max` + `shadcn`):
    - Use `ui-ux-pro-max` for curated palettes, typography scales, responsive layout patterns, and tech-stack guidelines.
    - **Mandatory 4-State Coverage**: Never design only the happy path. Explicitly implement:

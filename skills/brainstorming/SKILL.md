@@ -34,11 +34,13 @@ Your first message depends on what kind of request they made:
 3. **Ask for their opinion/decision**: End with a single, focused question asking for their thoughts, constraints, or preferences regarding your recommendation.
 
 ### If they asked to build, redesign, or modify a UI / frontend feature:
-1. **Pair with Frontend Design Intelligence**: Invoke `hyperpowers:frontend-design` (and consult `hyperpowers:ui-ux-pro-max`). Ground the proposal in domain aesthetics, semantic color tokens, and mandatory 4-state coverage (empty, loading skeleton, error, interactive).
+1. **Route by Intent (New Surface vs Evolutionary Redesign)**:
+   - *For New UI Surfaces*: Invoke `hyperpowers:frontend-design` (and consult `hyperpowers:ui-ux-pro-max`). Ground proposal in domain aesthetics, semantic color tokens, and mandatory 4-state coverage.
+   - *For Updating, Refactoring, or Improving Existing UIs*: Invoke `hyperpowers:ui-evolution`. Harvest existing CSS/tokens first ("reuse first, extend second, invent never"), run visual forensics on why the current UI is rated low (5/10), construct the Value Justification Table ("Why & Benefit"), and apply the 10/10 self-critique rubric with visual mockups.
 2. **Present a High-Signal Design Proposal (The WHAT & WHY)**:
    - Visual hierarchy, content grouping, and typography.
-   - Interaction mechanics (gestures, sheet sliding, selection markers).
-   - *Keep code lines and file edits out of this message* — focus purely on user-facing behavior and visual decisions.
+   - For existing UI refactors: present the Value Justification Table and generated visual concept(s).
+   - *Keep code lines and file edits out of this message* — focus purely on user-facing behavior, visual decisions, and token reusability.
 3. **Ask for Approval to Plan**: End with: *"Shall I proceed with writing the implementation plan for this design, or would you like to adjust any details?"*
 
 ### If they asked to build a new feature or project from scratch:
@@ -107,7 +109,7 @@ would help more than reading:
 - options that would look different from each other
 - a structure that's easier to see than read: a diagram, a timeline, a map
 
-**Pair with Frontend Design**: If the project involves user interfaces or web frontend components, invoke `hyperpowers:frontend-design` during ideation. Establish domain-anchored aesthetics, ban AI visual clichés, curate semantic color tokens, and plan for all 4 states (empty, loading skeleton, error, interactive) before writing specifications.
+**Pair with Frontend Design / UI Evolution**: If the project involves user interfaces or web frontend components, invoke `hyperpowers:frontend-design` for new surfaces, or `hyperpowers:ui-evolution` when updating or refactoring existing screens. Establish domain-anchored aesthetics, harvest existing tokens to prevent CSS explosion, conduct visual forensics, and evaluate against the 10/10 self-critique rubric before writing specifications.
 
 Once they've accepted, use it for mockups to react to, side-by-side
 options, and throwaway prototypes they can click.

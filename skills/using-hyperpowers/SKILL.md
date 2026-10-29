@@ -68,7 +68,8 @@ Invoke the appropriate process skill before jumping into code or raw execution:
 | User Intent / Engineering Phase | Primary Skill | Core Invariant |
 | :--- | :--- | :--- |
 | **New feature, exploration, redesign, or design choice** | `hyperpowers:brainstorming` | Clarify intent and trade-offs before building. Lead with technical recommendation first. |
-| **Frontend UI/UX aesthetic direction & redesigns** | `hyperpowers:frontend-design` | Domain-anchored aesthetics, tailored typography, 4-state coverage, ban AI visual clichés. |
+| **New frontend UI/UX aesthetic direction** | `hyperpowers:frontend-design` | Domain-anchored aesthetics, tailored typography, 4-state coverage, ban AI visual clichés. |
+| **Updating, refactoring & 10/10 UI evolution** | `hyperpowers:ui-evolution` | Token harvesting (zero redundant CSS), visual forensics, 10/10 self-critique with mockups. |
 | **Searchable UI/UX styles, palettes & fonts** | `hyperpowers:ui-ux-pro-max` | 79 styles, 192 product palettes, 74 font pairings, 119 UX rules via local `search.py`. |
 | **Component composition, registry & presets** | `hyperpowers:shadcn` | Component scaffolding, registry discovery (`npx shadcn@latest add`), preset design systems. |
 | **Out-of-distribution craft floor & UX polish** | `hyperpowers:impeccable` | Surface modes (*Operate*, *Read*, *Persuade*), tactile physics, micro-interactions, `DESIGN.md`. |
