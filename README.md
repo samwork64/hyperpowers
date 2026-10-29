@@ -11,7 +11,7 @@
 <p align="center">
   <a href="https://github.com/samwork64/hyperpowers/releases"><img src="https://img.shields.io/badge/version-1.0.0-blue.svg?style=flat-square" alt="Version"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License: MIT"></a>
-  <a href="#the-21-skill-suite"><img src="https://img.shields.io/badge/skills-21%20bundled-blueviolet.svg?style=flat-square" alt="Skills Bundled"></a>
+  <a href="#the-22-skill-suite"><img src="https://img.shields.io/badge/skills-22%20bundled-blueviolet.svg?style=flat-square" alt="Skills Bundled"></a>
   <a href="#installation"><img src="https://img.shields.io/badge/platforms-Antigravity%20%7C%20Claude%20%7C%20Codex%20%7C%20Cursor%20%7C%20Gemini-orange.svg?style=flat-square" alt="Platforms Supported"></a>
   <a href="#the-zero-idle-subagent-invariant"><img src="https://img.shields.io/badge/subagents-zero--idle%20invariant-red.svg?style=flat-square" alt="Zero-Idle Invariant"></a>
 </p>
@@ -24,12 +24,14 @@ Most AI coding agents suffer from a catastrophic dual failure: **they write supe
 
 **Hyperpowers** is an industrial-grade agent engineering and visual intelligence framework that solves these structural flaws across all modern agent harnesses:
 
-1. **Anti-Cliché Design Intelligence & 4-State Ergonomics**: An integrated 4-stage UI/UX pipeline backed by 79 searchable styles, 192 product palettes, 74 typography pairings, 119 UX guidelines, and mandatory 4-state coverage (*Empty*, *Loading Skeleton*, *Error*, *Accessible Focus*).
-2. **Empirical Multi-Viewport Visual QA (`ui-shot`)**: Headless CDP visual verification across Mobile (375px), Tablet (768px), and Desktop (1280px) in ~1 second with zero process leaks and zero memory bloat.
-3. **The Zero-Idle Subagent Invariant**: Strict prohibition against single-subagent sequential idling. Sequential tasks execute immediately inline; subagents are reserved strictly as concurrent throughput multipliers ($\ge 2$) for decoupled tasks.
-4. **Master Plan Execution Engine**: Unified 3-mode execution (Hybrid, Sandboxed SDD, and Native Inline) with compaction recovery, disconnect revival, and watchdog protection.
-5. **Living Subsystem Architecture (`agent-docs/`)**: Eliminates unmaintainable documentation sprawl by organizing architecture into compact subsystem briefs protected by Git Commit SHA drift detection and a managed ideas backlog.
-6. **Token & Latency Hardening**: Plan atomicity caps (3–7 tasks), minimal context slicing (15–30 lines per subagent brief), 2-Failure circuit breakers against debugging thrashing, and targeted inner-loop test execution.
+1. **Anti-Cliché Design Intelligence & UI Evolution**: Integrated 4-stage UI/UX pipeline backed by 79 searchable styles, 192 product palettes, 74 typography pairings, 119 UX guidelines, token harvesting (zero redundant CSS), and 5-axis 10/10 self-critiques (`ui-evolution`).
+2. **Dual-Engine Visual Verification (`visual-verification`)**: Combines Mode A (Stateful Chrome DevTools interactive session with DOM automation and progressive capture) with Mode B (ephemeral, zero-leak multi-viewport audits via `ui-shot` across Mobile 375px, Tablet 768px, and Desktop 1280px in ~1.2s).
+3. **Calibrated Criticality Gating (3 Blast-Radius Zones)**: Eliminates conversational friction for low-risk tweaks (Green Zone: instant execution, zero debate), enforces design token harvesting on visual updates (Yellow Zone: 10/10 critique), and demands independent architectural deliberation with $\ge 2$ alternatives on high-risk decisions (Red Zone).
+4. **Independent Deliberation & Anti-Sycophancy**: Operates as an opinionated Principal Engineer. Replaces sycophantic flattery with evidence-based critiques and structured Micro-Justifications (<60 words) to prevent multi-turn transcript bloat.
+5. **The Zero-Idle Subagent Invariant**: Strict prohibition against single-subagent sequential idling. Sequential tasks execute immediately inline; subagents are reserved strictly as concurrent throughput multipliers ($\ge 2$) for decoupled tasks.
+6. **Master Plan Execution Engine**: Unified 3-mode execution (Hybrid, Sandboxed SDD, and Native Inline) with compaction recovery, disconnect revival, and watchdog protection.
+7. **Living Subsystem Architecture (`agent-docs/`)**: Eliminates unmaintainable documentation sprawl by organizing architecture into compact subsystem briefs protected by Git Commit SHA drift detection and a managed ideas backlog.
+8. **Token & Latency Hardening**: Plan atomicity caps (3–7 tasks), minimal context slicing (15–30 lines per subagent brief), 2-Failure circuit breakers against debugging thrashing, and targeted inner-loop test execution.
 
 ---
 
@@ -48,7 +50,7 @@ agy plugin install https://github.com/samwork64/hyperpowers
 *Or instruct your agent directly in chat:*
 > *"Install the Hyperpowers plugin from https://github.com/samwork64/hyperpowers and activate the full-stack engineering suite."*
 
-Antigravity automatically discovers all 21 skills, configures the rules engine in `rules/AGENTS.md`, and activates `hyperpowers:using-hyperpowers` on session bootstrap.
+Antigravity automatically discovers all 22 skills, configures the rules engine in `rules/AGENTS.md`, and activates `hyperpowers:using-hyperpowers` on session bootstrap.
 
 ---
 
@@ -164,14 +166,15 @@ flowchart LR
 
 ---
 
-## 🛠️ The Complete 21-Skill Suite
+## 🛠️ The Complete 22-Skill Suite
 
-Hyperpowers delivers 21 fully integrated, orthogonal skills organized into six functional pillars:
+Hyperpowers delivers 22 fully integrated, orthogonal skills organized into six functional pillars:
 
 ```mermaid
 flowchart TD
     subgraph UI["Visual & Design Intelligence"]
         FD["frontend-design"]
+        UE["ui-evolution"]
         UP["ui-ux-pro-max"]
         SC["shadcn"]
         IM["impeccable"]
@@ -218,11 +221,12 @@ flowchart TD
 | Pillar | Skill | Purpose & Core Invariant |
 | :--- | :--- | :--- |
 | **Visual Experience** | [`frontend-design`](skills/frontend-design/SKILL.md) | Tailored typography, domain-anchored aesthetics, 4-state coverage, ban AI visual clichés. |
+| **Visual Experience** | [`ui-evolution`](skills/ui-evolution/SKILL.md) | Token harvesting (zero redundant CSS), visual forensics, 10/10 self-critique with mockups. |
 | **Visual Experience** | [`ui-ux-pro-max`](skills/ui-ux-pro-max/SKILL.md) | Searchable local database: 79 styles, 192 product palettes, 74 font pairings, 119 UX guidelines. |
 | **Visual Experience** | [`shadcn`](skills/shadcn/SKILL.md) | Component composition, preset registry, design system architecture (`npx shadcn@latest add`). |
 | **Visual Experience** | [`impeccable`](skills/impeccable/SKILL.md) | Out-of-distribution craft floor, surface modes (*Operate*, *Read*, *Persuade*), tactile physics. |
 | **Visual Experience** | [`web-design-guidelines`](skills/web-design-guidelines/SKILL.md) | Vercel guidelines audit: tap targets ($\ge 44\times 44$px), keyboard navigation, WCAG AA compliance. |
-| **Visual Experience** | [`visual-verification`](skills/visual-verification/SKILL.md) | Headless CDP multi-viewport capture (`Mobile`, `Tablet`, `Desktop`, `--full-page`, `--scroll`). |
+| **Visual Experience** | [`visual-verification`](skills/visual-verification/SKILL.md) | Dual-Engine QA: Chrome DevTools interactive automation + headless `ui-shot` multi-viewport. |
 | **Autonomous Execution** | [`executing-plans`](skills/executing-plans/SKILL.md) | **Master Execution Engine**: Mode 1: Hybrid (default), Mode 2: Sandboxed SDD, Mode 3: Native Inline. |
 | **Autonomous Execution** | [`dispatching-parallel-agents`](skills/dispatching-parallel-agents/SKILL.md) | Orthogonal task parallelism: concurrent batch dispatch for decoupled dependency branches. |
 | **Autonomous Execution** | [`using-git-worktrees`](skills/using-git-worktrees/SKILL.md) | Isolated workspace creation on fresh branches to protect current working tree. |
@@ -235,9 +239,46 @@ flowchart TD
 | **Ideation & Architecture** | [`writing-plans`](skills/writing-plans/SKILL.md) | Atomic plans capped at 3–7 tasks. Phase splitting for large features. Reject plan dumping in chat. |
 | **Ideation & Architecture** | [`managing-agent-docs`](skills/managing-agent-docs/SKILL.md) | Living subsystem briefs in `agent-docs/modules/`, Git commit SHA drift guard, active ideas backlog. |
 | **Lifecycle & Meta** | [`finishing-a-development-branch`](skills/finishing-a-development-branch/SKILL.md) | Clean tree verification, idea backlog reconciliation, SHA updates, structured merge/PR creation. |
-| **Lifecycle & Meta** | [`using-hyperpowers`](skills/using-hyperpowers/SKILL.md) | Conversation entry point, capability routing matrix, and cross-harness tool resolution. |
+| **Lifecycle & Meta** | [`using-hyperpowers`](skills/using-hyperpowers/SKILL.md) | Universal prompt triage router (5 categories), criticality gating, and tool resolution. |
 | **Lifecycle & Meta** | [`writing-skills`](skills/writing-skills/SKILL.md) | Test-driven skill design, YAML frontmatter conformance, subagent verification. |
 | **Lifecycle & Meta** | [`diagnosing-hyperpowers`](skills/diagnosing-hyperpowers/SKILL.md) | Objective transcript log forensics, line-level evidence collection, diagnostic reporting. |
+
+---
+
+## 🎯 Calibrated Criticality Gating & Anti-Sycophancy
+
+AI coding models naturally suffer from RLHF sycophancy—they passively execute flawed user requests, duplicate existing CSS, and fail to question architectural consequences. When told to "deliberate", they often over-correct into conversational friction (debating simple color tweaks).
+
+Hyperpowers resolves this with **Calibrated Criticality Gating (3 Blast-Radius Zones)**:
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                        Incoming User Prompt                            │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+          ┌─────────────────────────┼─────────────────────────┐
+          ▼                         ▼                         ▼
+   [Green Zone: Low-Risk]    [Yellow Zone: UI/Component]   [Red Zone: Architectural]
+   • Explicit value tweaks   • Visual redesigns            • Schema, state, auth
+   • Typos, formatting       • Styling & interactions      • Greenfield features
+   ─────────────────────     ────────────────────────      ─────────────────────────
+   Action:                   Action:                       Action:
+   Execute immediately with  Audit existing CSS/tokens;    Compare ≥2 alternatives;
+   verification. ZERO debate. 5-axis 10/10 rating;        lead with recommendation
+                             state 2-line trade-off.       & trade-offs upfront.
+```
+
+- **Green Zone (Tactical / Low-Risk)**: Direct, unambiguous requests (*"Change padding to 12px"*, *"Rename variable"*). **Action: Execute immediately with syntax/build verification. Zero debate or friction.**
+- **Yellow Zone (UI & Component Evolution)**: Visual changes, modal refactors, new buttons. **Action: Audit codebase tokens first (*reuse first, extend second, invent never*), apply 5-axis 10/10 visual rating, and state a 2-line trade-off.**
+- **Red Zone (System & Architectural Decisions)**: Data models, API contracts, major refactors, state architecture. **Action: Compare $\ge 2$ alternatives, lead with the recommended default and trade-offs upfront, then invite user alignment.**
+
+### The Micro-Justification Schema (<60 Words)
+To prevent the agent from bloating chat context history with long-winded essays, all technical rationale must adhere to the high-density **Micro-Justification Schema**:
+```markdown
+- **Verdict**: [Optimal / Suboptimal / Duplicative]
+- **Why & Trade-offs**: [1-2 lines citing empirical facts: reusability, performance, or WCAG]
+- **Recommended Default**: [The opinionated path forward]
+```
 
 ---
 
@@ -266,7 +307,7 @@ Hyperpowers is engineered to protect context windows and prevent runaway agent t
 3. **Minimal Context Slicing**: When dispatching implementers, coordinators slice and pass **only the 15–30 line task brief and interface contracts**. Pasting full 200+ line implementation plans into subagents is strictly banned.
 4. **The 2-Failure Circuit Breaker**: If two consecutive fix attempts fail to resolve a bug or cause secondary regressions, agents **must stop immediately**, run `git checkout -- .` to restore a clean baseline, and re-trace signal paths or consult telemetry rather than guessing.
 5. **Log Output Density Guard**: Raw verbose build logs (1,000+ lines of compiler stdout) are prevented from flooding context. Agents use quiet flags (`pytest -q`, `cargo test -- -q`) and surgical error tail inspection (`tail -n 50`).
-6. **Compressed Frontmatter Metadata**: All 21 skill descriptions are compressed to high-density intent triggers, saving **~250 tokens per turn** on every prompt invocation.
+6. **Compressed Frontmatter Metadata**: All 22 skill descriptions are compressed to high-density intent triggers, saving **~250 tokens per turn** on every prompt invocation.
 7. **File-Level Syntax Sanity Gate (`check-syntax.py`)**: Before claiming completion or declaring "good to go", agents execute a $<100\text{ms}$ static parse across all modified files (`ast.parse`, `json.loads`, `node --check`, `bash -n`, TOML, YAML). This prevents common failures where focused test suites pass on module A while an un-imported module B or config file harbors a silent syntax error.
 
 ---
@@ -294,12 +335,19 @@ agent-docs/
 
 ---
 
-## 🔬 Headless Visual Testing Engine (`ui-shot`)
+## 🔬 Dual-Engine Visual Verification (`visual-verification`)
 
-Hyperpowers bundles an ephemeral, zero-leak visual testing engine at [`skills/visual-verification/scripts/ui-shot.cjs`](skills/visual-verification/scripts/ui-shot.cjs).
+Hyperpowers implements a dual-engine visual verification architecture that combines stateful interactive browser automation with zero-leak responsive auditing:
 
-- **Zero External Dependencies**: Pure Node.js 18+ utilizing native `fetch` and `WebSocket` communicating directly with Chrome/Edge DevTools Protocol (CDP).
-- **Zero Memory Leaks**: Launches lightweight `chrome-headless-shell` or headless browser, executes in ~1 second, and terminates cleanly with 100% memory reclamation.
+### Mode A: Stateful Interactive Automation (Chrome DevTools / CDP)
+For multi-step interactive workflows (modals, drawers, multi-field forms, responsive navigation menus, active interaction states):
+- **Single Warm Session**: Maintains 1 headless Chrome DevTools session across steps to inspect live DOM nodes, trigger events, verify computed CSS, and capture progressive screenshots (`before-open.png`, `drawer-opened.png`, `form-submitted.png`).
+- **Compulsory Session Teardown**: Mandates closing the page and terminating the browser process immediately upon test completion to guarantee zero background memory leaks.
+
+### Mode B: Ephemeral Multi-Viewport Auditing (`ui-shot`)
+For fast, zero-leak layout and responsive visual gates:
+- **Zero External Dependencies**: Pure Node.js 18+ bundled at [`skills/visual-verification/scripts/ui-shot.cjs`](skills/visual-verification/scripts/ui-shot.cjs) utilizing native `fetch` and `WebSocket` communicating directly with Chrome/Edge DevTools Protocol (CDP).
+- **Sub-Second Execution**: Launches lightweight `chrome-headless-shell` or headless browser, executes in ~1.2 seconds, and exits cleanly with 100% memory reclamation.
 - **Multi-Viewport Standard**:
   ```bash
   node skills/visual-verification/scripts/ui-shot.cjs http://localhost:3000 ./screenshots
