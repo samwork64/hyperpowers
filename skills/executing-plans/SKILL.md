@@ -78,13 +78,28 @@ Follow the protocol matching your selected execution mode:
 Inspect the next task's tag in the plan:
 
 #### Path A: Sequential Task (`[Sequential]`)
-Execute directly inline in the current session:
-1. **Domain Verification**:
-   - *Dynamic Logic / Contracts*: Strict TDD (`hyperpowers:test-driven-development`). Write failing test $\rightarrow$ implement $\rightarrow$ pass. Run **targeted test file** during the inner cycle (never run the whole multi-module suite on every line edit).
-   - *UI / Presentation*: Markup/CSS $\rightarrow$ multi-viewport visual check via `ui-shot` (Mobile 375px, Tablet 768px, Desktop 1280px+) $\rightarrow$ verify 0 console errors. No unit tests for static CSS/text.
-   - *Static / Config*: Modify $\rightarrow$ link check (`curl -sI`) $\rightarrow$ compiler/typecheck gate (`tsc --noEmit`, `py_compile`).
-2. **Commit**: Run verification command and commit (`git commit -m "feat([scope]): [description]"`).
-3. **Update Ledger**: Mark completed (`- [x]`) in the active task ledger.
+Execute directly inline in the current session following the **3-Phase Task Execution Gate**:
+
+1. **Pre-Task Skill Activation Gate**:
+   Inspect the bound `[Skill: <name>]` tag in the task ledger:
+   - `[Skill: test-driven-development]`: Write the failing test first (RED) before modifying product code. Test the actual contract boundary.
+   - `[Skill: ui-evolution]`: Harvest existing CSS/tokens first (*reuse first, invent never*); score visual changes against 5-axis rubric ($\ge 9/10$ floor).
+   - `[Skill: frontend-design]`: Anchor in physical subject matter; ban AI visual clichés; implement all 4 states (empty, skeleton, error, interactive).
+   - `[Skill: systematic-debugging]`: Formulate a falsifiable hypothesis before touching code.
+   - `[Skill: verification-before-completion]`: Run static parse checks (`check-syntax.py`) and compile gates.
+
+2. **Inner Execution & Domain Verification**:
+   - *Logic / Contracts*: Run **targeted test file** during the inner cycle (never run the whole test suite on every line edit).
+   - *UI / Presentation*: Multi-viewport visual check via `ui-shot` (Mobile 375px, Tablet 768px, Desktop 1280px+) or warm Chrome DevTools session. Zero console errors.
+   - *Static / Config*: Link check (`curl -sI`) + compiler/typecheck gate (`tsc --noEmit`, `py_compile`).
+
+3. **Post-Task Inline Code Review Gate (`requesting-code-review`)**:
+   - Before marking completed (`- [x]`) or committing, conduct a 15-second inline review against [`code-review-rubric.md`](../requesting-code-review/code-review-rubric.md):
+     - No orphan debugging statements or console logging.
+     - Contracts and error paths handled.
+     - WCAG AA contrast ($\ge 4.5:1$) and touch targets ($\ge 44\times 44$px) maintained.
+   - Commit atomic diff (`git commit -m "feat([scope]): [description]"`).
+   - Mark completed (`- [x]`) in the active task ledger artifact.
 
 #### Path B: Independent Batch (`[Parallel Batch N]`)
 Verify the decoupling invariants before dispatch:

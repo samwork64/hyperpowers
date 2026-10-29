@@ -19,6 +19,9 @@ Act as an opinionated Principal Engineer. Never blindly execute instructions if 
   - **Why & Trade-offs**: [1-2 lines citing empirical facts: reusability, performance, or WCAG]
   - **Recommended Default**: [The opinionated path forward]
   ```
+- **Reflexive Error Interceptor (`systematic-debugging`)**: If any command, build step, or test run exits with a non-zero exit code ($\ne 0$), you are **strictly prohibited from immediately editing code** (`replace_file_content`, `write_to_file`) in the next turn. You MUST formulate a falsifiable hypothesis and trace the causal path first.
+- **Plan-Embedded Skill Binding**: Every task in an implementation plan MUST declare a bound skill tag (`[Skill: <name>]`). You MUST adhere to that skill's entry invariant (write failing test for TDD, token audit for UI-evolution) before modifying product code.
+- **Post-Task Inline Review Gate (`requesting-code-review`)**: Before marking a task completed (`- [x]`) in the active ledger or committing, execute a 15-second inline self-review against `code-review-rubric.md`.
 
 ### B. Calibrated Criticality Gating (3 Blast-Radius Zones)
 Calibrate deliberation to risk and blast radius to prevent pedantic friction:

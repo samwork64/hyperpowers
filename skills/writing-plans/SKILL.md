@@ -35,8 +35,9 @@ Before reading dozens of raw source files:
 
 ---
 
-## 3. Task Right-Sizing & Concurrency Tagging
+## 3. Task Right-Sizing, Concurrency & Skill Binding
 
+### A. Concurrency Tagging
 Organize tasks so the execution engine knows what can run concurrently:
 
 | Concurrency Tag | Task Characteristics | Execution Target |
@@ -44,7 +45,19 @@ Organize tasks so the execution engine knows what can run concurrently:
 | **`[Sequential]`** | Modifies core interfaces, migrations, or shared foundation that subsequent tasks depend on. | Executed directly inline by the coordinator agent. |
 | **`[Parallel Batch N]`** | Independent tasks that touch disjoint files and have zero shared mutable state (e.g., separate scrapers, isolated test files, disjoint views). | Dispatched concurrently to parallel subagents. |
 
-### Plan Atomicity & Task Cap Rule (Token & Drift Guard)
+### B. Mandatory Plan-Embedded Skill Binding (`[Skill: <name>]`)
+To prevent mid-flight skill amnesia caused by context memory decay ("lost in the middle"), **every task must explicitly bind its operational skill**. Because the active task ledger (`task.md`) is re-read on every turn, the skill requirement remains pinned at the attention frontier:
+
+| Workload Domain | Bound Skill Tag | Mandatory Invariant During Task Execution |
+| :--- | :--- | :--- |
+| **Logic, State & APIs** | `[Skill: test-driven-development]` | Write failing test first (RED) before touching product code. |
+| **Existing UI Refactor** | `[Skill: ui-evolution]` | Harvest existing tokens first; 5-axis 10/10 score; visual mockup. |
+| **New UI Component** | `[Skill: frontend-design]` | Domain aesthetics; ban generic AI clichés; 4-state coverage. |
+| **Bug Fix & Investigation** | `[Skill: systematic-debugging]` | State falsifiable hypothesis before editing; 2-failure breaker. |
+| **Static / Config / Setup** | `[Skill: verification-before-completion]` | Static parse gate (`check-syntax.py`); typecheck & link checks. |
+| **Multi-Domain Research** | `[Skill: dispatching-parallel-agents]` | Concurrent read-only research batches (`TypeName: "research"`). |
+
+### C. Plan Atomicity & Task Cap Rule (Token & Drift Guard)
 * **Task Cap**: Limit implementation plans to **3 to 7 atomic tasks**.
 * **Phased Milestone Splitting**: If a feature requires >8 tasks, do **NOT** write a monolithic mega-plan. Sprawling plans exhaust context tokens, cause agents to hallucinate step boundaries, and invite compounding drift. Split into phased milestones (e.g., `Phase 1: Backend Foundation`, `Phase 2: UI & Views`). Execute and verify Phase 1 before planning Phase 2.
 * **Configuration Override**: Customize the task cap threshold via `execution.taskCap` in `hyperpowers.json` or `HYPERPOWERS_TASK_CAP` (default: 7).
@@ -65,36 +78,44 @@ Every plan artifact should follow this high-density layout:
 
 ## Concurrency & Execution Map
 - **Phase 1 [Sequential]**: Core schema / foundational interfaces (Task 1).
-- **Phase 2 [Parallel Batch 1]**: Independent modules (Tasks 2A, 2B, 2C) — Depends on: Task 1.
-- **Phase 3 [Sequential]**: Integration, wiring, and verification (Task 3) — Depends on: Phase 2.
+- **Phase 2 [Parallel Batch 1]**: Independent modules (Tasks 2A, 2B) — Depends on: Task 1.
+- **Phase 3 [Sequential]**: UI refactor & integration (Task 3) — Depends on: Phase 2.
 
 ---
 
 ## Tasks
 
-### Task 1: [Sequential] [Task Name]
+### Task 1: [Sequential] [Skill: test-driven-development] Core Auth Validator
 **Dependencies:** None  
 **Files:**
-- Create: `path/to/file.py`
-- Test: `tests/path/to/test.py`
+- Create: `src/auth.py`
+- Test: `tests/test_auth.py`
 
-- [ ] **Step 1**: Write failing test / define contract.
-- [ ] **Step 2**: Implement minimal code.
-- [ ] **Step 3**: Verify test passes (`pytest tests/path/to/test.py`) & commit.
+- [ ] **Step 1**: Write failing test / define contract (`pytest tests/test_auth.py`).
+- [ ] **Step 2**: Implement minimal code in `src/auth.py`.
+- [ ] **Step 3**: Verify test passes & inline code review against rubric.
 
-### Task 2A: [Parallel Batch 1] [Task Name]
+### Task 2A: [Parallel Batch 1] [Skill: test-driven-development] Scraper Module A
 **Dependencies:** Depends on Task 1  
 **Files:**
 - Create: `tools/scraper_a.py`
-- [ ] **Step 1**: Implement scraper for source A.
+- [ ] **Step 1**: Implement scraper A contract.
 - [ ] **Step 2**: Verify output (`python tools/scraper_a.py --test`) & commit.
 
-### Task 2B: [Parallel Batch 1] [Task Name]
+### Task 2B: [Parallel Batch 1] [Skill: test-driven-development] Scraper Module B
 **Dependencies:** Depends on Task 1  
 **Files:**
 - Create: `tools/scraper_b.py`
-- [ ] **Step 1**: Implement scraper for source B.
+- [ ] **Step 1**: Implement scraper B contract.
 - [ ] **Step 2**: Verify output (`python tools/scraper_b.py --test`) & commit.
+
+### Task 3: [Sequential] [Skill: ui-evolution] Refactor Settings View
+**Dependencies:** Depends on Tasks 2A, 2B  
+**Files:**
+- Modify: `src/views/settings.html`
+- [ ] **Step 1**: Harvest tokens; build Value Justification Table.
+- [ ] **Step 2**: Implement responsive layout updates.
+- [ ] **Step 3**: Capture multi-viewport checks (`ui-shot`) and verify 10/10 rating.
 ```
 
 ---

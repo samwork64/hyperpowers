@@ -310,6 +310,8 @@ Hyperpowers is engineered to protect context windows and prevent runaway agent t
 5. **Log Output Density Guard**: Raw verbose build logs (1,000+ lines of compiler stdout) are prevented from flooding context. Agents use quiet flags (`pytest -q`, `cargo test -- -q`) and surgical error tail inspection (`tail -n 50`).
 6. **Compressed Frontmatter Metadata**: All 22 skill descriptions are compressed to high-density intent triggers, saving **~250 tokens per turn** on every prompt invocation.
 7. **File-Level Syntax Sanity Gate (`check-syntax.py`)**: Before claiming completion or declaring "good to go", agents execute a $<100\text{ms}$ static parse across all modified files (`ast.parse`, `json.loads`, `node --check`, `bash -n`, TOML, YAML). This prevents common failures where focused test suites pass on module A while an un-imported module B or config file harbors a silent syntax error.
+8. **Plan-Embedded Skill Binding**: Every task in an implementation plan explicitly binds its operational skill tag (`[Skill: tdd]`, `[Skill: ui-evolution]`, `[Skill: systematic-debugging]`). Because the task ledger (`task.md`) is re-read on every turn, skill constraints stay pinned at the attention frontier, immune to mid-session context decay.
+9. **Reflexive Action Interceptors**: Non-zero command or test exits strictly ban reflexive file editing without formulating a causal hypothesis first (`systematic-debugging`). Every task completion requires a 15-second inline self-review against `code-review-rubric.md` before marking completed.
 
 ---
 
