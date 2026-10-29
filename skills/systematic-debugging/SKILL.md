@@ -55,6 +55,12 @@ Follow these five phases sequentially for any defect:
    - Find adjacent or historical code that works correctly under similar conditions.
    - Identify the exact delta in assumptions, invariants, or data flow between the broken and working states.
 
+3. **Concurrent Hypothesis Disproving (Parallel Gated Research)**:
+   - When the defect could plausibly originate from $\ge 2$ decoupled, non-overlapping subsystems (e.g., client storage corruption vs. backend cache eviction) and requires deep inspection of separate modules (>3 files each):
+     - Invoke `hyperpowers:dispatching-parallel-agents` with concurrent read-only subagents (`TypeName: "research"`).
+     - Each subagent verifies or disproves one specific hypothesis and returns a structured brief (<20 lines: Hypothesis, Evidence, Verdict).
+     - *Single-Trace Invariant*: Single-thread call-stack tracing (error $\rightarrow$ frame $\rightarrow$ caller) must execute **strictly inline**. Never spin up subagents for sequential stack traces.
+
 ---
 
 ### Phase 3: Domain-Adaptive Minimal Reproduction

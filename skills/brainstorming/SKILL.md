@@ -22,6 +22,7 @@ Before writing code or plans, discover what is actually needed and why. Calibrat
 
 - **Recommendation First, Not Open-Ended Deflection**: When asked for advice, never deflect with a question. Give your recommendation, technical reasoning, and trade-offs first, then invite their reaction.
 - **Empirical Grounding**: Ground all critiques and proposals in actual codebase facts, existing design tokens, or measurable standards (WCAG contrast, touch targets, bundle size).
+- **Parallel Architectural Spikes**: When comparing $\ge 2$ competing libraries, algorithms, or external patterns requiring deep documentation/source exploration (>3 files/URLs each), invoke `hyperpowers:dispatching-parallel-agents` to run concurrent read-only research subagents (`TypeName: "research"`). Synthesize findings using the Micro-Justification Schema (<60 words) to keep parent context clean.
 - **Sensible Defaults**: Propose concrete defaults in plain words. A default never mentioned is one the user cannot approve.
 - **Idea Capture & Backlog**: Log out-of-scope ideas to `agent-docs/ideas.md` (`- [ ] **[Area] Title**: Description`). Reconcile and prune obsolete ideas.
 - **Visual Companion**: Offer a visual companion or mockup whenever seeing layout, hierarchy, or flows clarifies requirements faster than text.

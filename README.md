@@ -228,14 +228,14 @@ flowchart TD
 | **Visual Experience** | [`web-design-guidelines`](skills/web-design-guidelines/SKILL.md) | Vercel guidelines audit: tap targets ($\ge 44\times 44$px), keyboard navigation, WCAG AA compliance. |
 | **Visual Experience** | [`visual-verification`](skills/visual-verification/SKILL.md) | Dual-Engine QA: Chrome DevTools interactive automation + headless `ui-shot` multi-viewport. |
 | **Autonomous Execution** | [`executing-plans`](skills/executing-plans/SKILL.md) | **Master Execution Engine**: Mode 1: Hybrid (default), Mode 2: Sandboxed SDD, Mode 3: Native Inline. |
-| **Autonomous Execution** | [`dispatching-parallel-agents`](skills/dispatching-parallel-agents/SKILL.md) | Orthogonal task parallelism: concurrent batch dispatch for decoupled dependency branches. |
+| **Autonomous Execution** | [`dispatching-parallel-agents`](skills/dispatching-parallel-agents/SKILL.md) | Orthogonal parallelism: concurrent batches for independent tasks & multi-domain research spikes. |
 | **Autonomous Execution** | [`using-git-worktrees`](skills/using-git-worktrees/SKILL.md) | Isolated workspace creation on fresh branches to protect current working tree. |
 | **Causal Quality** | [`test-driven-development`](skills/test-driven-development/SKILL.md) | RED-GREEN-REFACTOR cycle for dynamic logic and contracts. Targeted inner-loop test execution. |
-| **Causal Quality** | [`systematic-debugging`](skills/systematic-debugging/SKILL.md) | Causal root isolation, falsifiable hypotheses, test-polluter isolation, 2-Failure circuit breaker. |
+| **Causal Quality** | [`systematic-debugging`](skills/systematic-debugging/SKILL.md) | Causal root isolation, falsifiable hypotheses, concurrent hypothesis disproving, 2-Failure breaker. |
 | **Causal Quality** | [`verification-before-completion`](skills/verification-before-completion/SKILL.md) | Demand fresh empirical evidence across full domain matrix before making completion claims. |
 | **Symmetrical Review** | [`requesting-code-review`](skills/requesting-code-review/SKILL.md) | 6-axis audit against `code-review-rubric.md`. Fast inline self-review by default. |
 | **Symmetrical Review** | [`receiving-code-review`](skills/receiving-code-review/SKILL.md) | 4-quadrant technical deliberation over performative agreement. Push back on hallucinated feedback. |
-| **Ideation & Architecture** | [`brainstorming`](skills/brainstorming/SKILL.md) | Socratic intent discovery before coding. Lead with engineering trade-offs; capture ideas to `ideas.md`. |
+| **Ideation & Architecture** | [`brainstorming`](skills/brainstorming/SKILL.md) | Socratic intent discovery before coding. Lead with trade-offs; parallel architecture spikes. |
 | **Ideation & Architecture** | [`writing-plans`](skills/writing-plans/SKILL.md) | Atomic plans capped at 3–7 tasks. Phase splitting for large features. Reject plan dumping in chat. |
 | **Ideation & Architecture** | [`managing-agent-docs`](skills/managing-agent-docs/SKILL.md) | Living subsystem briefs in `agent-docs/modules/`, Git commit SHA drift guard, active ideas backlog. |
 | **Lifecycle & Meta** | [`finishing-a-development-branch`](skills/finishing-a-development-branch/SKILL.md) | Clean tree verification, idea backlog reconciliation, SHA updates, structured merge/PR creation. |
@@ -295,6 +295,7 @@ BANNED: Dispatching 1 subagent for a sequential task and sitting idle.
 - **Rule 1: Inline First**: If a task is sequential, execute it directly in the parent session. Inline execution provides immediate feedback, zero spin-up latency, and zero token waste.
 - **Rule 2: True Concurrency ($\ge 2$)**: Subagents are reserved strictly as throughput multipliers for concurrent batches touching disjoint files (`Subagents: [...]`), or heavy non-blocking background delegation.
 - **Rule 3: Fast Inline Review**: Coordinators review diffs inline against [`code-review-rubric.md`](skills/requesting-code-review/code-review-rubric.md) in seconds rather than launching another idle subagent reviewer.
+- **Rule 4: Hybrid Gated Research**: Single-trace debugging and quick lookups (<3 files) execute **strictly inline**. Dispatch concurrent read-only subagent batches (`Subagents: [A, B]`, `TypeName: "research"`) only when exploring $\ge 2$ orthogonal subsystems or competing architecture options to prevent parent context bloat.
 
 ---
 
