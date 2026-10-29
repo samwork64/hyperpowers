@@ -1,23 +1,23 @@
 ---
 name: shadcn
 description: Add, search, fix, and compose UI components using the shadcn CLI, component registries, and design system presets. Applies when working with shadcn/ui, components.json, or styling apps with shadcn.
-user-invocable: false
-allowed-tools: Bash(npx shadcn@latest *), Bash(pnpm dlx shadcn@latest *), Bash(bunx --bun shadcn@latest *)
 ---
 
 # shadcn/ui
 
-A framework for building ui, components and design systems. Components are added as source code to the user's project via the CLI.
+A framework for building UI, components, and design systems. Components are added as source code to the user's project via the CLI.
 
 > **IMPORTANT:** Run all CLI commands using the project's package runner: `npx shadcn@latest`, `pnpm dlx shadcn@latest`, or `bunx --bun shadcn@latest` — based on the project's `packageManager`. Examples below use `npx shadcn@latest` but substitute the correct runner for the project.
 
-## Current Project Context
+## Project Inspection
 
-```json
-!`npx shadcn@latest info --json`
+To inspect the project configuration and installed components, run:
+
+```bash
+npx shadcn@latest info --json
 ```
 
-The JSON above contains the project config and installed components. Use `npx shadcn@latest docs <component>` to get documentation and example URLs for any component.
+Use `npx shadcn@latest docs <component>` to get documentation and example URLs for any component.
 
 ## Principles
 

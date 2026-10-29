@@ -13,27 +13,24 @@ Review files for compliance with Web Interface Guidelines.
 
 ## How It Works
 
-1. Fetch the latest guidelines from the source URL below
-2. Read the specified files (or prompt user for files/pattern)
-3. Check against all rules in the fetched guidelines
+1. Fetch fresh guidelines from the remote URL, or use the bundled local fallback if offline or unreachable:
+   - Remote: `https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md` (via `read_url_content` or `curl -s`)
+   - Local Fallback: `references/guidelines.md` in this skill's directory
+2. Read the specified target files (or prompt user for files/pattern)
+3. Audit against all rules in the guidelines (tap targets $\ge 44\times 44$px, WCAG AA contrast, keyboard focus rings, layout stability)
 4. Output findings in the terse `file:line` format
 
 ## Guidelines Source
 
-Fetch fresh guidelines before each review:
-
-```
-https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md
-```
-
-Use WebFetch to retrieve the latest rules. The fetched content contains all the rules and output format instructions.
+- **Remote URL**: `https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md`
+- **Bundled Fallback**: `references/guidelines.md` (use when network is unavailable or rate-limited)
 
 ## Usage
 
 When a user provides a file or pattern argument:
-1. Fetch guidelines from the source URL above
+1. Load guidelines (remote or local fallback)
 2. Read the specified files
-3. Apply all rules from the fetched guidelines
-4. Output findings using the format specified in the guidelines
+3. Apply all rules from the guidelines
+4. Output findings using the `file:line` format
 
-If no files specified, ask the user which files to review.
+If no files are specified, ask the user which files or UI components to review.
