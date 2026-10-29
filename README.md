@@ -367,6 +367,14 @@ For fast, zero-leak layout and responsive visual gates:
   # Send raw CDP commands:
   node skills/visual-verification/scripts/ui-shot.cjs --cdp 'Emulation.setEmulatedMedia:{"media":"print"}' http://localhost:3000 ./screenshots
   ```
+- **Adaptive Full-Page Capture with Infinite Scroll Clamping**:
+  ```bash
+  # Pre-hydrates lazy images, auto-detects infinite scroll, and caps height safely:
+  node skills/visual-verification/scripts/ui-shot.cjs --full-page [--max-height 12000] http://localhost:3000 ./screenshots/fullpage.png
+  ```
+  - **Cold Layout Pre-Hydration**: Stepped pre-scrolling hydrates `loading="lazy"` images, triggers `IntersectionObserver` callbacks, and ensures font readiness before capture.
+  - **Infinite Scroll Protection**: Automatically detects dynamic/infinite scroll expansion and clamps rasterization to the initial document boundary or `--max-height` (default: 12,000px), preventing runaway memory and Skia texture crashes (>16,384px).
+  - **AI Agent Attribution Notice**: Emits a structured stdout notice informing the agent that full-page captures are composite renders, preventing false bug accusations on sticky headers or truncated feeds.
 
 ---
 

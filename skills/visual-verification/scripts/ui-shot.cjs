@@ -35,6 +35,7 @@ Usage:
 
 Options:
   --full-page              Capture full document height beyond the viewport
+  --max-height <pixels>    Maximum height cap for full-page capture (default: 12000)
   --scroll <target>        Scroll target: "bottom", "top", CSS selector (e.g. "#footer"), or pixels
   --scroll-y <pixels>      Scroll to specific Y offset in pixels
   --viewport <WxH>         Custom viewport dimensions (e.g. 1280x800)
@@ -89,6 +90,7 @@ function loadHyperpowersConfig() {
 const hpConfig = loadHyperpowersConfig();
 
 let fullPage = false;
+let maxFullPageHeight = (hpConfig && hpConfig.visual && hpConfig.visual.maxFullPageHeight) ? hpConfig.visual.maxFullPageHeight : 12000;
 let scrollTarget = null;
 let customViewport = null;
 let colorScheme = null;
@@ -105,6 +107,8 @@ for (let i = 0; i < args.length; i++) {
   const arg = args[i];
   if (arg === "--full-page") {
     fullPage = true;
+  } else if (arg === "--max-height") {
+    maxFullPageHeight = parseInt(args[++i], 10) || 12000;
   } else if (arg === "--scroll") {
     scrollTarget = args[++i];
   } else if (arg === "--scroll-y") {
@@ -474,11 +478,98 @@ class CdpSession {
     return await this.send(method, params);
   }
 
-  async screenshot(captureBeyondViewport = false, formatOpts = { format: "png" }) {
+  async prepareFullPageHydration(maxHeight = 12000) {
+    const expr = `(async () => {
+      const getScrollHeight = () => Math.max(
+        document.body ? document.body.scrollHeight : 0,
+        document.documentElement ? document.documentElement.scrollHeight : 0
+      );
+      const getClientWidth = () => Math.max(
+        document.documentElement ? document.documentElement.clientWidth : 0,
+        window.innerWidth || 0
+      );
+
+      const initialHeight = getScrollHeight();
+      const viewportHeight = window.innerHeight || 800;
+      const clientWidth = getClientWidth();
+
+      // Infinite scroll detection tracking
+      let previousHeight = initialHeight;
+      let heightExpansions = 0;
+      let infiniteScrollDetected = false;
+      let currentScrollY = 0;
+      const targetMaxHeight = Math.min(${maxHeight}, 16000); // Strict safety cap below Skia 16384 limit
+
+      // Stepped pre-scroll pass: hydrate loading="lazy", IntersectionObserver & content-visibility
+      while (currentScrollY < targetMaxHeight) {
+        currentScrollY += Math.floor(viewportHeight * 0.85);
+        window.scrollTo({ top: currentScrollY, behavior: "instant" });
+        await new Promise(r => setTimeout(r, 70));
+
+        const currentHeight = getScrollHeight();
+        if (currentHeight > previousHeight + 50) {
+          heightExpansions++;
+          if (heightExpansions >= 3) {
+            infiniteScrollDetected = true;
+            break; // Terminate pre-scroll immediately upon detecting infinite scroll
+          }
+        }
+        previousHeight = currentHeight;
+
+        if (currentScrollY >= currentHeight) {
+          break; // Reached bottom of finite page
+        }
+      }
+
+      // Restore scroll to top
+      window.scrollTo({ top: 0, behavior: "instant" });
+      if (document.fonts && document.fonts.ready) {
+        try { await document.fonts.ready; } catch (e) {}
+      }
+      await new Promise(r => setTimeout(r, 120));
+
+      const finalDocumentHeight = getScrollHeight();
+      const clampedHeight = infiniteScrollDetected
+        ? Math.min(initialHeight, targetMaxHeight)
+        : Math.min(finalDocumentHeight, targetMaxHeight);
+
+      return {
+        initialHeight,
+        finalDocumentHeight,
+        clampedHeight: Math.max(clampedHeight, viewportHeight),
+        clientWidth: Math.max(clientWidth, 320),
+        infiniteScrollDetected,
+        hitMaxHeightLimit: finalDocumentHeight > targetMaxHeight
+      };
+    })()`;
+
+    const res = await this.send("Runtime.evaluate", {
+      expression: expr,
+      awaitPromise: true,
+      returnByValue: true
+    });
+
+    if (res.result && res.result.value) {
+      return res.result.value;
+    }
+    return {
+      initialHeight: 900,
+      finalDocumentHeight: 900,
+      clampedHeight: 900,
+      clientWidth: 1440,
+      infiniteScrollDetected: false,
+      hitMaxHeightLimit: false
+    };
+  }
+
+  async screenshot(captureBeyondViewport = false, formatOpts = { format: "png" }, clipRect = null) {
     const params = {
       format: formatOpts.format || "png",
       captureBeyondViewport: Boolean(captureBeyondViewport)
     };
+    if (clipRect) {
+      params.clip = clipRect;
+    }
     if (formatOpts.quality !== undefined) {
       params.quality = formatOpts.quality;
     }
@@ -646,9 +737,35 @@ async function main() {
 
     await runSession(vpConfig, async (session) => {
       console.log(`[ui-shot] Capturing screenshot (format=${formatOpts.format}, fullPage=${fullPage})...`);
-      const buf = await session.screenshot(fullPage, formatOpts);
+      let clipRect = null;
+      let fullPageMeta = null;
+
+      if (fullPage) {
+        console.log(`[ui-shot] Running adaptive pre-scroll hydration (maxHeight=${maxFullPageHeight}px)...`);
+        fullPageMeta = await session.prepareFullPageHydration(maxFullPageHeight);
+        clipRect = {
+          x: 0,
+          y: 0,
+          width: fullPageMeta.clientWidth,
+          height: fullPageMeta.clampedHeight,
+          scale: 1
+        };
+
+        if (fullPageMeta.infiniteScrollDetected) {
+          console.warn(`[ui-shot] Warning: Dynamic/infinite scroll detected. Clamped capture to initial boundary (${fullPageMeta.clampedHeight}px) to prevent runaway memory allocation.`);
+        } else if (fullPageMeta.hitMaxHeightLimit) {
+          console.warn(`[ui-shot] Warning: Page height (${fullPageMeta.finalDocumentHeight}px) exceeds max limit (${maxFullPageHeight}px). Clamped to ${fullPageMeta.clampedHeight}px.`);
+        }
+      }
+
+      const buf = await session.screenshot(fullPage, formatOpts, clipRect);
       fs.writeFileSync(targetFile, buf);
       console.log(`  ✓ Saved: ${targetFile} (${(buf.length / 1024).toFixed(1)} KB)`);
+
+      if (fullPage && fullPageMeta) {
+        console.log(`[ui-shot] ℹ️ Agent Notice: Full-page capture generated (${fullPageMeta.clientWidth}x${fullPageMeta.clampedHeight}px).`);
+        console.log(`[ui-shot] ℹ️ Composite Notice: This screenshot captures long-scroll content (infiniteScroll=${fullPageMeta.infiniteScrollDetected}). Truncated dynamic feeds or fixed headers are capture artifacts, not CSS bugs. Verify standard viewports (mobile/desktop) for pixel-exact layout inspection.`);
+      }
     });
 
     console.log("[ui-shot] Done. Process terminated cleanly.");

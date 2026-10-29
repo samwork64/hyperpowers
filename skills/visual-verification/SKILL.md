@@ -120,6 +120,46 @@ async function testInteractiveFlow(url, outDir) {
 }
 ```
 
+### Pattern 3: Direct CDP Full-Page Capture (With Infinite Scroll Clamping)
+When capturing full-page views directly in headless CDP sessions or Chrome DevTools MCP, never issue a naive `captureBeyondViewport: true` screenshot. Cold layouts leave lazy-loaded images (`loading="lazy"`, `IntersectionObserver`) unrendered, and infinite-scroll feeds crash Chromium at the 16,384px texture limit.
+
+Execute this universal pre-hydration and clamping sequence:
+```javascript
+// 1. Evaluate pre-hydration & detect infinite scroll
+const meta = await session.evaluateCode(`(async () => {
+  const getScrollHeight = () => Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+  const initialHeight = getScrollHeight();
+  const vh = window.innerHeight || 800;
+  const maxCap = 12000; // Cap safely below Skia 16384px texture limit
+  let prevH = initialHeight, expansions = 0, isInfinite = false, y = 0;
+
+  // Stepped pre-scroll triggers loading="lazy" & IntersectionObserver
+  while (y < maxCap) {
+    y += Math.floor(vh * 0.85);
+    window.scrollTo({ top: y, behavior: "instant" });
+    await new Promise(r => setTimeout(r, 70));
+    const curH = getScrollHeight();
+    if (curH > prevH + 50 && ++expansions >= 3) { isInfinite = true; break; }
+    prevH = curH;
+    if (y >= curH) break;
+  }
+  window.scrollTo({ top: 0, behavior: "instant" });
+  if (document.fonts?.ready) await document.fonts.ready;
+  return {
+    width: Math.max(document.documentElement.clientWidth, window.innerWidth),
+    height: Math.min(isInfinite ? initialHeight : getScrollHeight(), maxCap),
+    isInfinite
+  };
+})()`);
+
+// 2. Capture native rasterization clipped to safe height
+const snap = await send("Page.captureScreenshot", {
+  format: "png",
+  captureBeyondViewport: true,
+  clip: { x: 0, y: 0, width: meta.width, height: meta.height, scale: 1 }
+});
+```
+
 ---
 
 ## 2. Mode B: Ephemeral Multi-Viewport Audit (`ui-shot`)
@@ -139,7 +179,10 @@ node <path-to-hyperpowers>/skills/visual-verification/scripts/ui-shot.cjs http:/
 *(Captures Mobile, Tablet, and Desktop in parallel in ~1.2 seconds and exits immediately).*
 
 ### Targeted Fast Captures:
-* **Full-Page Tall View**: `ui-shot --full-page http://localhost:3000 ./screenshots/fullpage.png`
+* **Full-Page Tall View (Adaptive Clamping)**: `ui-shot --full-page [--max-height 12000] http://localhost:3000 ./screenshots/fullpage.png`
+  - Stepped pre-scroll hydrates lazy images and triggers `IntersectionObserver`.
+  - Auto-detects infinite scroll and clamps to initial height to prevent runaway memory allocation.
+  - Emits structured `[ui-shot] ℹ️ Agent Notice` in stdout to prevent hallucinated CSS bugs on sticky headers.
 * **Smart Scrolling**: `ui-shot --scroll bottom http://localhost:3000 ./screenshots/footer.png`
 * **Dark / Light Mode**: `ui-shot --dark http://localhost:3000 ./screenshots/dark_mode.png`
 
