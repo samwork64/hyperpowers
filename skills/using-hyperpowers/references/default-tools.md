@@ -14,8 +14,7 @@ Hyperpowers skills declare abstract actions ("dispatch a subagent", "create a pl
 | **File Read** | Native file reading tool (`view_file`, `read_file`) or `cat` / `head` | Inspect full file or line ranges. |
 | **File Edit / Patch** | Native edit tool (`replace_file_content`, `edit_file`, `patch`) | Make targeted, surgical replacements. |
 | **Shell Commands** | Native shell tool (`run_command`, `bash`, `terminal`) | Run test runners (`pytest`, `npm test`, `cargo test`), linters, and git commands. |
-| **Search & Discovery** | Native search tool (`grep`, `glob`, `find`) | Discover symbols, find usages, inspect directory trees. |
-| **Visual UI Verification** | `ui-shot` CLI (`~/.local/bin/ui-shot`) or headless browser script | Capture ephemeral screenshots at 375px (Mobile), 768px (Tablet), and 1280px+ (Desktop). Never leave persistent browser processes running. |
+| **Visual UI Verification** | Chrome DevTools / CDP session script or `ui-shot` CLI (`~/.local/bin/ui-shot`) | Maintain 1 session for interactive UI flows; capture multi-viewport layouts (375px, 768px, 1280px+). Explicitly close browser sessions before ending turn. |
 
 ---
 

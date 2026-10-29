@@ -57,7 +57,7 @@ Apply the verification standard tailored to the project domain:
 | **CLI & Tools** | Exit code 0 on success; distinct non-zero exit codes on bad inputs; clean `stdout` vs `stderr` separation; pipe compatibility. | Command printed help text; assumption that script runs without error. |
 | **Systems & Native** | Clean compilation with zero compiler warnings (`-Wall`), zero sanitizer violations (ASan/TSan), and clean typechecks. | Linter passed (linter does not verify compilation or memory safety). |
 | **Libraries & SDKs** | Public export types compile cleanly (`tsc --noEmit`, `mypy`), package bundles without warnings, and backward compatibility is preserved. | Internal tests pass but exported index types are broken. |
-| **Client UI & Web** | Multi-viewport check via `ui-shot` (Mobile 375px, Tablet 768px, Desktop 1280px+); interactive click/state verification; **zero** console errors/warnings. | "CSS looks right in editor"; unit tests pass while UI is clipped or overflowing. |
+| **Client UI & Web** | Chrome DevTools interactive session (for stateful menus, modals, forms) or multi-viewport check via `ui-shot` (Mobile 375px, Tablet 768px, Desktop 1280px+); interactive click/state verification; **zero** console errors/warnings. | "CSS looks right in editor"; unit tests pass while UI is clipped or overflowing. |
 | **Configuration & Ops** | Schema validation clean, service health endpoint returns 200, environment variables load with expected defaults. | Config file syntax highlighted cleanly in editor. |
 
 ---
@@ -77,6 +77,6 @@ Regardless of domain, **every** code change must satisfy static validation befor
 | :--- | :--- |
 | *"Should pass now."* | Run the command. Evidence is the only currency. |
 | *"Linter passed, so build is fine."* | Linters check style; compilers check structural validity and types. Run the build. |
-| *"The unit test passed, so the UI works."* | Unit tests cannot see rendered pixels, CSS overflow, or layout clipping. Run `ui-shot`. |
+| *"The unit test passed, so the UI works."* | Unit tests cannot see rendered pixels, CSS overflow, or layout clipping. Run Chrome DevTools session or `ui-shot`. |
 | *"The diff looks clean."* | Code syntax can look perfect while failing at runtime. Run verification. |
 | *"I'm confident in this change."* | Confidence is an emotion; verification is an empirical observation. Provide the output. |

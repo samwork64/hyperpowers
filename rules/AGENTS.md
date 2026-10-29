@@ -29,11 +29,12 @@ Follow this pipeline whenever designing, creating, or modifying user interfaces:
 3. **Stage 3: Judgment-First Verification (Logic TDD vs. Visual Verification vs. Compile Gate)**:
    - **Evaluate the Real Failure Mode First**:
      - *Dynamic Logic & Contracts (TDD)* (`hyperpowers:test-driven-development`): Apply to functions that compute, transform schemas, generate URLs with parameters, or manage state. Test the real contract: parameter encoding, boundary edge cases, and schema conformity.
-     - *Visual Layout & Responsive Flow (Visual Verification)*: Apply to CSS/Tailwind styling, layout spacing, typography, theme colors, and responsive flow. Verify visually in real viewports via `ui-shot`. Avoid unit tests that merely assert static DOM nodes or text exist (test theater).
-     - *Static URLs, Copy & Maintenance (Compile & Link Gate)*: Apply to static link corrections, typo fixes, copy adjustments, and configuration changes. Zero unit tests needed. Verify with static analysis (`tsc`, `py_compile`, `eslint`) and link reachability (`curl -sI`).
+      - *Visual Layout & Responsive Flow (Visual Verification)*: Apply to CSS/Tailwind styling, layout spacing, typography, theme colors, and responsive flow. Verify visually in real viewports via Chrome DevTools session or `ui-shot`. Avoid unit tests that merely assert static DOM nodes or text exist (test theater).
+      - *Static URLs, Copy & Maintenance (Compile & Link Gate)*: Apply to static link corrections, typo fixes, copy adjustments, and configuration changes. Zero unit tests needed. Verify with static analysis (`tsc`, `py_compile`, `eslint`) and link reachability (`curl -sI`).
    - **Universal Build Invariant**: Every change, regardless of category, must pass compilation, type-check, and lint passes before completion.
-4. **Stage 4: Multi-Viewport Visual Auditing & Craft Polish** (`web-design-guidelines` + `impeccable`):
-   - **Multi-Viewport Visual Gate**: Run `ui-shot <url> ./screenshots` to capture and inspect:
+4. **Stage 4: Chrome DevTools Automation & Visual Auditing** (`web-design-guidelines` + `impeccable`):
+   - **Mode A: Stateful Interactive Automation**: For multi-step UI testing (drawers, modals, forms, tabs), maintain 1 warm Chrome DevTools / CDP session. Perform actions (click, fill, toggle), inspect live DOM/CSS, and capture progressive screenshots across states. **Compulsory Cleanup**: Always close the page and terminate the browser session before completing the turn.
+   - **Mode B: Multi-Viewport Responsive Gate**: Run `ui-shot <url> ./screenshots` to capture and inspect standard viewports in ~1.2s:
      - **Mobile** (375px - 414px): Check touch target sizes (≥ 44×44px), zero horizontal overflow, proper column stacking, no text clipping (`preview-mobile.png`).
      - **Tablet** (768px - 834px): Check navigation collapse, grid/flex wrapping, and responsive layout transitions (`preview-tablet.png`).
      - **Desktop** (1280px+): Check max-width constraints, optical balance, whitespace rhythm, and typographic scale (`preview-desktop.png`).
@@ -42,10 +43,6 @@ Follow this pipeline whenever designing, creating, or modifying user interfaces:
      - For landing pages or tall views: `ui-shot --full-page <url> ./screenshots/fullpage.png`
      - For footers or scrolled states: `ui-shot --scroll bottom <url> ./screenshots/footer.png` (smart multi-pass scroll handles window, nested overflow containers, and disables CSS smooth-scroll delay).
      - For targeted scroll: `ui-shot --scroll "#element-id" <url>` or `ui-shot --scroll-y 1200 <url>`.
-   - **Interactive State, Custom Evaluation & Direct CDP**:
-     - Execute DOM actions before snapshot: `ui-shot --eval 'document.querySelector("#btn").click()' <url>`
-     - Send raw CDP methods directly: `ui-shot --cdp 'Emulation.setEmulatedMedia:{"media":"print"}' <url>`
-     - Multiple `--eval` and `--cdp` flags can be chained to stage complex UI states before capturing.
    - **Visual Quality & Cleanliness**: Check alignment, WCAG 4.5:1 contrast, optical rhythm, and micro-interactions (hover, focus, active, disabled).
    - **Interactive Smoke & Console Check**: Actively verify states and confirm zero unhandled console warnings, errors, or hydration mismatches.
 
@@ -79,9 +76,10 @@ Follow this pipeline whenever designing, creating, or modifying user interfaces:
 
 Prevent orphan processes, memory bloat, and port conflicts by following these invariants:
 
-1. **Visual Verification Tooling**:
-   - **Paved Path**: Always use `ui-shot` (backed by `chrome-headless-shell` with ephemeral CDP). It executes in ~1 second, frees 100% of memory on exit, and leaves zero background processes or tabs.
-   - Do NOT launch full desktop browsers (Brave, Firefox) in the background for screenshots, as their renderer and GPU helper processes leak gigabytes of RAM.
+1. **Visual Verification & Automation Tooling**:
+   - **Chrome DevTools / CDP Automation**: For interactive UI flows (drawers, modals, forms, tabs), maintain 1 warm headless session. Perform actions, inspect DOM/CSS, and capture progressive screenshots across states.
+   - **Fast Responsive Auditing**: Use bundled `ui-shot` (backed by `chrome-headless-shell` with ephemeral CDP) for quick 3-viewport layout checks. It captures Mobile, Tablet, and Desktop in ~1.2s and frees 100% of memory on exit.
+   - Do NOT launch full desktop GUI browsers (Brave, Firefox, Chrome desktop) in the background for automated tests, as their renderer and GPU helper processes leak gigabytes of RAM.
 2. **Ephemeral Dev Servers (Verification Only)**:
    - When launching a dev server solely to capture screenshots or run visual tests, bind its lifecycle to the command using a trap or process group:
      ```bash
@@ -95,8 +93,8 @@ Prevent orphan processes, memory bloat, and port conflicts by following these in
 3. **Persistent Dev Servers (Development Mode)**:
    - Before launching a dev server for user interaction, check whether a process is already listening on the target port (`ss -tulpn | grep :<port>` or `lsof -i :<port>`).
    - If a dev server is already running on the expected port, reuse it. Do not spawn duplicate instances that cascade onto ports 3001, 3002, 5174, etc.
-4. **Interactive Browser Tabs (`browser-mcp`)**:
-   - When interactive user testing in Chrome is needed via `browser-mcp`, always call `browser_close_tab` as soon as the test or data extraction is finished. Never leave tabs open across agent turns.
+4. **Mandatory Interactive Session Teardown**:
+   - Whenever maintaining an interactive browser session (via `chrome-devtools` MCP, direct CDP script, or `browser-mcp`), always close the page / session (`close_page`, `browser_close_tab`, or process kill) as soon as the test sequence finishes. Never leave tabs or headless Chrome processes running across agent turns.
 
 ## 3. Antigravity Tool Mappings
 - **Planning**: Use built-in `/plan` slash command or plan/task artifacts (`write_to_file` in artifact directory) rather than writing ad-hoc files to the repository. **Zero Textual Duplication**: never dump full plan text into the chat.

@@ -111,8 +111,8 @@ Select task steps based on the **failure mode**:
 ### B. UI & Presentation Tasks (Visual Verification)
 * Styling, layout, HTML/JSX, responsive flow.
 * No unit tests for static text or CSS classes.
-* Multi-viewport inspection via `ui-shot` (Mobile 375px, Tablet 768px, Desktop 1280px+) + 0 console errors.
-* Mandatory exact capture command: e.g. `ui-shot http://localhost:3000/orders ./screenshots`.
+* Chrome DevTools interactive session (for stateful menus, modals, forms) or multi-viewport inspection via `ui-shot` (Mobile 375px, Tablet 768px, Desktop 1280px+) + 0 console errors.
+* Mandatory exact capture or test command: e.g. `ui-shot http://localhost:3000/orders ./screenshots` or DevTools session script.
 
 ### C. Static & Maintenance Tasks (Compile & Link Gate)
 * URL fixes, config updates, typo fixes.
@@ -132,7 +132,7 @@ After saving the plan artifact:
    - Provide a concise 3–5 bullet summary covering:
      - The atomic tasks to be executed.
      - Files to be modified.
-     - The verification strategy (tests, `ui-shot` viewports, `check-syntax.py`).
+     - The verification strategy (tests, Chrome DevTools/`ui-shot` viewports, `check-syntax.py`).
 3. **Explicitly Request Plan Approval**:
    > *"I have prepared the implementation plan: `[plan location]`. Would you like me to proceed with execution (Hybrid Mode), or would you like to review and adjust any tasks first?"*
 4. **Wait for User Approval**: Execution begins ONLY in the next turn after the user explicitly confirms or approves the plan.

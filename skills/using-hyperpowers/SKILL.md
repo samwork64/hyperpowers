@@ -73,7 +73,7 @@ Invoke the appropriate process skill before jumping into code or raw execution:
 | **Component composition, registry & presets** | `hyperpowers:shadcn` | Component scaffolding, registry discovery (`npx shadcn@latest add`), preset design systems. |
 | **Out-of-distribution craft floor & UX polish** | `hyperpowers:impeccable` | Surface modes (*Operate*, *Read*, *Persuade*), tactile physics, micro-interactions, `DESIGN.md`. |
 | **Web Interface Guidelines & a11y audit** | `hyperpowers:web-design-guidelines` | Vercel guidelines compliance, tap targets ($\ge 44\times 44$px), keyboard navigation, WCAG AA. |
-| **Multi-viewport visual QA & screenshots** | `hyperpowers:visual-verification` | Ephemeral headless CDP capture (Mobile/Tablet/Desktop/Full-Page) via `ui-shot.cjs`. |
+| **Chrome DevTools automation & visual QA** | `hyperpowers:visual-verification` | Stateful Chrome DevTools sessions for UI flows + multi-viewport responsive checks via `ui-shot`. |
 | **Multi-step implementation planning** | `hyperpowers:writing-plans` | Break work into bite-sized tasks with domain-specific verification. Prefer native plan tools. |
 | **Executing plan (Master Engine: Hybrid / SDD / Inline)** | `hyperpowers:executing-plans` | Mode 1: Hybrid (default), Mode 2: Sandboxed SDD, Mode 3: Native Inline. Zero-idle invariant. |
 | **Parallel orthogonal tasks** | `hyperpowers:dispatching-parallel-agents` | Analyze dependency graph; dispatch concurrent subagents only when decoupled. |
@@ -109,7 +109,7 @@ Subagents are throughput multipliers for concurrent and isolated workloads. They
 Skills declare abstract actions (*Plan Storage*, *Task Tracking*, *Subagent Dispatch*, *Code Review*, *Domain Verification*). Detect your current agent platform and resolve these actions to the most capable native tools available:
 
 1. **Platform Reference Mappings**:
-   - **Google Antigravity (`agy`)**: [antigravity-tools.md](references/antigravity-tools.md) — Plan/Task Artifacts, `invoke_subagent` batch arrays, `schedule` watchdog, `ui-shot`.
+   - **Google Antigravity (`agy`)**: [antigravity-tools.md](references/antigravity-tools.md) — Plan/Task Artifacts, `invoke_subagent` batch arrays, `schedule` watchdog, Chrome DevTools / `ui-shot`.
    - **Claude Code (`claude`)**: [claude-code-tools.md](references/claude-code-tools.md) — Native Plan Mode, `TodoWrite` / `TodoRead`, `Agent` tool.
    - **OpenAI Codex (`codex`)**: [codex-tools.md](references/codex-tools.md) — `spawn_agent` V2, `followup_task`, `wait_agent` event subscription.
    - **Gemini CLI (`gemini`)**: [gemini-tools.md](references/gemini-tools.md) — `enter_plan_mode`, `write_todos` / `tracker_*`, `invoke_agent` (`@generalist`).

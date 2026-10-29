@@ -8,8 +8,7 @@ Hyperpowers skills declare abstract actions ("dispatch a subagent", "plan tasks"
 | **Task Tracking** | **Task Artifact** maintained via `write_to_file` and updated with `replace_file_content`. | Toggle `- [ ]` to `- [x]` as tasks complete. Do **not** use `manage_task` (which is exclusively for background shell processes). |
 | **Subagent Dispatch** | `invoke_subagent` tool. | **Zero-Idle Invariant:** Never dispatch a single subagent for a sequential task and wait idle. Dispatch concurrent batches (`Subagents: [...]`) for independent tasks. |
 | **Code Review** | **Inline Self-Review** against rubric (Default) or parallel `invoke_subagent`. | Inspect `git diff BASE..HEAD` directly against rubric in current turn in seconds; reserve subagents for parallel multi-module auditing. |
-| **Visual Verification** | `ui-shot` CLI (`~/.local/bin/ui-shot`). | Use ephemeral CDP screenshots (Mobile 375px, Tablet 768px, Desktop 1280px+). Never leave persistent browser tabs running. |
-| **Interactive Testing** | `browser-mcp` (Lazy tools). | If deep browser interaction is needed, always invoke `browser_close_tab` before ending turn. |
+| **Visual Verification & UI Automation** | Chrome DevTools session or `ui-shot` CLI (`~/.local/bin/ui-shot`). | Keep 1 warm session during interactive UI testing; capture multi-viewport layouts (375px, 768px, 1280px+). Explicitly close sessions/tabs before ending turn. |
 
 ---
 
