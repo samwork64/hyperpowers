@@ -16,8 +16,10 @@
   ```
 
 ## 3. Repository Invariants & Hard Bans
-- **Zero Path Leaks**: NEVER commit machine-specific paths (`/home/sam`, `/Users/...`). Verify with:
-  `git diff | grep -i "/home/sam"`
+- **Zero Path Leaks**: NEVER commit machine-specific paths (e.g. personal home directories). Verify with:
+  `git diff | grep -E "/home/|/Users/"`
+- **Cross-Harness Portability**: Hyperpowers runs across multiple agent harnesses (Antigravity, Claude Code, Codex, Cursor). Never hardcode harness-exclusive assumptions without providing universal CLI fallbacks.
+- **Token Stewardship & High-Density Authoring**: Maximize signal-to-token ratio. Use structured tables, compact schemas, and checklists over prose. Keep skills lean and rely on on-demand progressive disclosure.
 - **Strict Skill Frontmatter**: Every `skills/<name>/SKILL.md` MUST maintain valid YAML frontmatter (`name`, `description`).
 - **Syntax Gate**: Every file change MUST pass `check-syntax.py` before completion.
 - **Single Root Anchor Rule**: Do not generate duplicate instruction files (`CLAUDE.md` and `AGENTS.md`) in downstream target projects.
