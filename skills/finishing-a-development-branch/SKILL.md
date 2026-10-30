@@ -35,8 +35,8 @@ If uncommitted files remain, commit or stash them before proceeding.
   BASE_BRANCH=$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || echo "main")
   ```
 
-### Step 4: Root Invariants & Agent-Docs Maintenance Gate
-Maintain persistent architectural memory before merging:
+### Step 4: Root Invariants & Agent-Docs Maintenance Gate (`managing-agent-docs`)
+Maintain persistent architectural memory via `hyperpowers:managing-agent-docs` before merging:
 1. **Audit Tier 1 Root Invariant (Dynamic Resolution)**:
    - Identify the project's single active root instruction file (`AGENTS.md`, `CLAUDE.md`, or `.cursorrules`):
      ```bash

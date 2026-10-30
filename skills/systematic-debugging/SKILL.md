@@ -67,14 +67,15 @@ Follow these five phases sequentially for any defect:
 
 Reproduce the issue using the highest-fidelity, lowest-noise harness matching the domain:
 
-| **Logic, State & APIs** | Minimal automated unit/integration test. | Test fails with exact expected failure mode (RED). |
-| **Test Pollution (Order Flakiness)** | Run binary search with [find-polluter.sh](find-polluter.sh) when a test passes in isolation but fails in the suite. | Identifies the polluting test that leaks global state or unclosed sockets. |
+| **Logic, State & APIs** | Minimal automated unit/integration test via `hyperpowers:test-driven-development`. | Test fails with exact expected failure mode (RED). |
+| **Test Pollution (Order Flakiness)** | Run binary search with [find-polluter.sh](scripts/find-polluter.sh) when a test passes in isolation but fails in the suite. | Identifies the polluting test that leaks global state or unclosed sockets. |
 | **Concurrency & Races** | Deterministic stress script or focused timing harness. | Reliable trigger showing contention or interleaved state. |
 | **Build & Toolchain** | Isolated minimal reproduction command or environment check. | Clean reproduction of compiler/linker error without unrelated project noise. |
 | **CLI & Systems** | Targeted shell invocation with controlled flags/stdin/piping. | Exact non-zero exit code or corrupted stream output observed. |
 | **UI & Layout** | Multi-viewport inspection (`ui-shot`) or minimal DOM state harness. | Visual artifact capturing clipping, overlap, or console warning. |
 
 *If you cannot reproduce the issue:* Gather more telemetry and diagnostic instrumentation at component boundaries. Do not guess or fix blind.
+*Test-Driven Fix Handoff:* Once the minimal reproduction test is established, follow `hyperpowers:test-driven-development` to implement the minimal fix (GREEN) and refactor safely.
 
 ---
 
@@ -113,3 +114,11 @@ Reproduce the issue using the highest-fidelity, lowest-noise harness matching th
 | *"Quick patch now, investigate later."* | Symptom patches become permanent technical debt and obscure the real bug. |
 | *"It only happens intermittently, so let's add a sleep."* | Sleep masks race conditions. Fix synchronization, locking, or lifecycle ordering. |
 | *"The test failed, so let me update the test expectation."* | Unless the requirements changed, modifying tests to match broken output is test evasion. |
+
+---
+
+## 6. Deep-Dive References
+
+- [root-cause-tracing.md](references/root-cause-tracing.md) — Comprehensive causal mapping protocols and bisecting polluters.
+- [condition-based-waiting.md](references/condition-based-waiting.md) — Eliminating flaky timeouts and sleeps with condition-based waiting patterns.
+- [defense-in-depth.md](references/defense-in-depth.md) — Enforcing structural safety boundaries across architecture layers.

@@ -10,7 +10,7 @@ Hyperpowers skills declare abstract actions ("dispatch a subagent", "create a pl
 | **Design / Spec Storage** | Markdown file: `docs/specs/YYYY-MM-DD-<topic>-design.md` or `.specs/<topic>.md` | Store design specification in project docs before planning. |
 | **Task Tracking** | Markdown checklist (`- [ ]` $\rightarrow$ `- [x]`) in the plan file or project `TODO.md` | Update the checklist using standard file edit tools as each task passes verification. Bundled helper scripts (`task-start`, `task-done`) may also be used. |
 | **Subagent Dispatch** | Platform agent tool if installed; **otherwise execute sequentially inline** | **The Zero-Idle Invariant:** If no subagent tool is available, do **not** invent nonexistent tools. Execute tasks sequentially inline in the active session. If subagents exist, dispatch only for independent parallel batches. |
-| **Code Review** | **Inline Self-Review** against rubric in current turn | Coordinator inspects `git diff BASE..HEAD` directly against the [code-reviewer.md](../../requesting-code-review/code-reviewer.md) rubric in seconds. |
+| **Code Review** | **Inline Self-Review** against rubric in current turn | Coordinator inspects `git diff BASE..HEAD` directly against the [code-reviewer.md](../../requesting-code-review/references/code-reviewer.md) rubric in seconds. |
 | **File Read** | Native file reading tool (`view_file`, `read_file`) or `cat` / `head` | Inspect full file or line ranges. |
 | **File Edit / Patch** | Native edit tool (`replace_file_content`, `edit_file`, `patch`) | Make targeted, surgical replacements. |
 | **Shell Commands** | Native shell tool (`run_command`, `bash`, `terminal`) | Run test runners (`pytest`, `npm test`, `cargo test`), linters, and git commands. |

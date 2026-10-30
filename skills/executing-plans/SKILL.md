@@ -1,6 +1,6 @@
 ---
 name: executing-plans
-description: Master execution engine for implementation plans. Supports Hybrid execution (inline sequential + concurrent subagent batches), Sandboxed Subagent execution (SDD mode), and pure Native Inline execution with compaction recovery and zero-idle review gates.
+description: Use when executing an approved implementation plan using Hybrid, Sandboxed SDD, or Native Inline execution modes with compaction recovery and zero-idle review gates.
 ---
 
 # Master Plan Execution Engine
@@ -83,8 +83,10 @@ Execute directly inline in the current session following the **3-Phase Task Exec
 1. **Pre-Task Skill Activation Gate**:
    Inspect the bound `[Skill: <name>]` tag in the task ledger:
    - `[Skill: test-driven-development]`: Write the failing test first (RED) before modifying product code. Test the actual contract boundary.
+   - `[Skill: ui-direction]`: Anchor in physical subject matter; ban AI visual clichés; implement all 4 states (empty, skeleton, error, interactive).
+   - `[Skill: ui-components]`: Compose semantic components; reuse tokens; enforce accessibility presets.
    - `[Skill: ui-evolution]`: Harvest existing CSS/tokens first (*reuse first, invent never*); score visual changes against 5-axis rubric ($\ge 9/10$ floor).
-   - `[Skill: frontend-design]`: Anchor in physical subject matter; ban AI visual clichés; implement all 4 states (empty, skeleton, error, interactive).
+   - `[Skill: ui-verification]`: Run multi-viewport audits (375px, 768px, 1280px); zero visual defect or layout clipping.
    - `[Skill: systematic-debugging]`: Formulate a falsifiable hypothesis before touching code.
    - `[Skill: verification-before-completion]`: Run static parse checks (`check-syntax.py`) and compile gates.
 
@@ -94,7 +96,7 @@ Execute directly inline in the current session following the **3-Phase Task Exec
    - *Static / Config*: Link check (`curl -sI`) + compiler/typecheck gate (`tsc --noEmit`, `py_compile`).
 
 3. **Post-Task Inline Code Review Gate (`requesting-code-review`)**:
-   - Before marking completed (`- [x]`) or committing, conduct a 15-second inline review against [`code-review-rubric.md`](../requesting-code-review/code-review-rubric.md):
+   - Before marking completed (`- [x]`) or committing, conduct a 15-second inline review against [`code-review-rubric.md`](../requesting-code-review/references/code-review-rubric.md):
      - No orphan debugging statements or console logging.
      - Contracts and error paths handled.
      - WCAG AA contrast ($\ge 4.5:1$) and touch targets ($\ge 44\times 44$px) maintained.
@@ -131,8 +133,8 @@ For high-isolation tasks requiring dedicated workspaces:
    git diff --stat BASE_SHA..HEAD_SHA
    git diff BASE_SHA..HEAD_SHA
    ```
-   Evaluate against [code-review-rubric.md](../requesting-code-review/code-review-rubric.md), or dispatch a review using [templates/task-reviewer-prompt.md](templates/task-reviewer-prompt.md). If fixes are needed, re-review with [templates/re-review-prompt.md](templates/re-review-prompt.md).
-4. **Adjudication**:
+   Evaluate against [code-review-rubric.md](../requesting-code-review/references/code-review-rubric.md), or dispatch a review using [templates/task-reviewer-prompt.md](templates/task-reviewer-prompt.md). If fixes are needed, re-review with [templates/re-review-prompt.md](templates/re-review-prompt.md).
+3. **Adjudication**:
    - If clean: Mark completed (`- [x]`) and proceed.
    - If issues found: Send concrete findings back to implementer or fix surgical deltas inline.
 
@@ -150,10 +152,10 @@ For lightweight environments or single-module workflows:
 
 Once all tasks in the ledger are checked (`- [x]`):
 
-1. **File-Level Syntax & Static Sanity Pass**: Run `python3 skills/verification-before-completion/scripts/check-syntax.py` across all modified files. Verify zero syntax or structural parse errors before running high-level suites.
+1. **File-Level Syntax & Static Sanity Pass**: Run `python3 <path-to-hyperpowers>/skills/verification-before-completion/scripts/check-syntax.py` across all modified files. Verify zero syntax or structural parse errors before running high-level suites.
 2. **Universal Build Gate**: Run the full project test suite, typechecker, and linter (`hyperpowers:verification-before-completion`).
 3. **Fast Inline Code Review**:
    - Inspect whole-branch diff (`git diff BASE_BRANCH..HEAD`).
-   - Audit against the 6 evaluation axes in [code-review-rubric.md](../requesting-code-review/code-review-rubric.md).
+   - Audit against the 6 evaluation axes in [code-review-rubric.md](../requesting-code-review/references/code-review-rubric.md).
    - Resolve any Critical or Important issues immediately.
 4. **Branch Finalization**: Proceed to `hyperpowers:finishing-a-development-branch` to reconcile `agent-docs/ideas.md`, update subsystem briefs with the latest git commit SHA, and present clean merge/PR options.

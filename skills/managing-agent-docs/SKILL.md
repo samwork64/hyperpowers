@@ -1,6 +1,6 @@
 ---
 name: managing-agent-docs
-description: Maintain living architectural memory in agent-docs/ and manage the active ideas backlog. Use to initialize codebase maps, audit doc drift, or reconcile ideas.
+description: Use when maintaining living architectural memory in agent-docs/, initializing codebase maps, auditing documentation drift, or reconciling the ideas backlog.
 ---
 
 # Managing Agent-Docs & Ideas Backlog

@@ -1,6 +1,6 @@
 ---
 name: diagnosing-hyperpowers
-description: Diagnose failed or slow hyperpowers sessions across any agent harness. Analyzes transcripts, repeated work, ignored plans, or budget/latency issues to build evidence-backed bug reports.
+description: Use when diagnosing failed or slow hyperpowers sessions, analyzing transcript logs, investigating plan drift, or filing evidence-backed bug reports.
 ---
 
 # Diagnosing Hyperpowers

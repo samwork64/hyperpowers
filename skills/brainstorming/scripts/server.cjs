@@ -102,7 +102,7 @@ const URL_HOST = process.env.BRAINSTORM_URL_HOST || (HOST === '127.0.0.1' ? 'loc
 const SESSION_DIR = process.env.BRAINSTORM_DIR || '/tmp/brainstorm';
 const CONTENT_DIR = path.join(SESSION_DIR, 'content');
 const HYPERPOWERS_VERSION = readHyperpowersVersion();
-const HYPERPOWERS_BRAND_IMAGE_URL = 'https://primeradiant.com/brand/superpowers-visual-brainstorming-logo.png';
+const HYPERPOWERS_BRAND_IMAGE_URL = 'https://raw.githubusercontent.com/samwork64/hyperpowers/main/assets/app-icon.png';
 const TELEMETRY_DISABLE_ENV_VARS = [
   'HYPERPOWERS_DISABLE_TELEMETRY',
   'DISABLE_TELEMETRY',

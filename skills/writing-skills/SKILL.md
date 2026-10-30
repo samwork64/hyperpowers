@@ -108,3 +108,11 @@ Create a tracking todo for each item before deploying:
 - [ ] **Portability**: Zero hardcoded paths; scripts runnable across all agent harnesses.
 - [ ] **Validation**: Passes `agy plugin validate .` and `check-syntax.py`.
 - [ ] **Commit**: Committed to version control and synchronized to active plugin directory.
+
+---
+
+## 7. Deep-Dive References
+
+- [anthropic-best-practices.md](references/anthropic-best-practices.md) — Comprehensive guide on prompt caching, tool design, and context window efficiency.
+- [testing-skills-with-subagents.md](references/testing-skills-with-subagents.md) — Protocols for running multi-pressure baseline test scenarios with subagents.
+- [persuasion-principles.md](references/persuasion-principles.md) — Behavioral psychology principles for crafting robust, loophole-free rules.

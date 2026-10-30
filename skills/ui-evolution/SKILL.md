@@ -1,28 +1,16 @@
 ---
 name: ui-evolution
-description: "Use when updating, refactoring, redesigning, or polishing existing user interfaces. Enforces design token harvesting (zero redundant CSS), visual defect forensics, 10/10 aesthetic self-critique with visual mockups, and dual interactive/visual verification."
+description: Use when updating, refactoring, redesigning, or polishing existing user interfaces. Enforces design token harvesting (zero redundant CSS), visual defect forensics, surface mode calibration, 10/10 aesthetic self-critique with mockups, and dual verification.
 ---
 
-# UI Evolution & 10/10 Self-Critique Protocol
+# UI Evolution & Craft Polish (Stage 3: Updating Existing UI)
 
 ## Overview
 
-**Core Principle:** Refactoring an existing UI is an evolutionary discipline, not a greenfield rewrite. Preserve brand truth, eliminate visual friction, and reuse established components. Never generate code that merely "compiles" while looking like a 5/10 amateur prototype.
+**Core Principle:** Refactoring an existing UI is an evolutionary craft discipline, not a greenfield rewrite. Preserve brand truth, eliminate visual friction, reuse established tokens, and enforce an uncompromising craft floor. Never generate code that merely "compiles" while looking like a 5/10 amateur prototype.
 
 ```
-┌────────────────────────────────────────────────────────────────────────┐
-│                   THE 5-PHASE UI EVOLUTION LIFECYCLE                   │
-├────────────────────────────────────────────────────────────────────────┤
-│ PHASE 1: TOKEN HARVEST      ➔ Scan existing CSS, components, variables │
-│                                (Reuse first, extend second, invent 0)  │
-│ PHASE 2: VISUAL FORENSIC    ➔ Diagnose why it's 5/10 & build Value     │
-│                                Justification Matrix ("Why & Benefit")  │
-│ PHASE 3: 10/10 SELF-CRITIQUE➔ Generate mockups, score across 5 axes;   │
-│                                iterate until score ≥ 9/10              │
-│ PHASE 4: TOKEN REUSE BUILD  ➔ Implement using harvested tokens         │
-│ PHASE 5: DUAL VERIFICATION  ➔ Chrome DevTools: Visual QA + Interactive │
-│                                State Machine Functional Tests          │
-└────────────────────────────────────────────────────────────────────────┘
+PHASE 1: TOKEN HARVEST ➔ PHASE 2: VISUAL FORENSICS ➔ PHASE 3: SURFACE MODES & REFINEMENTS ➔ PHASE 4: 10/10 CRITIQUE ➔ PHASE 5: VERIFICATION
 ```
 
 ---
@@ -63,7 +51,27 @@ Before modifying any layout, summarize changes in this concise table:
 
 ---
 
-## Phase 3: Visual Concept Generation & 10/10 Self-Critique Loop
+## Phase 3: Surface Mode Calibration & Refinement Playbooks
+
+Scale ambition and restraint to the surface's mode:
+
+- **Persuade (Landing, pricing, conversion)**: Bold, distinct point of view. High contrast, tactile materials.
+- **Operate (Dashboards, admin, tools, settings)**: Precision and restraint. Native expectations, scanability, and dense typography outrank decorative expression.
+- **Read (Docs, articles, guides)**: Comprehension. Balanced line length (<75ch), generous rhythm.
+- **Experience (Galleries, players, media)**: Artifact leads; chrome recedes.
+
+### Targeted Refinement Playbooks
+When applying specific visual adjustments, consult the dedicated playbooks in `references/refinements/`:
+- **Bolder UI**: [references/refinements/bolder.md](references/refinements/bolder.md) — Amplify safe, bland, or timid designs with strong scale and contrast.
+- **Quieter UI**: [references/refinements/quieter.md](references/refinements/quieter.md) — Tone down aggressive, loud, or overstimulating interfaces.
+- **Distill Complexity**: [references/refinements/distill.md](references/refinements/distill.md) — Strip extraneous visual noise and redundant borders.
+- **Harden for Production**: [references/refinements/harden.md](references/refinements/harden.md) — Edge cases, long text clamping, empty states, error bounds.
+- **Typeset & Rhythm**: [references/refinements/typeset.md](references/refinements/typeset.md) — Typography scales, optical balance, vertical spacing.
+- **Craft Floor Invariants**: [references/refinements/craft-floor.md](references/refinements/craft-floor.md) — Non-negotiable quality floor for micro-interactions and contrast.
+
+---
+
+## Phase 4: Visual Concept Generation & 10/10 Self-Critique Loop
 
 1. **Generate Visual Mockups**:
    - In Antigravity: Use `generate_image` to render realistic Mobile ($9:16$) and Desktop ($16:9$) concepts.
@@ -79,14 +87,7 @@ Before modifying any layout, summarize changes in this concise table:
 | **5. Mobile Ergonomics & Tap Targets** | Built for touch devices and thumb-zone interaction. | Targets $\ge 44\times 44\text{px}$, vertical stacking on mobile, zero overflow. | Cramped 2-column mobile grids, awkward tiny tap zones. |
 
 3. **The Quality Floor**: **Minimum threshold is $9 / 10$**. If total score is $<9$, identify the failing axis, adjust choices, and refine before presenting to the user.
-4. **Multi-Variant Option Presentation**: If a legitimate architectural or visual trade-off exists (e.g. *Option A: Floating Minimalist Sheet* vs. *Option B: High-Density Retro Gaming HUD*), generate and present both for the user to choose.
-
----
-
-## Phase 4: Implementation with Reused Tokens
-
-- Implement changes strictly mapped to harvested CSS classes, variables, and components.
-- Do not write repetitive CSS blocks when a utility class or existing design system token accomplishes the goal.
+4. **Implementation**: Implement changes strictly mapped to harvested CSS classes, variables, and components.
 
 ---
 
@@ -94,9 +95,12 @@ Before modifying any layout, summarize changes in this concise table:
 
 Never stop at visual appearance. A 10/10 UI must function seamlessly:
 
-1. **Visual Layout Verification**:
-   - Capture multi-viewport suite (Mobile $375\text{px}$, Tablet $768\text{px}$, Desktop $1440\text{px}$) via Chrome DevTools or `ui-shot`.
-   - Verify zero horizontal overflow, proper text wrapping, and clean contrast.
+1. **Visual Layout Verification (`ui-shot.cjs`)**:
+   - Run the bundled ephemeral multi-viewport verification utility:
+     ```bash
+     node <path-to-hyperpowers>/skills/ui-verification/scripts/ui-shot.cjs http://localhost:3000 ./screenshots
+     ```
+   - Inspect captured viewports across Mobile ($375\text{px}$), Tablet ($768\text{px}$), and Desktop ($1440\text{px}$): check for touch targets $\ge 44\times 44$px, zero horizontal overflow, proper column stacking, and WCAG AA contrast.
 2. **Interactive State Machine QA (Headless Chrome DevTools Session)**:
    - Keep 1 persistent session open to verify interactive behaviors:
      - *Sheet Dismiss / Collapse*: Clicking close or collapse controls triggers animation and resets state.

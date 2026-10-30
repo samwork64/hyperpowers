@@ -113,6 +113,9 @@ Write just enough code to satisfy the test contract. Do not add speculative feat
 ### Verify GREEN: Confirm Test Passes
 Re-run the targeted test runner and verify it passes cleanly.
 
+> [!IMPORTANT]
+> **The 2-Failure Escalation Circuit Breaker**: If two consecutive attempts to make the test turn GREEN fail (or induce secondary regressions), you are strictly prohibited from guessing or trying a third edit. Halt immediately and escalate to `hyperpowers:systematic-debugging` to trace causal signal flow, inspect root causes, and formulate a falsifiable hypothesis.
+
 ### REFACTOR: Clean Up
 Remove duplication, improve variable names, or optimize performance while keeping the test suite green.
 
@@ -126,3 +129,9 @@ Regardless of whether a task is verified via TDD, visual verification, or link c
 * Type checks: `npx tsc --noEmit` or language equivalent.
 * Syntax / Lint checks: `npm run lint`, `eslint`, or `python3 -m py_compile`.
 * Full Suite Regressions: Ensure the broader test suite remains green.
+
+---
+
+## 6. Deep-Dive References
+
+- [writing-good-tests.md](references/writing-good-tests.md) — Comprehensive principles for naming breaks, literal fixtures, and eliminating test theater.

@@ -11,7 +11,7 @@
 <p align="center">
   <a href="https://github.com/samwork64/hyperpowers/releases"><img src="https://img.shields.io/badge/version-1.0.0-blue.svg?style=flat-square" alt="Version"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License: MIT"></a>
-  <a href="#the-22-skill-suite"><img src="https://img.shields.io/badge/skills-22%20bundled-blueviolet.svg?style=flat-square" alt="Skills Bundled"></a>
+  <a href="#the-19-skill-suite"><img src="https://img.shields.io/badge/skills-19%20bundled-blueviolet.svg?style=flat-square" alt="Skills Bundled"></a>
   <a href="#installation"><img src="https://img.shields.io/badge/platforms-Antigravity%20%7C%20Claude%20%7C%20Codex%20%7C%20Cursor%20%7C%20Gemini-orange.svg?style=flat-square" alt="Platforms Supported"></a>
   <a href="#the-zero-idle-subagent-invariant"><img src="https://img.shields.io/badge/subagents-zero--idle%20invariant-red.svg?style=flat-square" alt="Zero-Idle Invariant"></a>
 </p>
@@ -24,8 +24,8 @@ Most AI coding agents suffer from a catastrophic dual failure: **they write supe
 
 **Hyperpowers** is an industrial-grade agent engineering and visual intelligence framework that solves these structural flaws across all modern agent harnesses:
 
-1. **Anti-Cliché Design Intelligence & UI Evolution**: Integrated 4-stage UI/UX pipeline backed by 79 searchable styles, 192 product palettes, 74 typography pairings, 119 UX guidelines, token harvesting (zero redundant CSS), and 5-axis 10/10 self-critiques (`ui-evolution`).
-2. **Dual-Engine Visual Verification (`visual-verification`)**: Combines Mode A (Stateful Chrome DevTools interactive session with DOM automation and progressive capture) with Mode B (ephemeral, zero-leak multi-viewport audits via `ui-shot` across Mobile 375px, Tablet 768px, and Desktop 1280px in ~1.2s).
+1. **Anti-Cliché Design Intelligence & UI Suite**: Integrated 4-stage UI lifecycle pipeline (Stage 1: `ui-direction`, Stage 2: `ui-components`, Stage 3: `ui-evolution`, Stage 4: `ui-verification`) backed by 79 searchable styles, 192 product palettes, 74 typography pairings, 119 UX guidelines, token harvesting (zero redundant CSS), and 5-axis 10/10 self-critiques.
+2. **Dual-Engine Visual Verification (`ui-verification`)**: Combines Mode A (Stateful Chrome DevTools interactive session with DOM automation and progressive capture) with Mode B (ephemeral, zero-leak multi-viewport audits via `ui-shot` across Mobile 375px, Tablet 768px, and Desktop 1280px in ~1.2s).
 3. **Calibrated Criticality Gating (3 Blast-Radius Zones)**: Eliminates conversational friction for low-risk tweaks (Green Zone: instant execution, zero debate), enforces design token harvesting on visual updates (Yellow Zone: 10/10 critique), and demands independent architectural deliberation with $\ge 2$ alternatives on high-risk decisions (Red Zone).
 4. **Independent Deliberation & Anti-Sycophancy**: Operates as an opinionated Principal Engineer. Replaces sycophantic flattery with evidence-based critiques and structured Micro-Justifications (<60 words) to prevent multi-turn transcript bloat.
 5. **The Zero-Idle Subagent Invariant**: Strict prohibition against single-subagent sequential idling. Sequential tasks execute immediately inline; subagents are reserved strictly as concurrent throughput multipliers ($\ge 2$) for decoupled tasks.
@@ -50,7 +50,7 @@ agy plugin install https://github.com/samwork64/hyperpowers
 *Or instruct your agent directly in chat:*
 > *"Install the Hyperpowers plugin from https://github.com/samwork64/hyperpowers and activate the full-stack engineering suite."*
 
-Antigravity automatically discovers all 22 skills, configures the rules engine in `rules/AGENTS.md`, and activates `hyperpowers:using-hyperpowers` on session bootstrap.
+Antigravity automatically discovers all 19 skills, configures the rules engine in `rules/AGENTS.md`, and activates `hyperpowers:using-hyperpowers` on session bootstrap.
 
 ---
 
@@ -115,71 +115,77 @@ Hyperpowers includes a **Universal Default Fallback** (`skills/using-hyperpowers
 
 ## 🎨 The 4-Stage Frontend UI/UX Pipeline
 
-Whenever designing, modifying, or auditing user interfaces, Hyperpowers enforces a strict, four-stage design intelligence pipeline:
+Whenever designing, creating, refactoring, or auditing user interfaces, Hyperpowers enforces a unified, orthogonal 4-stage design intelligence pipeline with zero quality loss:
 
 ```mermaid
 flowchart LR
-    A["Stage 1: Direction & Aesthetics<br/>(frontend-design)"] --> B["Stage 2: Design Intelligence & Multi-State<br/>(ui-ux-pro-max + shadcn)"]
-    B --> C["Stage 3: Judgment-First Verification<br/>(Logic TDD vs Visual QA vs Compile Gate)"]
-    C --> D["Stage 4: Multi-Viewport Auditing<br/>(web-design-guidelines + impeccable + ui-shot)"]
+    A["Stage 1: Direction & Aesthetics<br/>(ui-direction)"] --> B["Stage 2: Component Scaffolding<br/>(ui-components)"]
+    C["Stage 3: Refactoring & Craft<br/>(ui-evolution)"] --> D["Stage 4: Responsive QA & Auditing<br/>(ui-verification)"]
+    B -.-> D
 ```
 
-### Stage 1: Direction & Aesthetics (`hyperpowers:frontend-design`)
-- **Ban AI Visual Clichés**: Strictly bans generic purple/indigo-to-cyan gradients (`from-indigo-500 to-teal-400`), the "Lucide-icon-in-a-gray-box" card monoculture, pastel "Trust-Me" badges, tracked-out ALL-CAPS eyebrow labels, and robotic buzz-copy (*"Streamline your workflow"*).
-- **Domain Vernacular**: Ground aesthetics in the physical subject matter (retro consoles, financial terminals, Swiss editorial publishing, high-density developer CLIs).
-- **Semantic Color Architecture**: Curate a deliberate 4–6 color palette using semantic theme tokens (`bg-background`, `text-foreground`, `border-border`, `bg-primary`). Never use washed-out low-contrast gray text (`text-slate-400` on white is banned).
+> **Decision Gate**: Creating a **New UI** starts at **Stage 1 & 2** (`ui-direction` $\rightarrow$ `ui-components`). Updating or polishing an **Existing UI** starts directly at **Stage 3** (`ui-evolution`). Both converge on **Stage 4** (`ui-verification`).
 
-### Stage 2: Design Intelligence & Multi-State Ergonomics (`ui-ux-pro-max` + `shadcn`)
-- **Searchable Design Intelligence**: Access 79 active design styles, 192 product palettes, 74 font pairings, and 119 UX guidelines directly via `search.py`:
+### Stage 1: Direction & Aesthetics (`hyperpowers:ui-direction`)
+- **Ban AI Visual Clichés**: Strictly bans generic purple/indigo-to-cyan SaaS gradients (`from-indigo-500 to-teal-400`), the "Lucide-icon-in-a-gray-box" card monoculture, pastel "Trust-Me" badges, tracked-out ALL-CAPS eyebrow labels, and robotic buzz-copy (*"Streamline your workflow"*).
+- **Domain Vernacular & Searchable Intelligence**: Access 79 active design styles, 192 product palettes, 74 font pairings, and 119 UX guidelines directly via `search.py`:
   ```bash
-  python3 skills/ui-ux-pro-max/scripts/search.py "fintech dashboard" --design-system
+  python3 skills/ui-direction/scripts/search.py "fintech dashboard" --design-system
   ```
-- **Mandatory 4-State Coverage**: Never design only the happy path:
+- **Semantic Color Architecture**: Curate a deliberate 4–6 color palette using semantic theme tokens (`bg-background`, `text-foreground`, `border-border`, `bg-primary`). Never use washed-out low-contrast gray text (`text-slate-400` on white is banned).
+- **Mandatory 4-State Ergonomic Coverage**:
   - *Empty State*: Context-rich illustration/copy + prominent action CTA.
   - *Loading State*: Layout-accurate skeleton loader matching real geometry (no generic spinners).
   - *Error State*: Plain-English explanation + actionable retry button.
   - *Interaction States*: Distinct hover, active, disabled, and high-visibility `:focus-visible` rings for WCAG accessibility.
-- **Component Composition**: Scaffold accessible, themeable components with `shadcn` (`npx shadcn@latest add`) rather than reinventing primitive UI from scratch.
 
-### Stage 3: Judgment-First Verification (Anti-Test-Theater Gate)
-- **Dynamic Logic & Contracts (TDD)** (`hyperpowers:test-driven-development`): Apply strict Red-Green-Refactor to functions that compute, transform schemas, serialize parameters, or manage state. Test the real contract: boundary cases, encoding, and schema conformity.
-- **Visual Layout & Responsive Flow (Visual QA)**: Apply empirical screenshot verification via `ui-shot.cjs`. Unit tests that merely assert static DOM nodes or text exist are **strictly banned as test theater**.
-- **Static URLs & Copy (Compile Gate)**: Zero unit tests needed. Verify static link reachability (`curl -sI`) and run compiler/typecheck passes (`tsc --noEmit`, `py_compile`, `eslint`).
+### Stage 2: Component Composition & Scaffolding (`hyperpowers:ui-components`)
+- **Primitive Scaffolding**: Scaffold accessible, themeable components with `shadcn` (`npx shadcn@latest add`) rather than reinventing primitive UI from scratch.
+- **Composition Rules**: Strict separation of concerns using standardized patterns (`FieldGroup`/`Field`, `InputGroup`, `MessageScroller`).
+- **Base vs Radix Selection**: Direct decision rules on when to adopt headless primitives versus pre-composed primitives.
 
-### Stage 4: Multi-Viewport Visual Auditing & Craft Polish (`visual-verification` + `impeccable`)
+### Stage 3: Refactoring, Evolution & Craft Polish (`hyperpowers:ui-evolution`)
+- **Token Harvesting (*Reuse First, Extend Second, Invent Never*)**: Audit existing CSS, Tailwind config, and design tokens first. Never inject duplicate styles or custom ad-hoc hex codes when design tokens exist.
+- **Surface Modes**: Tailor typography, density, and interactions to the specific surface archetype:
+  - *Persuade*: High-contrast storytelling, editorial rhythm, bold hierarchy.
+  - *Operate*: High-density data displays, keyboard accelerators, compact controls.
+  - *Read*: Distraction-free typography, optimal line-lengths, balanced measure.
+  - *Experience*: Immersive animations, tactile micro-interactions, rich physical feedback.
+- **Refinement Playbooks**: Tactical step-by-step guides for transforming UI in `references/refinements/` (`bolder.md`, `quieter.md`, `distill.md`, `harden.md`, `typeset.md`, `layout.md`, `colorize.md`, `animate.md`, `onboard.md`, `craft-floor.md`).
+- **10/10 Aesthetic Critique**: Evaluate visual craft across 5 axes (Contrast, Typography, Rhythm, Micro-interactions, Simplicity) with visual mockups before executing.
+
+### Stage 4: Multi-Viewport Auditing & Verification (`hyperpowers:ui-verification`)
 - **The Multi-Viewport Gate**: Run `ui-shot` to inspect real layout across breakpoints:
   - **Mobile (375px)**: Check touch target sizes ($\ge 44 \times 44\text{px}$), zero horizontal overflow, clean column stacking, and no clipped text.
   - **Tablet (768px)**: Check navigation collapse, grid wrapping, and layout transitions.
   - **Desktop (1280px+)**: Check max-width constraints, optical balance, whitespace rhythm, and typography scale.
+- **Web Interface Guidelines Compliance**: Automated rubric auditing for tap target sizing, focus ring visibility, keyboard navigation, and WCAG AA contrast ($\ge 4.5:1$).
 - **Interactive Staging & Scrolled Auditing**:
   ```bash
   # Full-page capture:
-  node skills/visual-verification/scripts/ui-shot.cjs --full-page http://localhost:3000 ./screenshots/fullpage.png
+  node skills/ui-verification/scripts/ui-shot.cjs --full-page http://localhost:3000 ./screenshots/fullpage.png
 
   # Deep scroll targeting:
-  node skills/visual-verification/scripts/ui-shot.cjs --scroll "#pricing" http://localhost:3000 ./screenshots/pricing.png
+  node skills/ui-verification/scripts/ui-shot.cjs --scroll "#pricing" http://localhost:3000 ./screenshots/pricing.png
 
   # Stage UI state via DOM execution:
-  node skills/visual-verification/scripts/ui-shot.cjs --eval 'document.querySelector("#theme-toggle").click()' http://localhost:3000 ./screenshots/dark.png
+  node skills/ui-verification/scripts/ui-shot.cjs --eval 'document.querySelector("#theme-toggle").click()' http://localhost:3000 ./screenshots/dark.png
   ```
 - **Console Hygiene**: Actively verify zero unhandled console warnings, runtime errors, or React hydration mismatches.
 
 ---
 
-## 🛠️ The Complete 22-Skill Suite
+## 🛠️ The Complete 19-Skill Suite
 
-Hyperpowers delivers 22 fully integrated, orthogonal skills organized into six functional pillars:
+Hyperpowers delivers 19 fully integrated, orthogonal skills organized into six functional pillars:
 
 ```mermaid
 flowchart TD
     subgraph UI["Visual & Design Intelligence"]
-        FD["frontend-design"]
-        UE["ui-evolution"]
-        UP["ui-ux-pro-max"]
-        SC["shadcn"]
-        IM["impeccable"]
-        WD["web-design-guidelines"]
-        VV["visual-verification"]
+        UD["ui-direction (Stage 1)"]
+        UC["ui-components (Stage 2)"]
+        UE["ui-evolution (Stage 3)"]
+        UV["ui-verification (Stage 4)"]
     end
 
     subgraph Exec["Autonomous Plan Execution"]
@@ -213,20 +219,17 @@ flowchart TD
     end
 
     BS --> WP --> EP
-    EP --> TDD & VV & VC
-    TDD & VV & VC --> RQ --> RC
+    EP --> TDD & UV & VC
+    TDD & UV & VC --> RQ --> RC
     RC --> FB
 ```
 
 | Pillar | Skill | Purpose & Core Invariant |
 | :--- | :--- | :--- |
-| **Visual Experience** | [`frontend-design`](skills/frontend-design/SKILL.md) | Tailored typography, domain-anchored aesthetics, 4-state coverage, ban AI visual clichés. |
-| **Visual Experience** | [`ui-evolution`](skills/ui-evolution/SKILL.md) | Token harvesting (zero redundant CSS), visual forensics, 10/10 self-critique with mockups. |
-| **Visual Experience** | [`ui-ux-pro-max`](skills/ui-ux-pro-max/SKILL.md) | Searchable local database: 79 styles, 192 product palettes, 74 font pairings, 119 UX guidelines. |
-| **Visual Experience** | [`shadcn`](skills/shadcn/SKILL.md) | Component composition, preset registry, design system architecture (`npx shadcn@latest add`). |
-| **Visual Experience** | [`impeccable`](skills/impeccable/SKILL.md) | Out-of-distribution craft floor, surface modes (*Operate*, *Read*, *Persuade*), tactile physics. |
-| **Visual Experience** | [`web-design-guidelines`](skills/web-design-guidelines/SKILL.md) | Vercel guidelines audit: tap targets ($\ge 44\times 44$px), keyboard navigation, WCAG AA compliance. |
-| **Visual Experience** | [`visual-verification`](skills/visual-verification/SKILL.md) | Dual-Engine QA: Chrome DevTools interactive automation + headless `ui-shot` multi-viewport. |
+| **Visual Experience** | [`ui-direction`](skills/ui-direction/SKILL.md) | Stage 1: Domain-anchored aesthetics, 4-state coverage, anti-cliché rules, and searchable design intelligence (79 styles, 192 palettes, 74 font pairings, 119 UX guidelines). |
+| **Visual Experience** | [`ui-components`](skills/ui-components/SKILL.md) | Stage 2: Component composition, shadcn preset registry, accessible primitives, and design system architecture. |
+| **Visual Experience** | [`ui-evolution`](skills/ui-evolution/SKILL.md) | Stage 3: Token harvesting (zero redundant CSS), surface modes (*Persuade*, *Operate*, *Read*, *Experience*), 10/10 critique with mockups, and refinement playbooks. |
+| **Visual Experience** | [`ui-verification`](skills/ui-verification/SKILL.md) | Stage 4: Dual-Engine QA: Chrome DevTools interactive automation, headless `ui-shot` multi-viewport, and Web Interface Guidelines compliance. |
 | **Autonomous Execution** | [`executing-plans`](skills/executing-plans/SKILL.md) | **Master Execution Engine**: Mode 1: Hybrid (default), Mode 2: Sandboxed SDD, Mode 3: Native Inline. |
 | **Autonomous Execution** | [`dispatching-parallel-agents`](skills/dispatching-parallel-agents/SKILL.md) | Orthogonal parallelism: concurrent batches for independent tasks & multi-domain research spikes. |
 | **Autonomous Execution** | [`using-git-worktrees`](skills/using-git-worktrees/SKILL.md) | Isolated workspace creation on fresh branches to protect current working tree. |
@@ -294,7 +297,7 @@ BANNED: Dispatching 1 subagent for a sequential task and sitting idle.
 
 - **Rule 1: Inline First**: If a task is sequential, execute it directly in the parent session. Inline execution provides immediate feedback, zero spin-up latency, and zero token waste.
 - **Rule 2: True Concurrency ($\ge 2$)**: Subagents are reserved strictly as throughput multipliers for concurrent batches touching disjoint files (`Subagents: [...]`), or heavy non-blocking background delegation.
-- **Rule 3: Fast Inline Review**: Coordinators review diffs inline against [`code-review-rubric.md`](skills/requesting-code-review/code-review-rubric.md) in seconds rather than launching another idle subagent reviewer.
+- **Rule 3: Fast Inline Review**: Coordinators review diffs inline against [`code-review-rubric.md`](skills/requesting-code-review/references/code-review-rubric.md) in seconds rather than launching another idle subagent reviewer.
 - **Rule 4: Hybrid Gated Research**: Single-trace debugging and quick lookups (<3 files) execute **strictly inline**. Dispatch concurrent read-only subagent batches (`Subagents: [A, B]`, `TypeName: "research"`) only when exploring $\ge 2$ orthogonal subsystems or competing architecture options to prevent parent context bloat.
 
 ---
@@ -308,7 +311,7 @@ Hyperpowers is engineered to protect context windows and prevent runaway agent t
 3. **Minimal Context Slicing**: When dispatching implementers, coordinators slice and pass **only the 15–30 line task brief and interface contracts**. Pasting full 200+ line implementation plans into subagents is strictly banned.
 4. **The 2-Failure Circuit Breaker**: If two consecutive fix attempts fail to resolve a bug or cause secondary regressions, agents **must stop immediately**, run `git checkout -- .` to restore a clean baseline, and re-trace signal paths or consult telemetry rather than guessing.
 5. **Log Output Density Guard**: Raw verbose build logs (1,000+ lines of compiler stdout) are prevented from flooding context. Agents use quiet flags (`pytest -q`, `cargo test -- -q`) and surgical error tail inspection (`tail -n 50`).
-6. **Compressed Frontmatter Metadata**: All 22 skill descriptions are compressed to high-density intent triggers, saving **~250 tokens per turn** on every prompt invocation.
+6. **Compressed Frontmatter Metadata**: All 19 skill descriptions are compressed to high-density intent triggers, saving **~250 tokens per turn** on every prompt invocation.
 7. **File-Level Syntax Sanity Gate (`check-syntax.py`)**: Before claiming completion or declaring "good to go", agents execute a $<100\text{ms}$ static parse across all modified files (`ast.parse`, `json.loads`, `node --check`, `bash -n`, TOML, YAML). This prevents common failures where focused test suites pass on module A while an un-imported module B or config file harbors a silent syntax error.
 8. **Plan-Embedded Skill Binding**: Every task in an implementation plan explicitly binds its operational skill tag (`[Skill: tdd]`, `[Skill: ui-evolution]`, `[Skill: systematic-debugging]`). Because the task ledger (`task.md`) is re-read on every turn, skill constraints stay pinned at the attention frontier, immune to mid-session context decay.
 9. **Reflexive Action Interceptors**: Non-zero command or test exits strictly ban reflexive file editing without formulating a causal hypothesis first (`systematic-debugging`). Every task completion requires a 15-second inline self-review against `code-review-rubric.md` before marking completed.
@@ -347,7 +350,7 @@ Hyperpowers eliminates both the "instruction dilution token tax" and missing con
 
 ---
 
-## 🔬 Dual-Engine Visual Verification (`visual-verification`)
+## 🔬 Dual-Engine Visual Verification (`ui-verification`)
 
 Hyperpowers implements a dual-engine visual verification architecture that combines stateful interactive browser automation with zero-leak responsive auditing:
 
@@ -358,11 +361,11 @@ For multi-step interactive workflows (modals, drawers, multi-field forms, respon
 
 ### Mode B: Ephemeral Multi-Viewport Auditing (`ui-shot`)
 For fast, zero-leak layout and responsive visual gates:
-- **Zero External Dependencies**: Pure Node.js 18+ bundled at [`skills/visual-verification/scripts/ui-shot.cjs`](skills/visual-verification/scripts/ui-shot.cjs) utilizing native `fetch` and `WebSocket` communicating directly with Chrome/Edge DevTools Protocol (CDP).
+- **Zero External Dependencies**: Pure Node.js 18+ bundled at [`skills/ui-verification/scripts/ui-shot.cjs`](skills/ui-verification/scripts/ui-shot.cjs) utilizing native `fetch` and `WebSocket` communicating directly with Chrome/Edge DevTools Protocol (CDP).
 - **Sub-Second Execution**: Launches lightweight `chrome-headless-shell` or headless browser, executes in ~1.2 seconds, and exits cleanly with 100% memory reclamation.
 - **Multi-Viewport Standard**:
   ```bash
-  node skills/visual-verification/scripts/ui-shot.cjs http://localhost:3000 ./screenshots
+  node skills/ui-verification/scripts/ui-shot.cjs http://localhost:3000 ./screenshots
   # Automatically outputs:
   #   - preview-mobile.png   (375x667, @2x DPI)
   #   - preview-tablet.png   (768x1024, @2x DPI)
@@ -371,15 +374,15 @@ For fast, zero-leak layout and responsive visual gates:
 - **Custom DOM Interaction & Raw CDP**:
   ```bash
   # Click buttons or fill inputs before capturing:
-  node skills/visual-verification/scripts/ui-shot.cjs --eval 'document.querySelector("#menu-btn").click()' http://localhost:3000 ./screenshots
+  node skills/ui-verification/scripts/ui-shot.cjs --eval 'document.querySelector("#menu-btn").click()' http://localhost:3000 ./screenshots
 
   # Send raw CDP commands:
-  node skills/visual-verification/scripts/ui-shot.cjs --cdp 'Emulation.setEmulatedMedia:{"media":"print"}' http://localhost:3000 ./screenshots
+  node skills/ui-verification/scripts/ui-shot.cjs --cdp 'Emulation.setEmulatedMedia:{"media":"print"}' http://localhost:3000 ./screenshots
   ```
 - **Adaptive Full-Page Capture with Infinite Scroll Clamping**:
   ```bash
   # Pre-hydrates lazy images, auto-detects infinite scroll, and caps height safely:
-  node skills/visual-verification/scripts/ui-shot.cjs --full-page [--max-height 12000] http://localhost:3000 ./screenshots/fullpage.png
+  node skills/ui-verification/scripts/ui-shot.cjs --full-page [--max-height 12000] http://localhost:3000 ./screenshots/fullpage.png
   ```
   - **Cold Layout Pre-Hydration**: Stepped pre-scrolling hydrates `loading="lazy"` images, triggers `IntersectionObserver` callbacks, and ensures font readiness before capture.
   - **Infinite Scroll Protection**: Automatically detects dynamic/infinite scroll expansion and clamps rasterization to the initial document boundary or `--max-height` (default: 12,000px), preventing runaway memory and Skia texture crashes (>16,384px).

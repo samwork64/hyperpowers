@@ -16,7 +16,6 @@ __pycache__/
 
 # Runtime session directories
 .hyperpowers/
-.superpowers/
 .worktrees/
 
 # Ephemeral screenshots (allow assets/)

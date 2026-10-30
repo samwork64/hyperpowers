@@ -8,10 +8,10 @@
 ## 2. Primary Build, Test & Validation Commands
 - **Validate Plugin Structure**: `agy plugin validate .`
 - **Static Syntax Sanity Gate**: `python3 skills/verification-before-completion/scripts/check-syntax.py --all`
-- **Run Test Suite**: `pytest skills/ui-ux-pro-max/scripts/tests/ skills/verification-before-completion/scripts/test_check_syntax.py -q`
+- **Run Test Suite**: `pytest`
 - **Sync to Live Install**:
   ```bash
-  cp -r skills/ rules/ README.md ~/.gemini/config/plugins/hyperpowers/ && \
+  cp -r skills/ rules/ README.md agent-docs/ plugin.json pytest.ini ~/.gemini/config/plugins/hyperpowers/ && \
   agy plugin validate ~/.gemini/config/plugins/hyperpowers
   ```
 

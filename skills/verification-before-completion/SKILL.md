@@ -68,6 +68,7 @@ Regardless of domain, **every** code change must satisfy static validation befor
 * **Compilation / Typecheck**: `tsc --noEmit`, `cargo check`, `go build`, `python3 -m py_compile`, etc.
 * **Linting / Formatting**: `eslint`, `flake8`, `ruff`, `golangci-lint`, etc.
 * **Full Regression Suite**: Broad test suite remains green with zero regressions.
+* **Living Memory Audit**: If subsystem interfaces, schemas, or behaviors were altered, update `agent-docs/modules/<subsystem>.md` with current contracts and advance the `Verified Commit` SHA.
 
 ---
 

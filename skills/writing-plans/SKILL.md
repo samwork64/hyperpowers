@@ -51,8 +51,10 @@ To prevent mid-flight skill amnesia caused by context memory decay ("lost in the
 | Workload Domain | Bound Skill Tag | Mandatory Invariant During Task Execution |
 | :--- | :--- | :--- |
 | **Logic, State & APIs** | `[Skill: test-driven-development]` | Write failing test first (RED) before touching product code. |
+| **New UI / Direction** | `[Skill: ui-direction]` | Domain aesthetics; ban generic AI clichés; 4-state coverage. |
+| **UI Components & Presets** | `[Skill: ui-components]` | Component composition; semantic tokens; accessibility presets. |
 | **Existing UI Refactor** | `[Skill: ui-evolution]` | Harvest existing tokens first; 5-axis 10/10 score; visual mockup. |
-| **New UI Component** | `[Skill: frontend-design]` | Domain aesthetics; ban generic AI clichés; 4-state coverage. |
+| **UI Verification & QA** | `[Skill: ui-verification]` | Multi-viewport auditing (375px, 768px, 1280px); zero visual defect. |
 | **Bug Fix & Investigation** | `[Skill: systematic-debugging]` | State falsifiable hypothesis before editing; 2-failure breaker. |
 | **Static / Config / Setup** | `[Skill: verification-before-completion]` | Static parse gate (`check-syntax.py`); typecheck & link checks. |
 | **Multi-Domain Research** | `[Skill: dispatching-parallel-agents]` | Concurrent read-only research batches (`TypeName: "research"`). |
@@ -156,6 +158,8 @@ After saving the plan artifact:
      - The verification strategy (tests, Chrome DevTools/`ui-shot` viewports, `check-syntax.py`).
 3. **Explicitly Request Plan Approval**:
    > *"I have prepared the implementation plan: `[plan location]`. Would you like me to proceed with execution (Hybrid Mode), or would you like to review and adjust any tasks first?"*
-4. **Wait for User Approval**: Execution begins ONLY in the next turn after the user explicitly confirms or approves the plan.
+4. **Wait for User Approval & Verify Workspace Isolation**:
+   - Execution begins ONLY in the next turn after the user explicitly confirms or approves the plan.
+   - Before executing Task 1, verify workspace/branch isolation (`hyperpowers:using-git-worktrees`): ensure work is on a dedicated feature branch or isolated git worktree to protect the parent working tree.
 </HARD-GATE>
 
