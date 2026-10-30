@@ -315,14 +315,14 @@ Hyperpowers is engineered to protect context windows and prevent runaway agent t
 
 ---
 
-## 📚 2-Tier Living Architectural Memory (`CLAUDE.md` / `AGENTS.md` + `agent-docs/`)
+## 📚 2-Tier Living Architectural Memory (Dynamic Root Anchor + `agent-docs/`)
 
 Hyperpowers eliminates both the "instruction dilution token tax" and missing context by organizing architectural memory into two disciplined tiers:
 
 ```
 <project-root>/
-├── CLAUDE.md / AGENTS.md     # [Tier 1 Root Anchor] Turn-0 injection (<60 lines)
-│                             # Build commands, hard bans, doc pointers.
+├── AGENTS.md (or CLAUDE.md)  # [Tier 1 Root Anchor] Turn-0 injection (<60 lines)
+│                             # Single active anchor: build commands, hard bans, doc pointers.
 └── agent-docs/               # [Tier 2 Deep Architecture] Read Just-in-Time (JIT)
     ├── architecture.md       # Global tech stack, entry points, directory map (<60 lines)
     ├── ideas.md              # Managed active backlog (auto-reconciled on branch completion)
@@ -332,7 +332,9 @@ Hyperpowers eliminates both the "instruction dilution token tax" and missing con
         └── api-gateway.md    # Empirical drift check: git diff <SHA>..HEAD -- <paths>
 ```
 
-- **Tier 1 Strict Admission Gate (<60 Lines)**: Root instruction files (`CLAUDE.md`, `AGENTS.md`) are injected into context on turn 0 of every session. To prevent context bloat and instruction dilution, agents are strictly prohibited from writing to root files except for:
+- **Dynamic Root Anchor Resolution (Never Create Both)**: Detects whether the repo already uses `AGENTS.md`, `CLAUDE.md`, or `.cursorrules`. If greenfield, aligns with the active harness (Claude $\rightarrow$ `CLAUDE.md`; Antigravity/others $\rightarrow$ `AGENTS.md`). Never duplicates root files.
+- **Project Boundary Gating & No-Folder Safeguards**: Operates only within confirmed project repositories (`git rev-parse --show-toplevel`). Never creates instruction files in generic scratch directories (`~`, `/tmp`). If an agent in a no-folder session modifies an external repo, it prompts the user before touching root instructions.
+- **Tier 1 Strict Admission Gate (<60 Lines)**: Root instruction files are injected into context on turn 0 of every session. To prevent context bloat and instruction dilution, agents are strictly prohibited from writing to root files except for:
   1. *Toolchain/command changes* (`npm` $\rightarrow$ `pnpm`).
   2. *Architectural hard bans/invariants* ("Touch targets $\ge 44$px", "Never drop active DB columns").
   3. *Direct user convention orders* ("Always use date-fns, not dayjs"). Task logs, code snippets, and feature diaries are strictly banned.

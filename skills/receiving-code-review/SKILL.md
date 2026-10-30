@@ -67,11 +67,11 @@ When addressing a list of review findings:
 
 When human partner feedback or code review establishes a permanent project standard (*"Always use date-fns, not dayjs"*, *"Use kebab-case for CSS custom properties"*, *"Pointers must be checked at FFI boundary"*):
 
-1. **Prevent Amnesia Across Sessions**:
-   - Conversational corrections vanish when the turn context compacts or when starting a new chat.
-   - Do not merely fix the active line of code—persist the learning so all future agents inherit it automatically.
+1. **Verify Project Workspace Boundary**:
+   - Check if currently working inside an active project (`git rev-parse --show-toplevel`).
+   - If operating in a rootless scratch directory (`~`, `/tmp`, scratchpad), do **NOT** create root instruction files locally. If modifying files in an external repo, ask the user before writing to the target repo's root instructions.
 2. **Persist According to the 2-Tier Hierarchy**:
-   - **Project-Wide Standard** $\rightarrow$ Append a 1-line bullet to Tier 1 Root Invariants (`CLAUDE.md` / `AGENTS.md`) under `## Core Invariants` (strictly maintaining the <60-line limit).
-   - **Subsystem Gotcha** $\rightarrow$ Append to Tier 2 brief (`agent-docs/modules/<subsystem>.md`).
+   - **Project-Wide Standard**: Append a 1-line bullet to the project's active root instruction file (`AGENTS.md` or `CLAUDE.md`, whichever is used) under `## Core Invariants` (strictly maintaining the <60-line limit).
+   - **Subsystem Gotcha**: Append to the domain's Tier 2 brief (`agent-docs/modules/<subsystem>.md`).
 3. **Concisely Confirm**:
    - *"Recorded invariant in `AGENTS.md`: `Never use dayjs; use date-fns`."*

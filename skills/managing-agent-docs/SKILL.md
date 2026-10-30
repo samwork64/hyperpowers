@@ -31,8 +31,8 @@ To ensure cross-agent continuity without polluting turn-0 context windows, Hyper
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│               TIER 1: Root Instruction Anchor (<60 Lines)               │
-│               (CLAUDE.md / AGENTS.md / rules/AGENTS.md)                │
+│               TIER 1: Active Root Instruction Anchor (<60 Lines)       │
+│               (AGENTS.md OR CLAUDE.md - dynamically resolved)          │
 ├────────────────────────────────────────────────────────────────────────┤
 │ • Injected into EVERY session at Turn 0                                │
 │ • Strictly: Primary build/test commands + Non-negotiable repo bans     │
@@ -50,7 +50,25 @@ To ensure cross-agent continuity without polluting turn-0 context windows, Hyper
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
-### Strict Admission Gate for Tier 1 Root Files (`CLAUDE.md` / `AGENTS.md`)
+### A. Dynamic Root Instruction Anchor Resolution (Never Create Both)
+Do not create duplicate root instruction files. Resolve the project's single canonical root anchor:
+1. **Existing File Precedence**: If the project already has an instruction file (`AGENTS.md`, `CLAUDE.md`, or `.cursorrules`), use and update that specific file.
+2. **Harness Alignment**: If greenfield (no file exists):
+   - In Claude Code $\rightarrow$ create `CLAUDE.md`.
+   - In Antigravity, Gemini, Codex, or generic CLI $\rightarrow$ create `AGENTS.md`.
+   - Never create both `CLAUDE.md` and `AGENTS.md` simultaneously.
+
+### B. Project Boundary Gating & No-Folder Sessions
+Before creating or updating root instruction anchors or `agent-docs/`:
+1. **Verify Active Project Workspace**: Check for a project root (`git rev-parse --show-toplevel` or marker files like `package.json`, `pyproject.toml`, `Cargo.toml`).
+2. **Rootless / Scratch Mode Ban**: If operating in a generic scratch directory (e.g. `/home/.../scratch`, `/tmp`, or `~`) without a project workspace, **do NOT create root instruction files or `agent-docs/`**.
+3. **External Repo Editing from No-Folder Sessions**: When operating in a rootless session but modifying files in an external project repository:
+   - Identify the target repo root (`git -C <path> rev-parse --show-toplevel`).
+   - Do **NOT** silently modify the target repo's root instruction file.
+   - Ask the user:
+     > *"We modified files in `[repo-name]`. Would you like me to record this invariant in `[repo-name]/[AGENTS.md|CLAUDE.md]`?"*
+
+### C. Strict Admission Gate for Tier 1 Root Files
 Because root instruction files consume context tokens on **every single prompt turn across every conversation**, agents are strictly prohibited from writing to them except under 3 explicit conditions:
 1. **Toolchain / Command Shift**: Build, test, lint, or run commands change (e.g. migrating to `pnpm`, or adding mandatory flags like `pytest -m "not e2e"`).
 2. **Architectural Hard Ban / Invariant**: A recurring failure mode or hard constraint is established (e.g. *"Never delete Postgres enum columns; deprecate only"* or *"All touch targets must be $\ge 44\times 44$px"*).
@@ -69,7 +87,7 @@ Because root instruction files consume context tokens on **every single prompt t
 
 ```
 <project-root>/
-├── CLAUDE.md / AGENTS.md     # [Tier 1 Root Anchor] Commands, hard bans, doc pointers (<60 lines)
+├── AGENTS.md (or CLAUDE.md)  # [Tier 1 Root Anchor] Commands, hard bans, doc pointers (<60 lines)
 └── agent-docs/               # [Tier 2 Deep Architecture]
     ├── architecture.md       # Global tech stack, directory boundaries, entry points (~50 lines)
     ├── ideas.md              # Active backlog (auto-reconciled on branch completion)
