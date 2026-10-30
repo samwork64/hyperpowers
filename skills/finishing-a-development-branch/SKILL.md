@@ -15,6 +15,16 @@ VERIFY TESTS & BUILD ➔ VERIFY TREE CLEANLINESS ➔ PRESENT INTEGRATION OPTIONS
 
 ---
 
+## The Worktree Integration Invariant (Zero-Stranded-Work Mandate)
+
+> [!CAUTION]
+> **Never Leave Work Stranded in an Isolated Worktree**:
+> When executing in an isolated git worktree (e.g. `.worktrees/*` or `<appDataDir>/worktrees/*`), completing tasks in a task ledger is **NOT** the end of the job. Work left on a detached worktree branch is completely invisible to the user's main workspace and remote origin.
+>
+> You are **strictly prohibited** from declaring a task finished while changes exist only on a detached worktree branch. You must guide the user through rebase/merge onto the base branch (`main` / `master`) and push to remote before concluding.
+
+---
+
 ## The Integration Protocol
 
 ### Step 1: Full Suite Verification

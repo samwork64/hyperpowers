@@ -158,4 +158,4 @@ Once all tasks in the ledger are checked (`- [x]`):
    - Inspect whole-branch diff (`git diff BASE_BRANCH..HEAD`).
    - Audit against the 6 evaluation axes in [code-review-rubric.md](../requesting-code-review/references/code-review-rubric.md).
    - Resolve any Critical or Important issues immediately.
-4. **Branch Finalization**: Proceed to `hyperpowers:finishing-a-development-branch` to reconcile `agent-docs/ideas.md`, update subsystem briefs with the latest git commit SHA, and present clean merge/PR options.
+4. **Branch & Worktree Finalization Gate**: You MUST invoke `hyperpowers:finishing-a-development-branch`. Never leave work stranded inside an isolated worktree branch. Reconcile `agent-docs/ideas.md`, update subsystem briefs with the verified commit SHA, and integrate/push to the main base branch before declaring completion.

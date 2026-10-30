@@ -41,7 +41,34 @@ Choose the verification strategy that matches the risk. For example:
 
 ---
 
-## 2. Anti-Flakiness & Hermetic Isolation Invariants
+## 2. 3-Tier Test Architecture & CI Partitioning
+
+To guarantee sub-15-second local inner loops and eliminate catastrophic CI quota burn (>95% cost reduction), all tests must be partitioned into three disciplined tiers:
+
+| Tier | Characteristics & Scope | Execution Boundary | CI Runner Policy |
+| :--- | :--- | :--- | :--- |
+| **Tier 1: Fast Unit & Logic** | In-memory, zero network, zero heavy file I/O, $<10$ms per test. Tests pure transformations, reducers, schema parsers, and algorithmic branches. | **Inner Loop**: Target single active test file.<br>**Outer Loop**: Entire Tier 1 suite executes in $<15$s. | **Standard Push CI**: Runs on every push/PR via a single fast `ubuntu-latest` runner. |
+| **Tier 2: Tagged Heavy / Integration** | Live sockets, subprocesses, database seeds, slow migrations, or multi-OS binaries. Must be tagged (e.g. `@pytest.mark.integration`, `--exclude integration`). | **Explicit Local Invocation**: Run manually when touching integration boundaries. | **On-Demand Only**: Excluded from default push CI. Run via `workflow_dispatch` or release tags. Must include `@unittest.skipUnless(ASSET_PATH.exists())` guards so missing uncommitted binaries skip cleanly. |
+| **Tier 3: Visual & Ephemeral Verification** | Multi-viewport rendering, typography, responsive layout, CSS variables. | **Chrome DevTools / `ui-shot`**: Captured across 375px, 768px, 1280px in $\sim 1$s. | **Never in Unit Tests**: Asserting HTML/CSS strings in unit tests is **strictly banned test theater**. |
+
+---
+
+## 3. Test Lifecycle & Obsolescence Pruning (Anti-Bloat Mandate)
+
+Tests are not sacred artifacts to be accumulated indefinitely; they have a finite lifecycle:
+
+1. **Delete Obsolete & Transitional Tests Immediately**:
+   - When a feature, API signature, or UI flow is redesigned or retired, **actively delete its obsolete unit tests**. Do not leave dead tests to rot or cause false regression alarms.
+   - Tests created as temporary debug probes or spikes during an investigation MUST be deleted before completing the task.
+2. **Strict Ban on "Change-Detector String Scrapers"**:
+   - **Banned**: Opening `.html`, `.css`, `.yml`, `.json`, or `.md` files to assert substrings or regexes (e.g. `assertIn("btn-cta", html)` or `assertIn("macos-latest", ci_yaml)`).
+   - These are change detectors that break on legitimate refactors while catching zero logic bugs. Delete them on sight.
+3. **No CI Matrix Lock-in Tests**:
+   - Never write tests asserting the exact list of runners, Python versions, or platforms in CI workflow files.
+
+---
+
+## 4. Anti-Flakiness & Hermetic Isolation Invariants
 
 Flaky tests erode confidence and waste tokens. Enforce two strict rules:
 
@@ -56,7 +83,7 @@ Flaky tests erode confidence and waste tokens. Enforce two strict rules:
 
 ---
 
-## 3. Full-Stack Schema & Contract Synchronization
+## 5. Full-Stack Schema & Contract Synchronization
 
 When implementing client-server features:
 1. **Schema-First Contracts**: Define input/output schemas (Zod, Pydantic, OpenAPI) once. Test boundary parsing:
@@ -69,7 +96,7 @@ When implementing client-server features:
 
 ---
 
-## 4. The Red-Green-Refactor Cycle
+## 6. The Red-Green-Refactor Cycle
 
 When a test is warranted, follow the strict cycle:
 
@@ -121,7 +148,7 @@ Remove duplication, improve variable names, or optimize performance while keepin
 
 ---
 
-## 5. The Universal Invariant: The Build & Syntax Gate
+## 7. The Universal Invariant: The Build & Syntax Gate
 
 Regardless of whether a task is verified via TDD, visual verification, or link checks:
 
@@ -132,6 +159,6 @@ Regardless of whether a task is verified via TDD, visual verification, or link c
 
 ---
 
-## 6. Deep-Dive References
+## 8. Deep-Dive References
 
 - [writing-good-tests.md](references/writing-good-tests.md) — Comprehensive principles for naming breaks, literal fixtures, and eliminating test theater.

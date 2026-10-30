@@ -168,6 +168,20 @@ should fail for each realistic mutation:
 A mutation nothing catches marks the behavior as unprotected — or the
 test as tautological.
 
+## Principle 3: Retire Obsolete Tests & Partition CI Load
+
+**Tests have a finite lifespan.** When an API contract evolves, a UI is redesigned, or a feature is retired, tests asserting the old behavior must be updated or deleted. Retaining dead tests out of fear generates compounding maintenance debt and false regression alerts.
+
+**Change detectors are not tests.** Opening an HTML template to assert class `btn-primary`, checking that CSS defines `@keyframes`, or asserting that `.github/workflows/ci.yml` contains a specific runner string is **test theater**:
+- It tests no state machine, schema, or logic.
+- It prevents benign design refactoring.
+- It creates fragile maintenance friction.
+Use visual verification (`ui-shot`) or compilers/linters for presentation. Reserve unit tests for computation, schemas, state, and contracts.
+
+**Graceful asset fallbacks.** If an integration test requires an offline seed database, external fixture, or local binary:
+- Wrap it with `@unittest.skipUnless(PATH.exists(), "Seed database not bundled")` or pytest skip fixture.
+- Never let an uncommitted 50MB fixture break CI on fresh clone checkouts.
+
 ## Quick Reference
 
 | When you... | Do |
@@ -182,6 +196,9 @@ test as tautological.
 | Need cleanup only tests use | Put it in test utilities |
 | Watch mock setup balloon | Switch to an integration test with real components |
 | Finish a test file | Run the mutation check |
+| Refactor or retire a feature | Audit and delete obsolete tests immediately; never hoard dead tests |
+| Test requires large offline binary | Add graceful skipUnless guard so headless CI passes cleanly |
+| Test only asserts HTML/CSS strings | Delete test; verify visually via ui-shot instead |
 
 ## Warning Signs
 
@@ -196,3 +213,7 @@ test as tautological.
 - A method is called only from test files
 - Mock setup is more than half the test, or you can't explain why the mock is needed
 - Mocking "just to be safe"
+- The test reads `.html`, `.css`, `.yml`, or `.md` as text to assert substrings or classes
+- The test asserts the CI matrix contains specific operating systems
+- The test crashes in CI because an uncommitted binary fixture is missing
+- Tests remain active for a feature or route that was deleted or replaced

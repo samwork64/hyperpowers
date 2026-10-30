@@ -2,7 +2,7 @@
 
 > **Repository:** Hyperpowers Plugin  
 > **Tech Stack:** Markdown, Python (syntax/evals), Node.js (CDP visual verification), Shell  
-> **Last Verified Commit:** `cab5e19` (2026-10-31)
+> **Last Verified Commit:** `ed069ed` (2026-10-31)
 
 ---
 
@@ -35,7 +35,10 @@
 ---
 
 ## 4. Key Architectural Invariants
-* **Rules Cap**: `rules/AGENTS.md` strictly capped at `<65 lines` to prevent Turn-0 prompt bloat.
+* **Rules Cap**: `rules/AGENTS.md` strictly capped at `<60 lines` to prevent Turn-0 prompt bloat.
 * **Zero Path Leaks**: Never commit machine-specific paths (`/home/`, `/Users/`).
 * **Zero-Idle Invariant**: Never dispatch a single subagent for sequential tasks; run inline.
 * **Empirical Verification**: Never declare completion without fresh verification evidence.
+* **3-Tier Test Partitioning**: Tier 1 fast unit tests in push CI; Tier 2 heavy/integration tests partitioned and asset-guarded; Tier 3 visual verification via `ui-shot` (zero static string-scrapers).
+* **CI Quota Protection**: Push CI runs single fast Linux runner; multi-OS matrices gated behind manual dispatch/release tags; `paths-ignore` for non-code files.
+* **Zero-Stranded-Work Mandate**: Isolated worktree/branch changes must be merged back to base `main` and pushed before completion.

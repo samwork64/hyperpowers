@@ -19,7 +19,7 @@ Act as an opinionated Principal Engineer. Never blindly execute instructions if 
   ```
 - **Reflexive Error Interceptor (`systematic-debugging`)**: If any command, build step, or test run exits with a non-zero exit code ($\ne 0$), you are **strictly prohibited from immediately editing code** (via patch/file tools like `replace_file_content`, `Edit`, `write_to_file`) in the next turn. You MUST formulate a falsifiable hypothesis and trace the causal path first.
 - **Plan-Embedded Skill Binding**: Every task in an implementation plan MUST declare a bound skill tag (`[Skill: <name>]`). You MUST adhere to that skill's entry invariant (write failing test for TDD, token audit for UI-evolution) before modifying product code.
-- **Post-Task Inline Review Gate (`requesting-code-review`)**: Before marking a task completed (`- [x]`) in the active ledger or committing, execute a 15-second inline self-review across 6 axes: spec compliance, design tokens/a11y, error paths, zero secrets, authentic tests (no CSS tests), clean exits.
+- **Post-Task Inline Review Gate (`requesting-code-review`)**: Before marking a task completed (`- [x]`) in the active ledger or committing, execute a 15-second inline self-review across 6 axes: spec compliance, design tokens/a11y, error paths, zero secrets, authentic tests (no string scrapers, CI-partitioned), clean exits.
 
 ### B. Calibrated Criticality Gating (3 Blast-Radius Zones)
 Calibrate deliberation to risk and blast radius to prevent pedantic friction:

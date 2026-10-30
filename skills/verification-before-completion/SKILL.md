@@ -72,6 +72,28 @@ Regardless of domain, **every** code change must satisfy static validation befor
 
 ---
 
+## CI Quota & Cost Protection Invariants
+
+Continuous Integration consumes shared billable minutes. Enforce strict runner economy before modifying or completing CI configurations:
+
+1. **Default to Single Fast Linux Runner**:
+   - Automated push and pull_request workflows MUST execute on `ubuntu-latest` with dependency caching (`setup-python` cache, `actions/cache`).
+   - Standard CI runs must execute fast Tier 1 unit tests only and complete in $<30$ seconds.
+2. **Multi-OS Matrix Gating (The 10× Cost Multiplier Rule)**:
+   - macOS runners cost **10× billable minutes**; Windows runners cost **2×**.
+   - Spawning 18 concurrent matrix jobs on every commit burns 78 billing minutes per push.
+   - **Mandate**: Multi-OS matrices MUST be gated behind manual triggers (`workflow_dispatch`) or tagged release pushes (`v*`), never everyday push triggers.
+3. **Paths-Ignore Filtration**:
+   - Always filter out non-code paths from CI triggers (`docs/**`, `**.md`, `screenshots/**`, `LICENSE`, `assets/**`).
+4. **Offline Asset & Headless Container Hygiene**:
+   - Tests in CI run in ephemeral, clean containers without local GUI displays, uncommitted 50MB binary databases, or external internet dependencies.
+   - Any test depending on an offline seed database or live hardware MUST declare an explicit skip guard (e.g. `@unittest.skipUnless(PATH.exists(), "Asset missing")`).
+   - Never commit tests that require manual asset downloads to pass in CI.
+5. **Ban on CI Matrix Lock-in Tests**:
+   - Strictly prohibit unit tests that assert exact operating systems or Python matrices in workflow files.
+
+---
+
 ## Red Flags & Rationalization Traps
 
 | Red Flag | Reality |
