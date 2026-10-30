@@ -60,3 +60,18 @@ When addressing a list of review findings:
 2. **Architectural & Interface Adjustments**: Modify signatures and contracts second.
 3. **Refactoring & Polish**: Address naming, documentation, and cleanup last.
 4. **Compile & Verification Gate**: Run the full test suite and `verification-before-completion` before reporting back.
+
+---
+
+## Convention Learning & Invariant Persistence Gate
+
+When human partner feedback or code review establishes a permanent project standard (*"Always use date-fns, not dayjs"*, *"Use kebab-case for CSS custom properties"*, *"Pointers must be checked at FFI boundary"*):
+
+1. **Prevent Amnesia Across Sessions**:
+   - Conversational corrections vanish when the turn context compacts or when starting a new chat.
+   - Do not merely fix the active line of code—persist the learning so all future agents inherit it automatically.
+2. **Persist According to the 2-Tier Hierarchy**:
+   - **Project-Wide Standard** $\rightarrow$ Append a 1-line bullet to Tier 1 Root Invariants (`CLAUDE.md` / `AGENTS.md`) under `## Core Invariants` (strictly maintaining the <60-line limit).
+   - **Subsystem Gotcha** $\rightarrow$ Append to Tier 2 brief (`agent-docs/modules/<subsystem>.md`).
+3. **Concisely Confirm**:
+   - *"Recorded invariant in `AGENTS.md`: `Never use dayjs; use date-fns`."*

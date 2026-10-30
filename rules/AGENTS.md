@@ -131,6 +131,9 @@ Prevent orphan processes, memory bloat, and port conflicts by following these in
   - *Parallel Batch Gating*: When research/analysis spans $\ge 2$ orthogonal domains (evaluating competing libraries in brainstorming, surveying decoupled subsystems before planning, or disproving independent failure hypotheses in debugging) and requires deep file/doc inspection (>3 files each), dispatch concurrent read-only subagents (`Subagents: [A, B]`, `TypeName: "research"`).
   - *Synthesis & Return Brief*: Research subagents must return a high-density findings brief (<20 lines: Hypothesis/Option, Empirical Evidence/Pointers, Verdict/Gotchas). The parent agent synthesizes findings and retains single-threaded decision authority.
 - **Task Tracking & Compaction Resilience**: Use task artifacts via `write_to_file` (`IsArtifact: true`, `ArtifactMetadata.ArtifactType: "task"`) and update with `replace_file_content`. Always persist active subagent IDs and commit completed tasks atomically. If session compaction occurs, immediately resume from the first pending task using the task artifact and `git log -n 5`. (`manage_task` is for background shell processes only).
+- **2-Tier Architectural Memory & Root Invariants**:
+  - *Tier 1 Root Anchor (`CLAUDE.md`, `AGENTS.md`)*: Strictly capped at **<60 lines**. Injected on turn 0 across conversations. Contains only primary build/test commands, critical repo bans, and doc pointers. Agents are strictly prohibited from writing to root files unless there is an empirical toolchain change, an architectural invariant established, or a direct user convention order.
+  - *Tier 2 Living Subsystems (`agent-docs/modules/*.md`)*: Domain-bounded briefs (30–50 lines) read Just-in-Time (JIT) only when touching that subsystem, eliminating turn-0 prompt token overhead. Never write task logs or code snippets into root files.
 
 ## 5. Configuration & Settings Resolution (`hyperpowers.json`)
 

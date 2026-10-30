@@ -35,21 +35,23 @@ If uncommitted files remain, commit or stash them before proceeding.
   BASE_BRANCH=$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || echo "main")
   ```
 
-### Step 4: Agent-Docs & Ideas Maintenance Gate
+### Step 4: Root Invariants & Agent-Docs Maintenance Gate
 Maintain persistent architectural memory before merging:
-1. **Update Subsystem Brief**:
+1. **Audit Tier 1 Root Invariants (`CLAUDE.md` / `AGENTS.md`)**:
+   - Did this feature introduce a toolchain/command shift (e.g. new test flags, build runner) or establish a project-wide non-negotiable architectural invariant?
+   - If yes: Update `CLAUDE.md` / `AGENTS.md`. Strictly enforce the **<60-line limit** and zero-bloat admission gate. Never add task logs, code snippets, or feature descriptions.
+2. **Update Tier 2 Subsystem Briefs**:
    - Determine which subsystem was modified (e.g. `src/billing/` $\rightarrow$ `agent-docs/modules/billing.md`).
    - If `agent-docs/modules/<subsystem>.md` exists: Update contracts, exports, and gotchas to reflect the new implementation. Stamp with current commit:
      `> **Verified Commit:** [HEAD_SHA] (YYYY-MM-DD)`
    - If a new architectural subsystem was created: Create a focused 30–50 line brief in `agent-docs/modules/<subsystem>.md`.
-2. **Reconcile Ideas Backlog**:
+3. **Reconcile Ideas Backlog**:
    - Check `agent-docs/ideas.md`.
    - Identify if this feature implemented, superseded, or invalidated any active backlog item.
-   - Ask user: *"Idea '[Title]' appears resolved or superseded by this feature. Shall I prune it from `agent-docs/ideas.md`?"*
-   - Delete resolved items from `ideas.md` to maintain zero token waste.
-3. **Commit Maintenance Updates**:
+   - Delete resolved or superseded items from `ideas.md` to maintain zero token waste.
+4. **Commit Maintenance Updates**:
    ```bash
-   git add agent-docs/ 2>/dev/null && git commit -m "docs(agent-docs): update subsystem brief & reconcile ideas" 2>/dev/null || true
+   git add CLAUDE.md AGENTS.md agent-docs/ 2>/dev/null && git commit -m "docs: update root invariants & subsystem topology" 2>/dev/null || true
    ```
 
 ### Step 5: Present Integration Options

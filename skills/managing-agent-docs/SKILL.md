@@ -25,40 +25,98 @@ Invoke `hyperpowers:managing-agent-docs` when:
 
 ---
 
-## 2. Directory Layout & Standards
+## 2. The 2-Tier Knowledge Hierarchy
+
+To ensure cross-agent continuity without polluting turn-0 context windows, Hyperpowers organizes knowledge into two strict tiers:
 
 ```
-agent-docs/
-├── architecture.md           # [Global] Tech stack, top-level directories, entry points, core invariants (~50 lines)
-├── ideas.md                  # [Active Backlog] Strictly active, high-signal ideas (zero token waste)
-└── modules/                  # [Subsystems] Living, domain-bounded briefs (30–50 lines each)
-    ├── auth.md               # Auth flows, session storage, middleware gotchas, verified commit SHA
-    ├── billing.md            # Stripe/payment flows, webhook handlers, subscription states
-    └── [subsystem].md        # Domain-bounded brief for active modules
+┌────────────────────────────────────────────────────────────────────────┐
+│               TIER 1: Root Instruction Anchor (<60 Lines)               │
+│               (CLAUDE.md / AGENTS.md / rules/AGENTS.md)                │
+├────────────────────────────────────────────────────────────────────────┤
+│ • Injected into EVERY session at Turn 0                                │
+│ • Strictly: Primary build/test commands + Non-negotiable repo bans     │
+│ • Zero verbose explanations. Pointers to Tier 2 docs.                  │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Pointers (Loaded Just-in-Time)
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│               TIER 2: Living Subsystem Topology (JIT)                  │
+│                     (agent-docs/modules/*.md)                          │
+├────────────────────────────────────────────────────────────────────────┤
+│ • Loaded ONLY when an agent actually touches that specific domain      │
+│ • Auth gotchas in `auth.md`, Stripe webhooks in `billing.md`           │
+│ • ZERO prompt token overhead when working on unrelated files!          │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+### Strict Admission Gate for Tier 1 Root Files (`CLAUDE.md` / `AGENTS.md`)
+Because root instruction files consume context tokens on **every single prompt turn across every conversation**, agents are strictly prohibited from writing to them except under 3 explicit conditions:
+1. **Toolchain / Command Shift**: Build, test, lint, or run commands change (e.g. migrating to `pnpm`, or adding mandatory flags like `pytest -m "not e2e"`).
+2. **Architectural Hard Ban / Invariant**: A recurring failure mode or hard constraint is established (e.g. *"Never delete Postgres enum columns; deprecate only"* or *"All touch targets must be $\ge 44\times 44$px"*).
+3. **Direct User Convention Order**: The user explicitly corrects a habit or orders a permanent preference (*"Always use kebab-case for CSS variables"*).
+
+#### Strictly Banned from Tier 1 Root Files:
+- ❌ Task logs, feature changelogs, or development history.
+- ❌ Code snippets, function implementations, or class definitions.
+- ❌ Backlog ideas or pending tasks (use `agent-docs/ideas.md`).
+- ❌ Module-specific trivia or subsystem details (use `agent-docs/modules/<subsystem>.md`).
+- ❌ Any file exceeding **60 lines** (must be pruned or moved to Tier 2).
+
+---
+
+## 3. Directory Layout & Standards
+
+```
+<project-root>/
+├── CLAUDE.md / AGENTS.md     # [Tier 1 Root Anchor] Commands, hard bans, doc pointers (<60 lines)
+└── agent-docs/               # [Tier 2 Deep Architecture]
+    ├── architecture.md       # Global tech stack, directory boundaries, entry points (~50 lines)
+    ├── ideas.md              # Active backlog (auto-reconciled on branch completion)
+    └── modules/              # Living subsystem briefs (30–50 lines each, read JIT)
+        ├── auth.md           # Auth flows, session storage, middleware gotchas, verified commit SHA
+        ├── billing.md        # Stripe/payment flows, webhook handlers, subscription states
+        └── [subsystem].md    # Domain-bounded brief for active modules
 ```
 
 > **The Subsystem Topology Invariant**: Never create feature-specific documentation (`agent-docs/add-stripe.md`). All knowledge must be integrated directly into the living **Subsystem Brief** (`agent-docs/modules/billing.md`).
 
 ---
 
-## 3. Workflow A: Initializing a Codebase Map
+## 4. Workflow A: Initializing Root Invariants & Codebase Map
 
-When a user asks to "set up agent docs" or when introducing Hyperpowers to a legacy codebase:
+When a user asks to "set up agent docs" or when introducing Hyperpowers to a codebase:
 
-1. **Avoid Upfront Full-Repo Bloat**:
-   - Do **NOT** document all 50+ files in the repository.
-   - Generate **ONLY** `agent-docs/architecture.md` using [templates/architecture-template.md](templates/architecture-template.md).
-2. **Keep it Under 60 Lines**:
-   - Tech stack & runtime versions.
-   - Directory map (which folder does what).
-   - Core entry points (server, client, database connection).
-   - Primary test & build commands (`npm test`, `pytest`, `cargo test`).
+1. **Create/Verify Tier 1 Root Anchor (`CLAUDE.md` or `AGENTS.md`)**:
+   Keep strictly under 60 lines:
+   ```markdown
+   # Project Architectural Invariants
+
+   ## Commands
+   - Build: `<build-cmd>`
+   - Test targeted: `<test-cmd> <path/to/test>`
+   - Lint & Typecheck: `<lint-cmd> && <typecheck-cmd>`
+
+   ## Core Invariants
+   - **Tooling**: Package manager or compiler constraints.
+   - **Quality**: Non-negotiable architectural or accessibility rules.
+
+   ## Deep Architecture (Read Just-in-Time)
+   - Global Map: `agent-docs/architecture.md`
+   - Active Backlog: `agent-docs/ideas.md`
+   - Subsystems: `agent-docs/modules/*.md`
+   ```
+
+2. **Generate `agent-docs/architecture.md`**:
+   - Limit to <60 lines using [templates/architecture-template.md](templates/architecture-template.md).
+   - Tech stack, directory map, entry points, test commands.
+
 3. **Subsystems are Documented Just-in-Time (JIT)**:
    - Module briefs in `agent-docs/modules/` are written **opportunistically** when a module is touched during a feature branch, never en masse upfront.
 
 ---
 
-## 4. Workflow B: Auditing & Resolving Doc Drift
+## 5. Workflow B: Auditing & Resolving Doc Drift
 
 Before relying on an existing subsystem brief in `agent-docs/modules/<subsystem>.md`:
 
@@ -77,7 +135,7 @@ Before relying on an existing subsystem brief in `agent-docs/modules/<subsystem>
 
 ---
 
-## 5. Workflow C: Managing the Ideas Backlog
+## 6. Workflow C: Managing the Ideas Backlog
 
 `agent-docs/ideas.md` captures high-value concepts without derailing active tasks:
 

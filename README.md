@@ -315,26 +315,33 @@ Hyperpowers is engineered to protect context windows and prevent runaway agent t
 
 ---
 
-## 📚 Living Subsystem Architecture (`agent-docs/`)
+## 📚 2-Tier Living Architectural Memory (`CLAUDE.md` / `AGENTS.md` + `agent-docs/`)
 
-Hyperpowers rejects both extremes of documentation: bloated unread wikis and missing architectural context. It maintains a **living subsystem topology**:
+Hyperpowers eliminates both the "instruction dilution token tax" and missing context by organizing architectural memory into two disciplined tiers:
 
 ```
-agent-docs/
-├── architecture.md          # Global tech stack, entry points, directory map (<60 lines)
-├── ideas.md                 # Managed active backlog (auto-reconciled on branch completion)
-└── modules/
-    ├── auth.md              # Subsystem brief: contracts, invariants, gotchas
-    ├── billing.md           # Tracked paths: src/billing/**, verified commit SHA
-    └── api-gateway.md       # Empirical drift check: git diff <SHA>..HEAD -- <paths>
+<project-root>/
+├── CLAUDE.md / AGENTS.md     # [Tier 1 Root Anchor] Turn-0 injection (<60 lines)
+│                             # Build commands, hard bans, doc pointers.
+└── agent-docs/               # [Tier 2 Deep Architecture] Read Just-in-Time (JIT)
+    ├── architecture.md       # Global tech stack, entry points, directory map (<60 lines)
+    ├── ideas.md              # Managed active backlog (auto-reconciled on branch completion)
+    └── modules/
+        ├── auth.md           # Subsystem brief: contracts, invariants, gotchas (30–50 lines)
+        ├── billing.md        # Tracked paths: src/billing/**, verified commit SHA
+        └── api-gateway.md    # Empirical drift check: git diff <SHA>..HEAD -- <paths>
 ```
 
+- **Tier 1 Strict Admission Gate (<60 Lines)**: Root instruction files (`CLAUDE.md`, `AGENTS.md`) are injected into context on turn 0 of every session. To prevent context bloat and instruction dilution, agents are strictly prohibited from writing to root files except for:
+  1. *Toolchain/command changes* (`npm` $\rightarrow$ `pnpm`).
+  2. *Architectural hard bans/invariants* ("Touch targets $\ge 44$px", "Never drop active DB columns").
+  3. *Direct user convention orders* ("Always use date-fns, not dayjs"). Task logs, code snippets, and feature diaries are strictly banned.
 - **Git Commit SHA Drift Detection**: Every subsystem brief records `Verified Commit: <git-sha>`. Before trusting documented contracts, agents run:
   ```bash
   git diff --name-only <VERIFIED_COMMIT>..HEAD -- <TRACKED_SOURCE_PATHS>
   ```
   If deltas exist, the brief is refreshed opportunistically before proceeding.
-- **Active Ideas Lifecycle**: Emerging ideas captured during brainstorming or reviews are ledgered in `agent-docs/ideas.md`. Upon branch finalization (`finishing-a-development-branch`), implemented or superseded ideas are automatically pruned to prevent context bloat.
+- **Active Ideas Lifecycle**: Emerging ideas captured during brainstorming or reviews are ledgered in `agent-docs/ideas.md`. Upon branch finalization (`finishing-a-development-branch`), implemented or superseded ideas are automatically pruned to maintain zero token waste.
 
 ---
 
